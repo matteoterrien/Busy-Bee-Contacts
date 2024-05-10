@@ -15,5 +15,11 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongoose": "^8.3.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.2.0"
   }
 }
