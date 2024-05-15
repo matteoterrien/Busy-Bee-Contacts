@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-
+import auth from "./auth.js";
 import userService from "./services/user-service.js";
 
 const app = express();
@@ -40,16 +40,16 @@ app.get("/users/:id", (req, res) => {
   });
 });
 
-app.post("/signup", registerUser);
+app.post("/signup", auth.registerUser);
 
-app.post("/users", authenticateUser, (req, res) => {
+app.post("/users", auth.authenticateUser, (req, res) => {
   const userToAdd = req.body;
   Users.addUser(userToAdd).then((result) =>
     res.status(201).send(result)
   );
 });
 
-app.post("/login", registerUser);
+app.post("/login", auth.loginUser);
 
 /*
 app.post("/users", (req, res) => {

@@ -79,8 +79,16 @@ function MyApp() {
 
   useEffect(() => {
     fetchUsers()
-      .then((res) => res.json())
-      .then((json) => setCharacters(json["users_list"]))
+      .then((res) =>
+        res.status === 200 ? res.json() : undefined
+      )
+      .then((json) => {
+        if (json) {
+          setCharacters(json["users_list"]);
+        } else {
+          setCharacters(null);
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -90,6 +98,10 @@ function MyApp() {
     <div className="container">
       <Table characterData={characters} removeCharacter={removeOneCharacter} />
       <Form handleSubmit={updateList} />
+      <Route
+        path="/login"
+        element={<Login handleSubmit={loginUser} />}
+      />
     </div>
   );
 }
