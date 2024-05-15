@@ -40,6 +40,18 @@ app.get("/users/:id", (req, res) => {
   });
 });
 
+app.post("/signup", registerUser);
+
+app.post("/users", authenticateUser, (req, res) => {
+  const userToAdd = req.body;
+  Users.addUser(userToAdd).then((result) =>
+    res.status(201).send(result)
+  );
+});
+
+app.post("/login", registerUser);
+
+/*
 app.post("/users", (req, res) => {
   const user = req.body;
   userService.addUser(user).then((savedUser) => {
@@ -47,6 +59,7 @@ app.post("/users", (req, res) => {
     else res.status(500).end();
   });
 });
+*/
 
 app.delete("/users/:id", (req, res) => {
   const id = req.params["id"].slice(1);
