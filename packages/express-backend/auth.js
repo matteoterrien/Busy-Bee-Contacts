@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+const creds = [];
+
 export function registerUser(req, res) {
     const { username, pwd } = req.body; // from form
     if (!username || !pwd) {
