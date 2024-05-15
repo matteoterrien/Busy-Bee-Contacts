@@ -1,14 +1,23 @@
 import mongoose from "mongoose";
 import userModel from "../models/user.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+const DB_CONNECTION = process.env.MONGODB_URI;
 
 mongoose.set("debug", true);
 
 mongoose
-  .connect("mongodb://localhost:27017/users", {
+  .connect(DB_CONNECTION, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .catch((error) => console.log(error));
+  .then(() => {
+    console.log("MongoDB connected 😄");
+  })
+  .catch(() => {
+    console.log("DB connection failed");
+  });
 
 function getUsers(name, job) {
   let promise;
