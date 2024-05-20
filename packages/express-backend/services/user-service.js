@@ -47,7 +47,7 @@ function findContactByFirstName(name) {
   return Contact.find({ first_name: name });
 }
 
-function findContactByLastName(name, job) {
+function findContactByLastName(name) {
   return Contact.find({ last_name: name });
 }
 
@@ -67,6 +67,7 @@ async function findAndDelete(id) {
 export default {
   addContact,
   getContacts,
+  findContactById,
   findContactByFirstName,
   findContactByLastName,
   findContactByFirstAndLastName,
