@@ -13,10 +13,6 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 app.get("/users", (req, res) => {
   const name = req.query["name"];
   const job = req.query["job"];
@@ -44,9 +40,7 @@ app.post("/signup", auth.registerUser);
 
 app.post("/users", auth.authenticateUser, (req, res) => {
   const userToAdd = req.body;
-  Users.addUser(userToAdd).then((result) =>
-    res.status(201).send(result)
-  );
+  Users.addUser(userToAdd).then((result) => res.status(201).send(result));
 });
 
 app.post("/login", auth.loginUser);

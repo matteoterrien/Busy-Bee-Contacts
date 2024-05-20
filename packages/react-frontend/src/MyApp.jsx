@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Table from "./Table";
+import Table from "./HomePage";
 import Form from "./Form";
+import { ChakraProvider } from "@chakra-ui/react";
+import ProfileCard from "./ProfileCard";
+import ContactPop from "./ContactPop";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
+
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   function postUser(person) {
     const promise = fetch("Http://localhost:8000/users", {
@@ -77,11 +82,13 @@ function MyApp() {
       });
   }
 
+  function selectUser(userId) {
+    setSelectedUserId(userId);
+  }
+
   useEffect(() => {
     fetchUsers()
-      .then((res) =>
-        res.status === 200 ? res.json() : undefined
-      )
+      .then((res) => (res.status === 200 ? res.json() : undefined))
       .then((json) => {
         if (json) {
           setCharacters(json["users_list"]);
@@ -96,12 +103,17 @@ function MyApp() {
 
   return (
     <div className="container">
-      <Table characterData={characters} removeCharacter={removeOneCharacter} />
-      <Form handleSubmit={updateList} />
-      <Route
-        path="/login"
-        element={<Login handleSubmit={loginUser} />}
+      <ContactPop />
+      <Table
+        characterData={characters}
+        removeCharacter={removeOneCharacter}
+        selectUser={selectUser}
       />
+      <Form handleSubmit={updateList} />
+      <Route path="/login" element={<Login handleSubmit={loginUser} />} />
+      <ChakraProvider>
+        {selectedUserId && <ProfileCard userId={selectedUserId} />}
+      </ChakraProvider>
     </div>
   );
 }
