@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import Form from "./Form";
+import Login from "./Login";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
+  const INVALID_TOKEN = "INVALID_TOKEN";
+  const [token, setToken] = useState(INVALID_TOKEN);
+  const [message, setMessage] = useState("");
 
   function postUser(person) {
     const promise = fetch("Http://localhost:8000/users", {
@@ -50,8 +54,29 @@ function MyApp() {
   }
 
   function fetchUsers() {
-    const promise = fetch("http://localhost:8000/users");
+    const promise = fetch(`${API_PREFIX}/users`, {
+      headers: addAuthHeader()
+    });
+  
     return promise;
+  }
+
+  function addAuthHeader(otherHeaders = {}) {
+    const promise = fetch(`${API_PREFIX}/users`, {
+      method: "POST",
+      headers: addAuthHeader({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(person)
+    });
+    if (token === INVALID_TOKEN) {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${token}`
+      };
+    }
   }
 
   function updateList(person) {
@@ -101,6 +126,10 @@ function MyApp() {
       <Route
         path="/login"
         element={<Login handleSubmit={loginUser} />}
+      />
+      <Route
+        path="/signup"
+        element={<Login handleSubmit={signupUser} buttonLabel="Sign Up" />}
       />
     </div>
   );

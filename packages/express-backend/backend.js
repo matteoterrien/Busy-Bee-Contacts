@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import auth from "./auth.js";
+import * as auth from "./auth.js";
 import userService from "./services/user-service.js";
 
 const app = express();
