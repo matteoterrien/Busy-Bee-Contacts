@@ -24,6 +24,7 @@ function getUsers(name, job) {
   return promise;
 }
 
+
 function findUserById(id) {
   return userModel.findById(id);
 }

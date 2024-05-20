@@ -23,6 +23,10 @@ function TableBody(props) {
         <td>
           <button onClick={() => props.removeCharacter(index)}>Delete</button>
         </td>
+        
+        <td>
+          <button onClick={() => props.selectUser(row._id)}>View Profile</button>
+        </td>
       </tr>
     );
   });
@@ -36,6 +40,7 @@ function Table(props) {
       <TableBody
         characterData={props.characterData}
         removeCharacter={props.removeCharacter}
+        selectUser={props.selectUser}
       />
     </table>
   );

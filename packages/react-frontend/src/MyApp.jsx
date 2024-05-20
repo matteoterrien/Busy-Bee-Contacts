@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import Form from "./Form";
+import { ChakraProvider } from '@chakra-ui/react';
+import ProfileCard from './ProfileCard';
+import ContactPop from "./ContactPop";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
+  
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   function postUser(person) {
     const promise = fetch("Http://localhost:8000/users", {
@@ -77,6 +82,10 @@ function MyApp() {
       });
   }
 
+  function selectUser(userId) {
+    setSelectedUserId(userId);
+  };
+
   useEffect(() => {
     fetchUsers()
       .then((res) => res.json())
@@ -88,9 +97,15 @@ function MyApp() {
 
   return (
     <div className="container">
-      <Table characterData={characters} removeCharacter={removeOneCharacter} />
+      
+    <ContactPop/>
+      <Table characterData={characters} removeCharacter={removeOneCharacter} selectUser={selectUser} />
       <Form handleSubmit={updateList} />
+      <ChakraProvider>
+      {selectedUserId && <ProfileCard userId={selectedUserId} />}
+    </ChakraProvider>
     </div>
+    
   );
 }
 
