@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Table from "./Table";
+import Table from "./HomePage";
 import Form from "./Form";
 import { ChakraProvider } from '@chakra-ui/react';
 import ProfileCard from './ProfileCard';
