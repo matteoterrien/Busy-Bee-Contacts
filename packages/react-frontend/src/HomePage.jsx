@@ -1,18 +1,16 @@
 import React from "react";
 
-function TableHeader() {
+function HomeHeader() {
   return (
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Remove Person</th>
+        <th>Busy Bee Contacts</th>
       </tr>
     </thead>
   );
 }
 
-function TableBody(props) {
+function HomeBody(props) {
   const rows = props.characterData.map((row, index) => {
     return (
       <tr key={index}>
@@ -27,11 +25,11 @@ function TableBody(props) {
   return <tbody>{rows}</tbody>;
 }
 
-function Table(props) {
+function HomePage(props) {
   return (
     <table>
-      <TableHeader />
-      <TableBody
+      <HomeHeader />
+      <HomeBody
         characterData={props.characterData}
         removeCharacter={props.removeCharacter}
       />
@@ -39,4 +37,4 @@ function Table(props) {
   );
 }
 
-export default Table;
+export default HomePage;

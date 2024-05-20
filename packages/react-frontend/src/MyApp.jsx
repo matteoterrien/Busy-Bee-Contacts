@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Table from "./Table";
+import Table from "./HomePage";
 import Form from "./Form";
+import HomePage from "./HomePage";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
@@ -88,7 +89,10 @@ function MyApp() {
 
   return (
     <div className="container">
-      <Table characterData={characters} removeCharacter={removeOneCharacter} />
+      <HomePage
+        characterData={characters}
+        removeCharacter={removeOneCharacter}
+      />
       <Form handleSubmit={updateList} />
     </div>
   );
