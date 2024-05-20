@@ -4,9 +4,13 @@ import Form from "./Form";
 import { ChakraProvider } from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
+import Login from "./Login";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
+  const INVALID_TOKEN = "INVALID_TOKEN";
+  const [token, setToken] = useState(INVALID_TOKEN);
+  const [message, setMessage] = useState("");
 
   const [selectedUserId, setSelectedUserId] = useState(null);
 
@@ -55,8 +59,29 @@ function MyApp() {
   }
 
   function fetchUsers() {
-    const promise = fetch("http://localhost:8000/users");
+    const promise = fetch(`${API_PREFIX}/users`, {
+      headers: addAuthHeader(),
+    });
+
     return promise;
+  }
+
+  function addAuthHeader(otherHeaders = {}) {
+    const promise = fetch(`${API_PREFIX}/users`, {
+      method: "POST",
+      headers: addAuthHeader({
+        "Content-Type": "application/json",
+      }),
+      body: JSON.stringify(person),
+    });
+    if (token === INVALID_TOKEN) {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${token}`,
+      };
+    }
   }
 
   function updateList(person) {
@@ -111,9 +136,6 @@ function MyApp() {
       />
       <Form handleSubmit={updateList} />
       <Route path="/login" element={<Login handleSubmit={loginUser} />} />
-      <ChakraProvider>
-        {selectedUserId && <ProfileCard userId={selectedUserId} />}
-      </ChakraProvider>
     </div>
   );
 }
