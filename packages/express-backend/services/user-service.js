@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import userModel from "../models/user.js";
+import Contact from "../models/contact.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -22,7 +22,7 @@ mongoose
 function getUsers(name, job) {
   let promise;
   if (name === undefined && job === undefined) {
-    promise = userModel.find();
+    promise = Contact.find();
   } else if (name && job) {
     promise = findUserByNameAndJob(name, job);
   } else if (name && !job) {
@@ -34,30 +34,30 @@ function getUsers(name, job) {
 }
 
 function findUserById(id) {
-  return userModel.findById(id);
+  return Contact.findById(id);
 }
 
 function addUser(user) {
-  const userToAdd = new userModel(user);
+  const userToAdd = new Contact(user);
   const promise = userToAdd.save();
   return promise;
 }
 
 function findUserByName(name) {
-  return userModel.find({ name: name });
+  return Contact.find({ name: name });
 }
 
 function findUserByJob(job) {
-  return userModel.find({ job: job });
+  return Contact.find({ job: job });
 }
 
 function findUserByNameAndJob(name, job) {
-  return userModel.find({ name: name, job: job });
+  return Contact.find({ name: name, job: job });
 }
 
 async function findAndDelete(id) {
   try {
-    const deletedUser = await userModel.findByIdAndDelete(id);
+    const deletedUser = await Contact.findByIdAndDelete(id);
     return deletedUser;
   } catch (error) {
     console.error("Error deleting user:", error);
