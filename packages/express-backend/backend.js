@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import * as auth from "./auth.js";
 import userService from "./services/user-service.js";
 
 const app = express();
@@ -35,6 +36,16 @@ app.get("/users/:id", (req, res) => {
   });
 });
 
+app.post("/signup", auth.registerUser);
+
+app.post("/users", auth.authenticateUser, (req, res) => {
+  const userToAdd = req.body;
+  Users.addUser(userToAdd).then((result) => res.status(201).send(result));
+});
+
+app.post("/login", auth.loginUser);
+
+/*
 app.post("/users", (req, res) => {
   const user = req.body;
   userService.addUser(user).then((savedUser) => {
@@ -42,6 +53,7 @@ app.post("/users", (req, res) => {
     else res.status(500).end();
   });
 });
+*/
 
 app.delete("/users/:id", (req, res) => {
   const id = req.params["id"].slice(1);

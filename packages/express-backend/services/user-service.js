@@ -65,6 +65,7 @@ async function findAndDelete(id) {
 }
 
 export default {
+  findContactById,
   addContact,
   getContacts,
   findContactByFirstName,

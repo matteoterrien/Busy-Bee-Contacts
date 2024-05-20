@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Table from "./HomePage";
 import Form from "./Form";
-import { ChakraProvider } from '@chakra-ui/react';
-import ProfileCard from './ProfileCard';
+import { ChakraProvider } from "@chakra-ui/react";
+import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
+import Login from "./Login";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
-  
+  const INVALID_TOKEN = "INVALID_TOKEN";
+  const [token, setToken] = useState(INVALID_TOKEN);
+  const [message, setMessage] = useState("");
+
   const [selectedUserId, setSelectedUserId] = useState(null);
 
   function postUser(person) {
@@ -55,8 +59,29 @@ function MyApp() {
   }
 
   function fetchUsers() {
-    const promise = fetch("http://localhost:8000/users");
+    const promise = fetch(`${API_PREFIX}/users`, {
+      headers: addAuthHeader(),
+    });
+
     return promise;
+  }
+
+  function addAuthHeader(otherHeaders = {}) {
+    const promise = fetch(`${API_PREFIX}/users`, {
+      method: "POST",
+      headers: addAuthHeader({
+        "Content-Type": "application/json",
+      }),
+      body: JSON.stringify(person),
+    });
+    if (token === INVALID_TOKEN) {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${token}`,
+      };
+    }
   }
 
   function updateList(person) {
@@ -84,12 +109,18 @@ function MyApp() {
 
   function selectUser(userId) {
     setSelectedUserId(userId);
-  };
+  }
 
   useEffect(() => {
     fetchUsers()
-      .then((res) => res.json())
-      .then((json) => setCharacters(json["users_list"]))
+      .then((res) => (res.status === 200 ? res.json() : undefined))
+      .then((json) => {
+        if (json) {
+          setCharacters(json["users_list"]);
+        } else {
+          setCharacters(null);
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -97,15 +128,15 @@ function MyApp() {
 
   return (
     <div className="container">
-      
-    <ContactPop/>
-      <Table characterData={characters} removeCharacter={removeOneCharacter} selectUser={selectUser} />
+      <ContactPop />
+      <Table
+        characterData={characters}
+        removeCharacter={removeOneCharacter}
+        selectUser={selectUser}
+      />
       <Form handleSubmit={updateList} />
-      <ChakraProvider>
-      {selectedUserId && <ProfileCard userId={selectedUserId} />}
-    </ChakraProvider>
+      <Route path="/login" element={<Login handleSubmit={loginUser} />} />
     </div>
-    
   );
 }
 
