@@ -1,13 +1,31 @@
+import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
 import * as auth from "./auth.js";
 import contactService from "./services/contact-service.js";
+import dotenv from "dotenv";
 
+dotenv.config();
+const DB_CONNECTION = process.env.MONGODB_URI;
 const app = express();
 const port = 8000;
 
 app.use(cors());
 app.use(express.json());
+
+mongoose.set("debug", true);
+
+mongoose
+  .connect(DB_CONNECTION, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected 😄");
+  })
+  .catch(() => {
+    console.log("DB connection failed");
+  });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
@@ -19,7 +37,7 @@ app.get("/contacts", (req, res) => {
   contactService
     .getContacts(first_name, last_name)
     .then((result) => {
-      res.send({ users_list: result });
+      res.send({ contacts_list: result });
     })
     .catch((error) => {
       console.log(error);

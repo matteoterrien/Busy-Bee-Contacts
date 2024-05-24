@@ -11,17 +11,19 @@ function HomeHeader() {
 }
 
 function HomeBody(props) {
-  const rows = props.characterData.map((row, index) => {
+  const rows = props.contactData.map((row, index) => {
     return (
       <tr key={index}>
-        <td>{row.name}</td>
-        <td>{row.job}</td>
+        <td>{row.first_name}</td>
+        <td>{row.last_namex}</td>
         <td>
-          <button onClick={() => props.removeCharacter(index)}>Delete</button>
+          <button onClick={() => props.removeContact(index)}>Delete</button>
         </td>
-        
+
         <td>
-          <button onClick={() => props.selectUser(row._id)}>View Profile</button>
+          <button onClick={() => props.selectContact(row._id)}>
+            View Profile
+          </button>
         </td>
       </tr>
     );
@@ -34,9 +36,9 @@ function HomePage(props) {
     <table>
       <HomeHeader />
       <HomeBody
-        characterData={props.characterData}
-        removeCharacter={props.removeCharacter}
-        selectUser={props.selectUser}
+        contactData={props.contactData}
+        removeContact={props.removeContact}
+        selectContact={props.selectContact}
       />
     </table>
   );

@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
-import Table from "./HomePage";
 import Form from "./Form";
 import { ChakraProvider } from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
 import Login from "./Login";
+import HomePage from "./HomePage";
+import { Route } from "react-router-dom";
 
 function MyApp() {
-  const [characters, setCharacters] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
   const [message, setMessage] = useState("");
 
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedContactId, setSelectedContactId] = useState(null);
 
-  function postUser(person) {
-    const promise = fetch("Http://localhost:8000/users", {
+  function postContact(person) {
+    const promise = fetch("http://localhost:8000/contacts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,9 +37,9 @@ function MyApp() {
     return promise;
   }
 
-  function deleteUser(index) {
+  function deleteContact(index) {
     const person = characters.at(index)._id;
-    const promise = fetch("Http://localhost:8000/users/:" + person, {
+    const promise = fetch("http://localhost:8000/contacts/:" + person, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +48,7 @@ function MyApp() {
     })
       .then((res) => {
         if (res.status == 404) {
-          console.log("Did not find user");
+          console.log("Did not find contact");
         } else if (res.status != 204) {
           console.log("ERROR: Returned Status ", res.status);
         }
@@ -58,34 +59,30 @@ function MyApp() {
     return promise;
   }
 
-  function fetchUsers() {
-    const promise = fetch(`${API_PREFIX}/users`, {
-      headers: addAuthHeader(),
-    });
+  function fetchContacts() {
+    const promise = fetch("http://localhost:8000/contacts");
+    // {
+    //   headers: addAuthHeader(),
+    // }
+    // );
 
     return promise;
   }
 
   function addAuthHeader(otherHeaders = {}) {
-    const promise = fetch(`${API_PREFIX}/users`, {
-      method: "POST",
-      headers: addAuthHeader({
-        "Content-Type": "application/json",
-      }),
-      body: JSON.stringify(person),
-    });
     if (token === INVALID_TOKEN) {
       return otherHeaders;
     } else {
       return {
         ...otherHeaders,
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
     }
   }
 
   function updateList(person) {
-    postUser(person)
+    postContact(person)
       .then((promise) => {
         setCharacters([...characters, promise]);
       })
@@ -94,31 +91,31 @@ function MyApp() {
       });
   }
 
-  function removeOneCharacter(index) {
-    deleteUser(index)
+  function removeOneContact(index) {
+    deleteContact(index)
       .then((promise) => {
-        const updated = characters.filter((character, i) => {
+        const updated = contacts.filter((contact, i) => {
           return i !== index;
         });
-        setCharacters(updated);
+        setContacts(updated);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  function selectUser(userId) {
-    setSelectedUserId(userId);
+  function selectContact(userId) {
+    setSelectedContactId(userId);
   }
 
   useEffect(() => {
-    fetchUsers()
+    fetchContacts()
       .then((res) => (res.status === 200 ? res.json() : undefined))
       .then((json) => {
         if (json) {
-          setCharacters(json["users_list"]);
+          setContacts(json["contacts_list"]);
         } else {
-          setCharacters(null);
+          setContacts(null);
         }
       })
       .catch((error) => {
@@ -129,13 +126,13 @@ function MyApp() {
   return (
     <div className="container">
       <ContactPop />
-      <Table
-        characterData={characters}
-        removeCharacter={removeOneCharacter}
-        selectUser={selectUser}
+      <HomePage
+        contactData={contacts}
+        removeCharacter={removeOneContact}
+        selectContact={selectContact}
       />
       <Form handleSubmit={updateList} />
-      <Route path="/login" element={<Login handleSubmit={loginUser} />} />
+      {/* <Route path="/login" element={<Login handleSubmit={loginUser} />} /> */}
     </div>
   );
 }

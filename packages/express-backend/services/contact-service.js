@@ -1,23 +1,4 @@
-import mongoose from "mongoose";
 import Contact from "../models/contact.js";
-import dotenv from "dotenv";
-
-dotenv.config();
-const DB_CONNECTION = process.env.MONGODB_URI;
-
-mongoose.set("debug", true);
-
-mongoose
-  .connect(DB_CONNECTION, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("MongoDB connected 😄");
-  })
-  .catch(() => {
-    console.log("DB connection failed");
-  });
 
 function getContacts(first_name, last_name) {
   let promise;
@@ -27,7 +8,7 @@ function getContacts(first_name, last_name) {
     promise = findContactByFirstAndLastName(first_name, last_name);
   } else if (first_name && !last_name) {
     promise = findContactByFirstName(first_name);
-  } else if (job && !name) {
+  } else if (!first_name && last_name) {
     promise = findContactByLastName(last_name);
   }
   return promise;
