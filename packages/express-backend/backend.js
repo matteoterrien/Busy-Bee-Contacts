@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import contactService from "./services/contact-service.js";
+import * as auth from "./auth.js";
+import userService from "./services/user-service.js";
 
 const app = express();
 const port = 8000;
@@ -35,13 +36,24 @@ app.get("/contacts/:id", (req, res) => {
   });
 });
 
-app.post("/contacts", (req, res) => {
+app.post("/signup", auth.registerUser);
+
+app.post("/users", auth.authenticateUser, (req, res) => {
+  const userToAdd = req.body;
+  Users.addUser(userToAdd).then((result) => res.status(201).send(result));
+});
+
+app.post("/login", auth.loginUser);
+
+/*
+app.post("/users", (req, res) => {
   const user = req.body;
   contactService.addUser(user).then((savedUser) => {
     if (savedUser) res.status(201).send(savedUser);
     else res.status(500).end();
   });
 });
+*/
 
 app.delete("/contacts/:id", (req, res) => {
   const id = req.params["id"].slice(1);
