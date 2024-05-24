@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import * as auth from "./auth.js";
-import userService from "./services/user-service.js";
+import contactService from "./services/contact-service.js";
 
 const app = express();
 const port = 8000;
@@ -14,10 +14,10 @@ app.listen(port, () => {
 });
 
 app.get("/contacts", (req, res) => {
-  const name = req.query["name"];
-  const job = req.query["job"];
+  const first_name = req.query["first_name"];
+  const last_name = req.query["last_name"];
   contactService
-    .getUsers(name, job)
+    .getContacts(first_name, last_name)
     .then((result) => {
       res.send({ users_list: result });
     })
@@ -29,7 +29,7 @@ app.get("/contacts", (req, res) => {
 
 app.get("/contacts/:id", (req, res) => {
   const id = req.params["id"];
-  contactService.findUserById(id).then((result) => {
+  contactService.findContactById(id).then((result) => {
     if (result === undefined || result === null)
       res.status(404).send("Resource not found.");
     else res.send({ users_list: result });
@@ -56,13 +56,26 @@ app.post("/users", (req, res) => {
 */
 
 app.delete("/contacts/:id", (req, res) => {
-  const id = req.params["id"].slice(1);
-  contactService.findUserById(id).then((result) => {
-    if (result === undefined) {
-      res.status(404).send("resource not found.");
-    } else {
-      contactService.findAndDelete(id);
-      return res.status(204).send();
-    }
-  });
+  const id = req.params["id"];
+  contactService
+    .findContactById(id)
+    .then((result) => {
+      if (result === undefined) {
+        res.status(404).send("Resource not found.");
+      } else {
+        contactService
+          .findAndDelete(id)
+          .then(() => {
+            res.status(204).send();
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).send("An error occurred on the server.");
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send("An error occurred on the server.");
+    });
 });
