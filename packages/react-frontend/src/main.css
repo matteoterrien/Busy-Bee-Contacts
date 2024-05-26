@@ -27,14 +27,6 @@
 .primColor {
   background-color: #e4dfaf;
 }
-.cont {
-	backgroundColor=#E4DFAF;
-	borderRadius=20;
-	overflow=hidden;
-	textAlign=left;
-	lineHeight=0;
-	p=4;
-}
 .but {
   background-color: #e4dfaf;
   color: black;
@@ -43,7 +35,8 @@
   padding: 10px;
   border-radius: 7px;
   cursor: pointer;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 .but:hover {

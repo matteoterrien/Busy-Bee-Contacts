@@ -10,9 +10,6 @@ const DB_CONNECTION = process.env.MONGODB_URI;
 const app = express();
 const port = 8000;
 
-app.use(cors());
-app.use(express.json());
-
 mongoose.set("debug", true);
 
 mongoose
@@ -27,6 +24,9 @@ mongoose
     console.log("DB connection failed");
   });
 
+app.use(cors());
+app.use(express.json());
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
@@ -38,11 +38,20 @@ app.get("/contacts", (req, res) => {
     .getContacts(first_name, last_name)
     .then((result) => {
       res.send({ contact_list: result });
+      res.send({ contact_list: result });
     })
     .catch((error) => {
       console.log(error);
       res.status(500).send("An error ocurred in the server.");
     });
+});
+
+app.get("/contacts/favorite", (req, res) => {
+  contactService.findContactByFavorites().then((result) => {
+    if (result === undefined || result === null)
+      res.status(404).send("Resource not found.");
+    else res.send({ contact_list: result });
+  });
 });
 
 app.get("/contacts/:id", (req, res) => {
@@ -51,26 +60,18 @@ app.get("/contacts/:id", (req, res) => {
     if (result === undefined || result === null)
       res.status(404).send("Resource not found.");
     else res.send({ contact_list: result });
+    else res.send({ contact_list: result });
   });
 });
 
-// app.get("/contacts/:favorite"),
-//   (req, res) => {
-//     contactService.findFavoriteContacts().then((result) => {
-//       if (result === undefined || result === null)
-//         res.status(404).send("Resource not found.");
-//       else res.send({ contact_list: result });
-//     });
-//   };
+// app.post("/signup", auth.registerUser);
 
-app.post("/signup", auth.registerUser);
+// app.post("/users", auth.authenticateUser, (req, res) => {
+//   const userToAdd = req.body;
+//   Users.addUser(userToAdd).then((result) => res.status(201).send(result));
+// });
 
-app.post("/users", auth.authenticateUser, (req, res) => {
-  const userToAdd = req.body;
-  Users.addUser(userToAdd).then((result) => res.status(201).send(result));
-});
-
-app.post("/login", auth.loginUser);
+// app.post("/login", auth.loginUser);
 
 /*
 app.post("/users", (req, res) => {

@@ -36,6 +36,10 @@ function findContactByFirstAndLastName(first, last) {
   return Contact.find({ first_name: first, last_name: last });
 }
 
+function findContactByFavorites() {
+  return Contact.find({ favorite: true });
+}
+
 async function findAndDelete(id) {
   try {
     const deletedContact = await Contact.findByIdAndDelete(id);
@@ -43,10 +47,6 @@ async function findAndDelete(id) {
   } catch (error) {
     console.error("Error deleting contact:", error);
   }
-}
-
-function findFavoriteContacts() {
-  return Contact.find({ favorite: true });
 }
 
 export default {
@@ -57,5 +57,5 @@ export default {
   findContactByLastName,
   findContactByFirstAndLastName,
   findAndDelete,
-  findFavoriteContacts,
+  findContactByFavorites,
 };
