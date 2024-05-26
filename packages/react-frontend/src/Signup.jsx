@@ -13,7 +13,7 @@ import {
 import { Formik, Form } from "formik";
 import { object, string } from "yup";
 
-export default function LoginPage(): JSX.Element {
+export default function LoginPage() {
   return (
     <ChakraProvider resetCSS>
       <Center h="100vh" className="border">
