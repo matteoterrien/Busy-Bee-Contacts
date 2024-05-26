@@ -38,6 +38,7 @@ app.get("/contacts", (req, res) => {
     .getContacts(first_name, last_name)
     .then((result) => {
       res.send({ contact_list: result });
+      res.send({ contact_list: result });
     })
     .catch((error) => {
       console.log(error);
@@ -58,6 +59,7 @@ app.get("/contacts/:id", (req, res) => {
   contactService.findContactById(id).then((result) => {
     if (result === undefined || result === null)
       res.status(404).send("Resource not found.");
+    else res.send({ contact_list: result });
     else res.send({ contact_list: result });
   });
 });
