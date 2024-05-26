@@ -37,7 +37,7 @@ app.get("/contacts", (req, res) => {
   contactService
     .getContacts(first_name, last_name)
     .then((result) => {
-      res.send({ contacts_list: result });
+      res.send({ contact_list: result });
     })
     .catch((error) => {
       console.log(error);
@@ -50,9 +50,18 @@ app.get("/contacts/:id", (req, res) => {
   contactService.findContactById(id).then((result) => {
     if (result === undefined || result === null)
       res.status(404).send("Resource not found.");
-    else res.send({ users_list: result });
+    else res.send({ contact_list: result });
   });
 });
+
+// app.get("/contacts/:favorite"),
+//   (req, res) => {
+//     contactService.findFavoriteContacts().then((result) => {
+//       if (result === undefined || result === null)
+//         res.status(404).send("Resource not found.");
+//       else res.send({ contact_list: result });
+//     });
+//   };
 
 app.post("/signup", auth.registerUser);
 

@@ -51,6 +51,10 @@ const ContactSchema = new mongoose.Schema(
     tags: {
       type: [Number],
     },
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
   },
   { collection: "contact_list" },
 );
