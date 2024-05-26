@@ -8,9 +8,10 @@ function Form(props) {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    if (name === "last_name")
-      setPerson({ first_name: person["first_name"], last_name: value });
-    else setPerson({ name: value, last_name: person["last_name"] });
+    setPerson((prevPerson) => ({
+      ...prevPerson,
+      [name]: value,
+    }));
   }
 
   function submitForm() {
