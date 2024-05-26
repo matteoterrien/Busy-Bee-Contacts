@@ -17,7 +17,7 @@ export default function LoginPage(): JSX.Element {
   return (
     <ChakraProvider resetCSS>
       <Center h="100vh" className="border">
-        <Stack boxShadow="md" bg="white" p="20" rounded="md">
+        <Stack boxShadow="large" bg="white" p="20" rounded="md">
           <Stack isInline>
             <Image
               src="https://us.123rf.com/450wm/kaissaart/kaissaart1807/kaissaart180700038/114801772-bee-flat-design-illustration-simple-vector-icon.jpg?ver=6"
@@ -25,9 +25,9 @@ export default function LoginPage(): JSX.Element {
               mx="auto"
             />
           </Stack>
-          <Heading as="h1"> Log In </Heading>
+          <Heading as="h1"> Sign Up </Heading>
           <Text fontsize="lg" className="secText">
-            Please Log in with your Busy Bee Contact Information.
+            Please enter the information to register for Busy Bee Contacts.
           </Text>
 
           <Formik
@@ -44,6 +44,12 @@ export default function LoginPage(): JSX.Element {
                 <Stack>
                   <Input
                     bg="lightgrey"
+                    name="name"
+                    type="name"
+                    placeholder="Full Name"
+                  />
+                  <Input
+                    bg="lightgrey"
                     name="email"
                     type="email"
                     placeholder="Email"
@@ -54,12 +60,13 @@ export default function LoginPage(): JSX.Element {
                     type="password"
                     placeholder="Password"
                   />
+
                   <Button
                     isLoasding={isSubmitting}
                     loadingText="Whispering to our servers"
                     className="but"
                   >
-                    Login
+                    Sign Up
                   </Button>
                 </Stack>
               </Form>
@@ -68,14 +75,11 @@ export default function LoginPage(): JSX.Element {
 
           <Stack justify="center" className="secText" spacing="3">
             <Text align="center">
-              <span>Don't have an account? </span>
+              <span>Already have an account? </span>
               <Button colorScheme="purple" variant="link">
-                Sign Up
+                Log In
               </Button>
             </Text>
-            <Button colorScheme="purple" variant="link">
-              Forgot Password?
-            </Button>
           </Stack>
         </Stack>
       </Center>
