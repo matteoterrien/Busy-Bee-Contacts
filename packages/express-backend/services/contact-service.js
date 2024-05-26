@@ -49,10 +49,6 @@ async function findAndDelete(id) {
   }
 }
 
-function findFavoriteContacts() {
-  return Contact.find({ favorite: true });
-}
-
 export default {
   findContactById,
   addContact,
