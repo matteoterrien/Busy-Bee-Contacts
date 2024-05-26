@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./styles.css";
 import {
   Center,
   ChakraProvider,
@@ -11,9 +10,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import { object, string } from "yup";
 
-export default function LoginPage(): JSX.Element {
+export default function LoginPage() {
   return (
     <ChakraProvider resetCSS>
       <Center h="100vh" className="border">
