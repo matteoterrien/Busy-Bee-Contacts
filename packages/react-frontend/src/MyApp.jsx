@@ -125,13 +125,13 @@ function MyApp() {
 
   return (
     <div className="container">
-      <ContactPop />
+      {/* <ContactPop /> */}
       <HomePage
         contactData={contacts}
         removeCharacter={removeOneContact}
         selectContact={selectContact}
       />
-      <Form handleSubmit={updateList} />
+      {/* <Form handleSubmit={updateList} /> */}
       {/* <Route path="/login" element={<Login handleSubmit={loginUser} />} /> */}
     </div>
   );

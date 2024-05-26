@@ -17,8 +17,8 @@ const ContactSchema = new mongoose.Schema(
       trim: true,
       validate(phone) {
         var validRegex =
-          /^[\+]?[0-9]{0,3}\W?+[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-        if (!phone.value.match(validRegex))
+          /^[\+]?[0-9]{0,3}\W?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        if (!phone.match(validRegex))
           throw new Error("Invalid Phone Number. Try Again.");
       },
     },
@@ -28,7 +28,7 @@ const ContactSchema = new mongoose.Schema(
       validate(email) {
         var validRegex =
           /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if (!email.value.match(validRegex))
+        if (!email.match(validRegex))
           throw new Error("Invalid Email Address. Try Again.");
       },
     },
