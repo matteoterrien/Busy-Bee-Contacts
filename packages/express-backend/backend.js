@@ -60,7 +60,6 @@ app.get("/contacts/:id", (req, res) => {
     if (result === undefined || result === null)
       res.status(404).send("Resource not found.");
     else res.send({ contact_list: result });
-    else res.send({ contact_list: result });
   });
 });
 
