@@ -10,7 +10,7 @@ const DB_CONNECTION = process.env.MONGODB_URI;
 const app = express();
 const port = 8000;
 
-mongoose.set("debug", true);
+mongoose.set("debug", false);
 
 mongoose
   .connect(DB_CONNECTION, {
@@ -37,7 +37,6 @@ app.get("/contacts", (req, res) => {
   contactService
     .getContacts(first_name, last_name)
     .then((result) => {
-      res.send({ contact_list: result });
       res.send({ contact_list: result });
     })
     .catch((error) => {

@@ -1,13 +1,15 @@
 import React from "react";
-import { Text, Box, Button, Stack, ButtonGroup } from "@chakra-ui/react";
-import BeeIcon from "./assets/BeeIcon";
+import { Text, Box, Button } from "@chakra-ui/react";
+import { GiBee } from "react-icons/gi";
+import { IoMdContact } from "react-icons/io";
+import { TiStarFullOutline } from "react-icons/ti";
 
 function HomeHeader() {
   return (
     <div>
       <Box display="flex">
-        <BeeIcon />
-        <Text marginLeft="5%" fontSize="6xl" fontFamily="Kokoro">
+        <GiBee size={100} color="#E4DFAF" />
+        <Text marginLeft="2%" fontSize="6xl" fontFamily="Comic Sans MS">
           Busy Bee Contacts
         </Text>
       </Box>
@@ -17,10 +19,19 @@ function HomeHeader() {
 
 function FavoritesHeader() {
   return (
-    <Box borderRadius="lg" alignItems="center" bg="#E4DFAF">
+    <Box
+      display="flex"
+      borderRadius="lg"
+      alignItems="center"
+      bg="#E4DFAF"
+      justifyContent="space-between"
+    >
       <Text ml={5} fontSize="4xl" fontFamily="kokoro" as="b">
         Favorites
       </Text>
+      <Box mr={5}>
+        <TiStarFullOutline size={40} />
+      </Box>
     </Box>
   );
 }
@@ -44,6 +55,7 @@ function HomeBody(props) {
           width="100%"
           borderRadius="lg"
           bg="lightgray"
+          borderWidth={0}
           justifyContent="flex-start"
           alignItems="flex-start"
           mt={3}
@@ -51,6 +63,9 @@ function HomeBody(props) {
           height="auto"
           onClick={() => props.selectContact(row._id)}
         >
+          <Box marginRight="1%">
+            <IoMdContact size={50} />
+          </Box>
           <Box
             width="50%"
             display="flex"
