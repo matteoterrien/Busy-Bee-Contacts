@@ -3,7 +3,6 @@ import Form from "./Form";
 import { ChakraProvider } from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
-import Login from "./Login";
 import HomePage from "./HomePage";
 import { Route } from "react-router-dom";
 

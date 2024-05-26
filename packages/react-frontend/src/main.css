@@ -27,14 +27,7 @@
 .primColor {
   background-color: #e4dfaf;
 }
-.cont {
-	backgroundColor=#E4DFAF;
-	borderRadius=20;
-	overflow=hidden;
-	textAlign=left;
-	lineHeight=0;
-	p=4;
-}
+
 .but {
   background-color: #e4dfaf;
   color: black;
