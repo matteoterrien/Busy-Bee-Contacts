@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Form from "./Form";
-import { ChakraProvider } from "@chakra-ui/react";
 import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
-import Login from "./Login";
 import HomePage from "./HomePage";
 import { Route } from "react-router-dom";
 
 function MyApp() {
   const [contacts, setContacts] = useState([]);
+  const [favoriteContacts, setFavoriteContacts] = useState([]);
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
   const [message, setMessage] = useState("");
@@ -69,6 +68,14 @@ function MyApp() {
     return promise;
   }
 
+  const fetchFavoriteContacts = async () => {
+    const res = await fetch("http://localhost:8000/contacts/favorite");
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return await res.json();
+  };
+
   function addAuthHeader(otherHeaders = {}) {
     if (token === INVALID_TOKEN) {
       return otherHeaders;
@@ -113,7 +120,7 @@ function MyApp() {
       .then((res) => (res.status === 200 ? res.json() : undefined))
       .then((json) => {
         if (json) {
-          setContacts(json["contacts_list"]);
+          setContacts(json["contact_list"]);
         } else {
           setContacts(null);
         }
@@ -123,11 +130,26 @@ function MyApp() {
       });
   }, []);
 
+  useEffect(() => {
+    fetchFavoriteContacts()
+      .then((json) => {
+        if (json) {
+          setFavoriteContacts(json["contact_list"]);
+        } else {
+          setContacts(null);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch favorite contacts:", error);
+      });
+  }, []);
+
   return (
     <div className="container">
       {/* <ContactPop /> */}
       <HomePage
         contactData={contacts}
+        favoriteContactData={favoriteContacts}
         removeCharacter={removeOneContact}
         selectContact={selectContact}
       />
