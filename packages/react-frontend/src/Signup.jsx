@@ -10,6 +10,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
+import styles from "./main.css"
 
 export default function LoginPage() {
   return (
