@@ -21,12 +21,14 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 /* Written CSS Code */
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
 .border {
   background-color: #8f8255;
 }
-.primColor {
-  background-color: #e4dfaf;
-}
+
 .but {
   background-color: #e4dfaf;
   color: black;
@@ -35,8 +37,7 @@
   padding: 10px;
   border-radius: 7px;
   cursor: pointer;
-  box-shadow:
-    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 .but:hover {
@@ -46,6 +47,9 @@
 .but:active {
   background-color: #beba8d;
   color: black;
+}
+.add {
+  background-color: #cbc47f;
 }
 
 .avatar {
@@ -60,6 +64,10 @@
   width: 70px;
   border: 2px solid black;
   border-radius: 10px;
+}
+
+.all {
+  background-color: lightgrey;
 }
 
 .friends {
@@ -80,6 +88,7 @@
 .medical {
   background-color: #ffceef;
 }
+
 /* End of Written CSS Code */
 
 html {
