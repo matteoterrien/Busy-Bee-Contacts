@@ -21,7 +21,30 @@ import {
   AtSignIcon,
 } from "@chakra-ui/icons";
 
-const App = () => (
+function updateContact(contact) {
+  const id = contact._id;
+  const promise = fetch("http://localhost:8000/contacts", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(id, contact),
+    code: 201,
+  })
+    .then((res) => {
+      if (res.status == 201) {
+        return res.json();
+      } else {
+        console.log("ERROR: Returned Status ", res.status);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return promise;
+}
+
+const App = (props) => (
   <ChakraProvider resetCSS>
     <Box
       backgroundColor="#FFF"
@@ -64,9 +87,9 @@ const App = () => (
         </Box>
         <Box width="80%">
           <Heading textAlign="left" as="h1" size="xl">
-            Name
+            {props.first_name} {props.last_name}
           </Heading>
-          <Text fontStyle="italic">Pronouns</Text>
+          <Text fontStyle="italic">{props.pronouns}</Text>
           <Stack spacing={2} isInline alignItems="center" position="absolute">
             <Box className="tag friends">Friends</Box>
             <Box className="tag work">Work</Box>
@@ -125,7 +148,7 @@ const App = () => (
                   Phone Number
                 </Text>
                 <Text width="60%" textAlign="center" p={2}>
-                  XXX-XXXX
+                  {props.phone_number}
                 </Text>
               </Stack>
             </Box>
@@ -149,7 +172,7 @@ const App = () => (
                   Email
                 </Text>
                 <Text width="60%" textAlign="center" p={2}>
-                  XXX@XXXX.XXX
+                  {props.email}
                 </Text>
               </Stack>
             </Box>
@@ -173,7 +196,7 @@ const App = () => (
                   Birthday
                 </Text>
                 <Text width="60%" textAlign="center" p={2}>
-                  XXXX XX, XXXX
+                  {props.birthday}
                 </Text>
               </Stack>
             </Box>
@@ -197,7 +220,7 @@ const App = () => (
                   Address
                 </Text>
                 <Text width="60%" textAlign="center" p={2}>
-                  XXXX XXXXX XX XX
+                  {props.addess}
                 </Text>
               </Stack>
             </Box>
@@ -244,20 +267,7 @@ const App = () => (
         </Heading>
         <Box p={2} height="100px" overflow="auto">
           <Text textAlign="left" lineHeight={1.5}>
-            Text value Text value Text value Text valueText value Text value
-            Text valueText value Text value Text valueText value Text value Text
-            valueText value Text value Text valueText value Text valueText value
-            Text value Text valueText value Text value Text valueText value Text
-            value Text value Text value Text value Text value Text valueText
-            value Text value Text valueText value Text value Text valueText
-            value Text value Text valueText value Text value Text valueText
-            value Text valueText value Text value Text valueText value Text
-            value Text valueText value Text value Text value Text value Text
-            value Text value Text valueText value Text value Text valueText
-            value Text value Text valueText value Text value Text valueText
-            value Text value Text valueText value Text valueText value Text
-            value Text valueText value Text value Text valueText value Text
-            value Text value
+            {props.notes}
           </Text>
         </Box>
       </Box>
@@ -274,8 +284,9 @@ const App = () => (
           borderRadius={40}
           width="50%"
           className="but"
+          onClick={((props.favorite = !props.favorite), updateContact(props))}
         >
-          Add to Favorites
+          {props.favorite ? "Remove from Favorites" : "Add to Favorites"}
         </Button>
         <Button
           variant="solid"
