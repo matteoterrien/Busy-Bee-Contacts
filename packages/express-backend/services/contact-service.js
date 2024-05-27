@@ -40,6 +40,15 @@ function findContactByFavorites() {
   return Contact.find({ favorite: true });
 }
 
+async function findContactAndUpdate(id) {
+  try {
+    const updatedContact = await Contact.findByIdAndUpdate(id);
+    return updatedContact;
+  } catch (error) {
+    console.error("Error updating contact:", error);
+  }
+}
+
 async function findAndDelete(id) {
   try {
     const deletedContact = await Contact.findByIdAndDelete(id);
@@ -58,4 +67,5 @@ export default {
   findContactByFirstAndLastName,
   findAndDelete,
   findContactByFavorites,
+  findContactAndUpdate,
 };

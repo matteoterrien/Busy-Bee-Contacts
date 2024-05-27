@@ -62,24 +62,20 @@ app.get("/contacts/:id", (req, res) => {
   });
 });
 
-// app.post("/signup", auth.registerUser);
-
-// app.post("/users", auth.authenticateUser, (req, res) => {
-//   const userToAdd = req.body;
-//   Users.addUser(userToAdd).then((result) => res.status(201).send(result));
-// });
-
-// app.post("/login", auth.loginUser);
-
-/*
-app.post("/users", (req, res) => {
-  const user = req.body;
-  contactService.addUser(user).then((savedUser) => {
-    if (savedUser) res.status(201).send(savedUser);
-    else res.status(500).end();
-  });
+app.put("/contacts/:id", (req, res) => {
+  const id = req.params["id"];
+  contactService
+    .findContactAndUpdate(id)
+    .then((result) => {
+      if (result === undefined || result === null)
+        res.status(404).send("Resource not found");
+      else res.send({ contact_list: result });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send("An error occurred on the server.");
+    });
 });
-*/
 
 app.delete("/contacts/:id", (req, res) => {
   const id = req.params["id"];
@@ -105,3 +101,22 @@ app.delete("/contacts/:id", (req, res) => {
       res.status(500).send("An error occurred on the server.");
     });
 });
+
+// app.post("/signup", auth.registerUser);
+
+// app.post("/users", auth.authenticateUser, (req, res) => {
+//   const userToAdd = req.body;
+//   Users.addUser(userToAdd).then((result) => res.status(201).send(result));
+// });
+
+// app.post("/login", auth.loginUser);
+
+/*
+app.post("/users", (req, res) => {
+  const user = req.body;
+  contactService.addUser(user).then((savedUser) => {
+    if (savedUser) res.status(201).send(savedUser);
+    else res.status(500).end();
+  });
+});
+*/
