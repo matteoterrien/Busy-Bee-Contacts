@@ -52,6 +52,32 @@
   background-color: #cbc47f;
 }
 
+.butred {
+  background-color: #eb5555;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.butred:hover {
+  background-color: rgb(134, 58, 58);
+}
+
+.butred:active {
+  background-color: rgb(97, 47, 47);
+}
+
+.butgreen {
+  background-color: #77cc6d;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.butgreen:hover {
+  background-color: #599952;
+}
+.butgreen:active {
+  background-color: #3f6d3a;
+}
+
 .avatar {
   border: 5px solid #ffc7c7;
 }
