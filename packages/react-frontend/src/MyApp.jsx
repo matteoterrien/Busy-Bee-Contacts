@@ -6,7 +6,7 @@ import HomePage from "./HomePageV2";
 import Contact from "./Contact";
 import Edit from "./ContactEdit";
 import CreateContact from "./CreateContact";
-import Login from "./LoginPage";
+import LoginPage from "./Login";
 
 function MyApp() {
   const [contacts, setContacts] = useState([]);
