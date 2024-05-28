@@ -97,7 +97,7 @@ function ShowAllContactsHeader() {
         mt={1}
         borderWidth={0}
         className="add but"
-          onClick={() => setShouldNavigate(true)}
+        onClick={() => setShouldNavigate(true)}
       >
         Add Contact
       </Button>
@@ -146,7 +146,6 @@ function AllContactsBody(props) {
   });
   return <>{rows}</>;
 }
-}
 
 function HomePage(props) {
   return (
@@ -155,10 +154,7 @@ function HomePage(props) {
       <FavoritesHeader />
       <AllContactsBody contactData={props.favoriteContactData} />
       <ShowAllContactsHeader />
-      <AllContactsBody
-        contactData={props.contactData}
-        selectContact={props.selectContact}
-      />
+      <AllContactsBody contactData={props.contactData} />
     </>
   );
 }
