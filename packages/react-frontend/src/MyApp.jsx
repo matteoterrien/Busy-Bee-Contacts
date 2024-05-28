@@ -140,12 +140,22 @@ function MyApp() {
       });
   }
 
+  function selectContact(userId) {
+    setSelectedContactId(userId);
+  }
+
+  const sortContactsByFirstName = (contacts) => {
+    return contacts
+      .slice()
+      .sort((a, b) => a.first_name.localeCompare(b.first_name));
+  };
+
   useEffect(() => {
     fetchContacts()
       .then((res) => (res.status === 200 ? res.json() : undefined))
       .then((json) => {
         if (json) {
-          setContacts(json["contact_list"]);
+          setContacts(sortContactsByFirstName(json["contact_list"]));
         } else {
           setContacts(null);
         }
@@ -159,7 +169,7 @@ function MyApp() {
     fetchFavoriteContacts()
       .then((json) => {
         if (json) {
-          setFavoriteContacts(json["contact_list"]);
+          setFavoriteContacts(sortContactsByFirstName(json["contact_list"]));
         } else {
           setContacts(null);
         }
