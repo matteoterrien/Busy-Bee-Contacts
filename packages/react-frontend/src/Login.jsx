@@ -10,9 +10,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import styles from "./main.css"
 
-export default function LoginPage() {
+function LoginPage() {
   return (
     <ChakraProvider resetCSS>
       <Center h="100vh" className="border">
@@ -81,3 +80,5 @@ export default function LoginPage() {
     </ChakraProvider>
   );
 }
+
+export default LoginPage;

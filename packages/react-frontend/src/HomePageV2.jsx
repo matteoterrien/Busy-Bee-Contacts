@@ -4,9 +4,13 @@ import {
   Button,
   Image,
   Stack,
+  HStack,
   ChakraProvider,
   Spacer,
 } from "@chakra-ui/react";
+import { AddIcon, StarIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { GiBee } from "react-icons/gi";
 import { IoMdContact } from "react-icons/io";
 import { TiStarFullOutline } from "react-icons/ti";
@@ -64,6 +68,15 @@ function FavoritesHeader() {
 }
 
 function ShowAllContactsHeader() {
+  const navigate = useNavigate();
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate("../createContact");
+    }
+  }, [shouldNavigate, navigate]);
+
   return (
     <Box
       display="flex"
@@ -84,6 +97,7 @@ function ShowAllContactsHeader() {
         mt={1}
         borderWidth={0}
         className="add but"
+        onClick={() => setShouldNavigate(true)}
       >
         Add Contact
       </Button>
@@ -92,6 +106,7 @@ function ShowAllContactsHeader() {
 }
 
 function AllContactsBody(props) {
+  const navigate = useNavigate();
   const rows = props.contactData.map((row, index) => {
     return (
       <div key={index}>
@@ -106,7 +121,9 @@ function AllContactsBody(props) {
           overflow="hidden"
           height="auto"
           borderWidth={0}
-          onClick={() => props.selectContact(row._id)}
+          onClick={() => {
+            navigate(`../contact/${row._id}`);
+          }}
         >
           <IoMdContact size={50} />
           <Box
@@ -137,10 +154,7 @@ function HomePage(props) {
       <FavoritesHeader />
       <AllContactsBody contactData={props.favoriteContactData} />
       <ShowAllContactsHeader />
-      <AllContactsBody
-        contactData={props.contactData}
-        selectContact={props.selectContact}
-      />
+      <AllContactsBody contactData={props.contactData} />
     </>
   );
 }

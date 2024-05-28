@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Form from "./Form";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
 import HomePage from "./HomePageV2";
-import { Route } from "react-router-dom";
+import Contact from "./Contact";
+import Edit from "./ContactEdit";
+import CreateContact from "./CreateContact";
 
 function MyApp() {
   const [contacts, setContacts] = useState([]);
@@ -12,7 +14,34 @@ function MyApp() {
   const [token, setToken] = useState(INVALID_TOKEN);
   const [message, setMessage] = useState("");
 
-  const [selectedContactId, setSelectedContactId] = useState(null);
+  useEffect(() => {
+    fetchContacts()
+      .then((res) => (res.status === 200 ? res.json() : undefined))
+      .then((json) => {
+        if (json) {
+          setContacts(json["contact_list"]);
+        } else {
+          setContacts(null);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetchFavoriteContacts()
+      .then((json) => {
+        if (json) {
+          setFavoriteContacts(json["contact_list"]);
+        } else {
+          setContacts(null);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch favorite contacts:", error);
+      });
+  }, []);
 
   function postContact(person) {
     const promise = fetch("http://localhost:8000/contacts", {
@@ -151,16 +180,25 @@ function MyApp() {
   }, []);
 
   return (
-    <div className="container">
+    <div id="page">
       {/* <ContactPop /> */}
-      <HomePage
-        contactData={contacts}
-        favoriteContactData={favoriteContacts}
-        removeCharacter={removeOneContact}
-        selectContact={selectContact}
-      />
-      {/* <Form handleSubmit={updateList} /> */}
-      {/* <Route path="/login" element={<Login handleSubmit={loginUser} />} /> */}
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <HomePage
+              contactData={contacts}
+              favoriteContactData={favoriteContacts}
+              removeCharacter={removeOneContact}
+            />
+          }
+        />
+        <Route exact path="/contact/:id" element={<Contact />} />
+        <Route exact path="/edit/:id" element={<Edit />} />
+        <Route exact path="/createContact/" element={<CreateContact />} />
+        {/* <Route path="/login" element={<LoginPage handleSubmit={loginUser} />} /> */}
+      </Routes>
     </div>
   );
 }
