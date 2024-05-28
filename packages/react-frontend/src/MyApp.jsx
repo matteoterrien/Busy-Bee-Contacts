@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Form from "./Form";
 import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
 import HomePage from "./HomePage";
-import { Route } from "react-router-dom";
 
 function MyApp() {
   const [contacts, setContacts] = useState([]);
@@ -13,6 +13,76 @@ function MyApp() {
   const [message, setMessage] = useState("");
 
   const [selectedContactId, setSelectedContactId] = useState(null);
+
+  const BasicExample = () => (
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="./">HomePage</Link>
+          </li>
+          <li>
+            <Link to="./">ProfileCard</Link>
+          </li>
+        </ul>
+  
+        <hr />
+  
+        <Route path="./" component={HomePage} />
+        <Route path="./" component={ProfileCard} />
+      </div>
+    </Router>
+  );
+
+  const HomePage = () => (
+    <div>
+      <HomePage 
+        contactData={contacts}
+        favoriteContactData={favoriteContacts}
+        removeCharacter={removeOneContact}
+        selectContact={selectContact}
+      />
+    </div>
+  );
+
+  function selectContact(userId) {
+    setSelectedContactId(userId);
+  }
+
+  useEffect(() => {
+    fetchContacts()
+      .then((res) => (res.status === 200 ? res.json() : undefined))
+      .then((json) => {
+        if (json) {
+          setContacts(json["contact_list"]);
+        } else {
+          setContacts(null);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetchFavoriteContacts()
+      .then((json) => {
+        if (json) {
+          setFavoriteContacts(json["contact_list"]);
+        } else {
+          setContacts(null);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch favorite contacts:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (selectedContactId) {
+      // Logic to change the page to Contact using the selectedContactId
+    }
+  }, [selectedContactId]);
 
   function postContact(person) {
     const promise = fetch("http://localhost:8000/contacts", {
@@ -113,6 +183,7 @@ function MyApp() {
 
   function selectContact(userId) {
     setSelectedContactId(userId);
+    
   }
 
   useEffect(() => {
