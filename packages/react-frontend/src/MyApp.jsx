@@ -141,6 +141,27 @@ function MyApp() {
       });
   }
 
+  function loginUser(creds) {
+    const promise = fetch(`${API_PREFIX}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(creds),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((payload) => setToken(payload.token));
+          setMessage(`Login successful; auth token saved`);
+        } else {
+          setMessage(`Login Error ${response.status}: ${response.data}`);
+        }
+      })
+      .catch((error) => {
+        setMessage(`Login Error: ${error}`);
+      });
+    }
+
   function selectContact(userId) {
     setSelectedContactId(userId);
   }
@@ -182,7 +203,7 @@ function MyApp() {
 
   return (
     <div id="page">
-      {/* <ContactPop /> */}
+      { /* <ContactPop /> */ }
       <Routes>
         <Route
           exact
@@ -198,8 +219,8 @@ function MyApp() {
         <Route exact path="/contact/:id" element={<Contact />} />
         <Route exact path="/edit/:id" element={<Edit />} />
         <Route exact path="/createContact/" element={<CreateContact />} />
-        <Route exact path="/deleteContact/contact/:id" element={<HomePage />} />
-        {/* <Route path="/login" element={<LoginPage handleSubmit={loginUser} />} /> */}
+        <Route exact path="/deleteContact/:id" element={<HomePage />} />
+        {<Route path="/login" element={<LoginPage handleSubmit={loginUser} />} />}
       </Routes>
     </div>
   );
