@@ -1,39 +1,34 @@
-import styles from "./main.css";
 import {
   Text,
   Box,
   Button,
   Image,
   Stack,
-  Flex,
-  HStack,
-  VStack,
   ChakraProvider,
   Spacer,
 } from "@chakra-ui/react";
-import { AddIcon, StarIcon } from "@chakra-ui/icons"; //import BeeIcon from "./assets/BeeIcon";
+import { GiBee } from "react-icons/gi";
+import { IoMdContact } from "react-icons/io";
+import { TiStarFullOutline } from "react-icons/ti";
 
 function HomeHeader() {
   return (
     <ChakraProvider resetCSS>
-      <Stack isInline position="sticky" alignItems="center">
+      <Box display="flex">
+        {/* <GiBee size={200} color="#E4DFAF" /> */}
         <Image
           src="https://us.123rf.com/450wm/kaissaart/kaissaart1807/kaissaart180700038/114801772-bee-flat-design-illustration-simple-vector-icon.jpg?ver=6"
-          minH={140}
-          maxW={140}
-          align="marginLeft"
+          height={200}
+          width={200}
+          color="#E4DFAF"
         />
         <Stack width="100%">
-          <Text
-            marginLeft="5%"
-            fontSize="xxx-large"
-            fontFamily="Kokoro"
-            fontWeight="bold"
-            position="relative"
-          >
-            Busy Bee Contacts
-          </Text>
-          <Stack marginLeft="5%" spacing={2} isInline alignItems="center">
+          <Box display="flex">
+            <Text ml="2%" fontSize="7xl" fontFamily="Kokoro">
+              Busy Bee Contacts
+            </Text>
+          </Box>
+          <Box display="flex" justifyContent="space-evenly">
             <button className="tagbut tag all">All</button>
             <button className="friends tag tagbut">Friends</button>
             <button className="tagbut tag family">Family</button>
@@ -41,9 +36,10 @@ function HomeHeader() {
             <button className="tagbut tag school">School</button>
             <button className="tagbut tag personal">Personal</button>
             <button className="tagbut tag medical">Medical</button>
-          </Stack>
+          </Box>
+          <Spacer />
         </Stack>
-      </Stack>
+      </Box>
     </ChakraProvider>
   );
 }
@@ -51,59 +47,51 @@ function HomeHeader() {
 function FavoritesHeader() {
   return (
     <Box
+      display="flex"
       borderRadius="lg"
       alignItems="center"
       bg="#E4DFAF"
-      minH={45}
-      display="flex"
-      width="100%"
+      justifyContent="space-between"
     >
-      <Stack isInline alignItems="center" padding={10}>
-        <Text ml={5} fontSize={25} fontFamily="kokoro" as="b">
-          Favorites
-        </Text>
-        <StarIcon display="flex" boxSize={25} />
-      </Stack>
+      <Text ml={5} fontSize="4xl" fontFamily="kokoro" as="b">
+        Favorites
+      </Text>
+      <Box mr={5}>
+        <TiStarFullOutline size={40} />
+      </Box>
     </Box>
   );
 }
 
-function ShowAllContacts() {
+function ShowAllContactsHeader() {
   return (
     <Box
+      display="flex"
       borderRadius="lg"
       alignItems="center"
+      justifyContent="space-between"
       bg="#E4DFAF"
-      minH={45}
-      display="flex"
-      width="100%"
+      mt={3}
     >
-      <HStack alignItems="center" minH={45} minW="100%" padding={10}>
-        <Text ml={5} fontSize={25} fontFamily="kokoro" as="b">
-          All
-        </Text>
-        <Spacer />
-        <Button
-          variant="solid"
-          size="md"
-          rightIcon={<AddIcon />}
-          display="flex"
-          padding="sm"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="row"
-          maxH={35}
-          backgroundColor="white"
-          className="add but"
-        >
-          Add Contact
-        </Button>
-      </HStack>
+      <Text ml={5} fontSize="4xl" fontFamily="kokoro" as="b">
+        All
+      </Text>
+      <Button
+        display="flex"
+        height={35}
+        bg="white"
+        mr={2}
+        mt={1}
+        borderWidth={0}
+        className="add but"
+      >
+        Add Contact
+      </Button>
     </Box>
   );
 }
 
-function HomeBody(props) {
+function AllContactsBody(props) {
   const rows = props.contactData.map((row, index) => {
     return (
       <div key={index}>
@@ -117,8 +105,10 @@ function HomeBody(props) {
           mt={3}
           overflow="hidden"
           height="auto"
+          borderWidth={0}
           onClick={() => props.selectContact(row._id)}
         >
+          <IoMdContact size={50} />
           <Box
             width="50%"
             display="flex"
@@ -138,21 +128,21 @@ function HomeBody(props) {
     );
   });
   return <>{rows}</>;
-} 
+}
 
 function HomePage(props) {
   return (
     <>
       <HomeHeader />
       <FavoritesHeader />
-      <HomeBody
+      <AllContactsBody contactData={props.favoriteContactData} />
+      <ShowAllContactsHeader />
+      <AllContactsBody
         contactData={props.contactData}
         selectContact={props.selectContact}
       />
-      <ShowAllContacts />
     </>
   );
 }
-
 
 export default HomePage;

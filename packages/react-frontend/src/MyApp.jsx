@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Form from "./Form";
 import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
-import HomePage from "./HomePage";
+import HomePage from "./HomePageV2";
 import { Route } from "react-router-dom";
 
 function MyApp() {
@@ -115,12 +115,18 @@ function MyApp() {
     setSelectedContactId(userId);
   }
 
+  const sortContactsByFirstName = (contacts) => {
+    return contacts
+      .slice()
+      .sort((a, b) => a.first_name.localeCompare(b.first_name));
+  };
+
   useEffect(() => {
     fetchContacts()
       .then((res) => (res.status === 200 ? res.json() : undefined))
       .then((json) => {
         if (json) {
-          setContacts(json["contact_list"]);
+          setContacts(sortContactsByFirstName(json["contact_list"]));
         } else {
           setContacts(null);
         }
@@ -134,7 +140,7 @@ function MyApp() {
     fetchFavoriteContacts()
       .then((json) => {
         if (json) {
-          setFavoriteContacts(json["contact_list"]);
+          setFavoriteContacts(sortContactsByFirstName(json["contact_list"]));
         } else {
           setContacts(null);
         }
