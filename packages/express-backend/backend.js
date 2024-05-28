@@ -102,16 +102,16 @@ app.delete("/contacts/:id", (req, res) => {
     });
 });
 
-// app.post("/signup", auth.registerUser);
+ app.post("/signup", auth.registerUser);
 
-// app.post("/users", auth.authenticateUser, (req, res) => {
-//   const userToAdd = req.body;
-//   Users.addUser(userToAdd).then((result) => res.status(201).send(result));
-// });
+ app.post("/users", auth.authenticateUser, (req, res) => {
+   const userToAdd = req.body;
+   Users.addUser(userToAdd).then((result) => res.status(201).send(result));
+ });
 
-// app.post("/login", auth.loginUser);
+ app.post("/login", auth.loginUser);
 
-/*
+
 app.post("/users", (req, res) => {
   const user = req.body;
   contactService.addUser(user).then((savedUser) => {
@@ -119,4 +119,4 @@ app.post("/users", (req, res) => {
     else res.status(500).end();
   });
 });
-*/
+

@@ -203,7 +203,6 @@ function MyApp() {
 
   return (
     <div id="page">
-      { /* <ContactPop /> */ }
       <Routes>
         <Route
           exact
