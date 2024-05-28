@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Center,
   ChakraProvider,
@@ -10,9 +9,15 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
+import React, { useState } from "react";
 
-function LoginPage() {
-  return (
+function LoginPage(props) {
+    const [creds, setCreds] = useState({
+      username: "",
+      pwd: "",
+    });
+
+     return (
     <ChakraProvider resetCSS>
       <Center h="100vh" className="border">
         <Stack boxShadow="md" bg="white" p="20" rounded="md">
@@ -79,6 +84,70 @@ function LoginPage() {
       </Center>
     </ChakraProvider>
   );
+  
+    function handleChange(event) {
+      const { name, value } = event.target;
+      switch (name) {
+        case "username":
+          setCreds({ ...creds, username: value });
+          break;
+        case "password":
+          setCreds({ ...creds, pwd: value });
+          break;
+      }
+    }
+  
+    function submitForm() {
+      props.handleSubmit(creds);
+      setCreds({ username: "", pwd: "" });
+    }
+  
+  function loginUser(creds) {
+    const promise = fetch(`${API_PREFIX}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(creds),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((payload) => setToken(payload.token));
+          setMessage(`Login successful; auth token saved`);
+        } else {
+          setMessage(`Login Error ${response.status}: ${response.data}`);
+        }
+      })
+      .catch((error) => {
+        setMessage(`Login Error: ${error}`);
+      });
+  
+    return promise;
+  }
+  
+  function signupUser(creds) {
+    const promise = fetch(`${API_PREFIX}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(creds),
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          response.json().then((payload) => setToken(payload.token));
+          setMessage(
+            `Signup successful for user: ${creds.username}; auth token saved`,
+          );
+        } else {
+          setMessage(`Signup Error ${response.status}: ${response.data}`);
+        }
+      })
+      .catch((error) => {
+        setMessage(`Signup Error: ${error}`);
+      });
+  
+    return promise;
+  }
 }
-
 export default LoginPage;
