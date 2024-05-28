@@ -6,6 +6,7 @@ import HomePage from "./HomePageV2";
 import Contact from "./Contact";
 import Edit from "./ContactEdit";
 import CreateContact from "./CreateContact";
+import Login from "./LoginPage";
 
 function MyApp() {
   const [contacts, setContacts] = useState([]);
@@ -197,6 +198,7 @@ function MyApp() {
         <Route exact path="/contact/:id" element={<Contact />} />
         <Route exact path="/edit/:id" element={<Edit />} />
         <Route exact path="/createContact/" element={<CreateContact />} />
+        <Route exact path="/deleteContact/contact/:id" element={<HomePage />} />
         {/* <Route path="/login" element={<LoginPage handleSubmit={loginUser} />} /> */}
       </Routes>
     </div>
