@@ -29,7 +29,7 @@ function LoginPage(props) {
             />
           </Stack>
           <Heading as="h1"> Log In </Heading>
-          <Text fontsize="lg" className="secText">
+          <Text fontSize="lg" className="secText">
             Please Log in with your Busy Bee Contact Information.
           </Text>
 
@@ -58,7 +58,7 @@ function LoginPage(props) {
                     placeholder="Password"
                   />
                   <Button
-                    isLoasding={isSubmitting}
+                    isLoading={isSubmitting}
                     loadingText="Whispering to our servers"
                     className="but"
                   >
