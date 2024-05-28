@@ -24,42 +24,10 @@ import {
   AddIcon,
 } from "@chakra-ui/icons";
 
-function Edit() {
+function CreateContact() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [contact, setContact] = useState(null);
-
-  function updateContact(contact) {
-    const id = contact._id;
-    const promise = fetch("http://localhost:8000/contacts", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(id, contact),
-      code: 201,
-    })
-      .then((res) => {
-        if (res.status == 201) {
-          return res.json();
-        } else {
-          console.log("ERROR: Returned Status ", res.status);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    return promise;
-  }
-
-  useEffect(() => {
-    fetch(`http://localhost:8000/contacts/${id}`)
-      .then((res) => res.json())
-      .then((data) => setContact(data["contact_list"]))
-      .catch((error) => console.log(error));
-  }, [id]);
-
-  if (!contact) return <div>Loading...</div>;
+  const [contact, setContact] = useState("");
 
   return (
     <ChakraProvider resetCSS>
@@ -87,7 +55,7 @@ function Edit() {
               display="flex"
               alignItems="center"
               flexDirection="row"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/")}
             >
               Cancel
             </Button>
@@ -102,8 +70,7 @@ function Edit() {
               flexDirection="row"
               className="butgreen"
               onClick={() => {
-                updateContact(contact);
-                navigate(-1);
+                navigate("/");
               }}
             >
               Done
@@ -394,25 +361,9 @@ function Edit() {
             <Textarea placeholder="Edit Note..." />
           </Box>
         </Box>
-        <Button
-          className="butred"
-          variant="solid"
-          size="md"
-          rightIcon={<DeleteIcon />}
-          backgroundColor="red.300"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="row"
-          borderRadius={40}
-          width="100%"
-          color="#000000"
-        >
-          Delete Contact
-        </Button>
       </Box>
     </ChakraProvider>
   );
 }
 
-export default Edit;
+export default CreateContact;

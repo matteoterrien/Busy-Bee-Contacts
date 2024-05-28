@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Form from "./Form";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 import ContactPop from "./ContactPop";
-import HomePage from "./HomePage";
+import HomePage from "./HomePageV2";
+import Contact from "./Contact";
+import Edit from "./ContactEdit";
+import CreateContact from "./CreateContact";
 
 function MyApp() {
   const [contacts, setContacts] = useState([]);
@@ -11,43 +13,6 @@ function MyApp() {
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
   const [message, setMessage] = useState("");
-
-  const [selectedContactId, setSelectedContactId] = useState(null);
-
-  const BasicExample = () => (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="./">HomePage</Link>
-          </li>
-          <li>
-            <Link to="./">ProfileCard</Link>
-          </li>
-        </ul>
-  
-        <hr />
-  
-        <Route path="./" component={HomePage} />
-        <Route path="./" component={ProfileCard} />
-      </div>
-    </Router>
-  );
-
-  const HomePage = () => (
-    <div>
-      <HomePage 
-        contactData={contacts}
-        favoriteContactData={favoriteContacts}
-        removeCharacter={removeOneContact}
-        selectContact={selectContact}
-      />
-    </div>
-  );
-
-  function selectContact(userId) {
-    setSelectedContactId(userId);
-  }
 
   useEffect(() => {
     fetchContacts()
@@ -77,12 +42,6 @@ function MyApp() {
         console.error("Failed to fetch favorite contacts:", error);
       });
   }, []);
-
-  useEffect(() => {
-    if (selectedContactId) {
-      // Logic to change the page to Contact using the selectedContactId
-    }
-  }, [selectedContactId]);
 
   function postContact(person) {
     const promise = fetch("http://localhost:8000/contacts", {
@@ -181,11 +140,6 @@ function MyApp() {
       });
   }
 
-  function selectContact(userId) {
-    setSelectedContactId(userId);
-    
-  }
-
   useEffect(() => {
     fetchContacts()
       .then((res) => (res.status === 200 ? res.json() : undefined))
@@ -216,16 +170,25 @@ function MyApp() {
   }, []);
 
   return (
-    <div className="container">
+    <div id="page">
       {/* <ContactPop /> */}
-      <HomePage
-        contactData={contacts}
-        favoriteContactData={favoriteContacts}
-        removeCharacter={removeOneContact}
-        selectContact={selectContact}
-      />
-      {/* <Form handleSubmit={updateList} /> */}
-      {/* <Route path="/login" element={<Login handleSubmit={loginUser} />} /> */}
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <HomePage
+              contactData={contacts}
+              favoriteContactData={favoriteContacts}
+              removeCharacter={removeOneContact}
+            />
+          }
+        />
+        <Route exact path="/contact/:id" element={<Contact />} />
+        <Route exact path="/edit/:id" element={<Edit />} />
+        <Route exact path="/createContact/" element={<CreateContact />} />
+        {/* <Route path="/login" element={<LoginPage handleSubmit={loginUser} />} /> */}
+      </Routes>
     </div>
   );
 }

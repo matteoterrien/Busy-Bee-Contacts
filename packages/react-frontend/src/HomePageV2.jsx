@@ -1,17 +1,16 @@
-import styles from "./main.css";
 import {
   Text,
   Box,
   Button,
   Image,
   Stack,
-  Flex,
   HStack,
-  VStack,
   ChakraProvider,
   Spacer,
 } from "@chakra-ui/react";
-import { AddIcon, StarIcon } from "@chakra-ui/icons"; //import BeeIcon from "./assets/BeeIcon";
+import { AddIcon, StarIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
 function HomeHeader() {
   return (
@@ -69,6 +68,15 @@ function FavoritesHeader() {
 }
 
 function ShowAllContacts() {
+  const navigate = useNavigate();
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate("../createContact");
+    }
+  }, [shouldNavigate, navigate]);
+
   return (
     <Box
       borderRadius="lg"
@@ -95,6 +103,7 @@ function ShowAllContacts() {
           maxH={35}
           backgroundColor="white"
           className="add but"
+          onClick={() => setShouldNavigate(true)}
         >
           Add Contact
         </Button>
@@ -104,6 +113,7 @@ function ShowAllContacts() {
 }
 
 function HomeBody(props) {
+  const navigate = useNavigate();
   const rows = props.contactData.map((row, index) => {
     return (
       <div key={index}>
@@ -117,7 +127,9 @@ function HomeBody(props) {
           mt={3}
           overflow="hidden"
           height="auto"
-          onClick={() => props.selectContact(row._id)}
+          onClick={() => {
+            navigate(`../contact/${row._id}`);
+          }}
         >
           <Box
             width="50%"
@@ -138,21 +150,17 @@ function HomeBody(props) {
     );
   });
   return <>{rows}</>;
-} 
+}
 
 function HomePage(props) {
   return (
     <>
       <HomeHeader />
       <FavoritesHeader />
-      <HomeBody
-        contactData={props.contactData}
-        selectContact={props.selectContact}
-      />
+      <HomeBody contactData={props.contactData} />
       <ShowAllContacts />
     </>
   );
 }
-
 
 export default HomePage;
