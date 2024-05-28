@@ -21,6 +21,7 @@ import {
   CalendarIcon,
   AtSignIcon,
 } from "@chakra-ui/icons";
+import "./main.css"
 
 function Contact() {
   const { id } = useParams();
