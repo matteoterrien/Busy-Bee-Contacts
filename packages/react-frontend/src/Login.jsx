@@ -8,7 +8,6 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
 import React, { useState } from "react";
 
 function LoginPage(props) {
@@ -51,11 +50,11 @@ function LoginPage(props) {
               <Stack justify="center" className="secText" spacing="3">
                 <Text align="center">
                   <span>Don't have an account? </span>
-                  <Button colorScheme="purple" variant="link">
+                  <Button colorScheme="white" variant="link">
                     Sign Up
                   </Button>
                 </Text>
-                <Button colorScheme="purple" variant="link">
+                <Button colorScheme="white" variant="link">
                   Forgot Password?
                 </Button>
               </Stack>
