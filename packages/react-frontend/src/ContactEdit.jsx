@@ -4,6 +4,7 @@ import {
   ChakraProvider,
   Box,
   Stack,
+  HStack,
   Text,
   Button,
   Heading,
@@ -142,12 +143,12 @@ function Edit() {
               m={3}
             />
             <Text fontStyle="italic">Pronouns</Text>
-            <Stack spacing={2} isInline alignItems="center">
-              <Box className="tag friends">Friends</Box>
-              <Box className="tag work">Work</Box>
-              <Box className="tag personal">Personal</Box>
+            <HStack spacing={2} alignItems="center">
+              <div className="tag friends">Friends</div>
+              <div className="tag work">Work</div>
+              <div className="tag personal">Personal</div>
               <button className="tag buttag all">Add Tag</button>
-            </Stack>
+            </HStack>
           </Box>
         </Stack>
         <Box
@@ -188,7 +189,7 @@ function Edit() {
                   <Text width="65%" fontWeight="bold" p={2}>
                     Phone Number
                   </Text>
-                  <Textarea
+                  <Textarea 
                     placeholder={
                       contact.phone_number ? contact.phone_number : "XXX-XXXX"
                     }

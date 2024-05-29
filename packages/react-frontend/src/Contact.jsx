@@ -21,6 +21,7 @@ import {
   CalendarIcon,
   AtSignIcon,
 } from "@chakra-ui/icons";
+import "./styles.css"
 
 function Contact() {
   const { id } = useParams();
@@ -106,7 +107,7 @@ function Contact() {
               {contact.first_name} {contact.last_name}
             </Heading>
             <Text fontStyle="italic">{contact.pronouns}</Text>
-            <Stack spacing={2} isInline alignItems="center" position="absolute">
+            <Stack spacing={2} isInline alignItems="center" >
               <Box className="tag friends">Friends</Box>
               <Box className="tag work">Work</Box>
               <Box className="tag personal">Personal</Box>
