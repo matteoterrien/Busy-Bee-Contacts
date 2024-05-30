@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+var User = import ('./../express-backend/models/user.js');
 
 const creds = [];
 
@@ -66,29 +68,43 @@ export function registerUser(req, res) {
   }
 
   export function loginUser(req, res) {
-    const { username, pwd } = req.body; // from form
-    const retrievedUser = creds.find(
-      (c) => c.username === username
-    );
-  
-    if (!retrievedUser) {
+    const { username, pwd } = req.body; 
+    console.log("Logging in with creds username: |" + username +"| password: |" + pwd + "|"); // for debugging
+    mongoose.model('User').findOne({ username: username }).then((retrievedUser) => {
+      if (!retrievedUser) {
       // invalid username
+      console.log("Couldn't retrieve username"); // for debugging
       res.status(401).send("Unauthorized");
-    } else {
+      } else {
+        console.log("Retrieved user password: |" + retrievedUser + "|"); // for debugging (need to fix how i access the password from the retrieved user object)
+        if (retrievedUser.password == pwd) {
+          generateAccessToken(username).then((token) => {
+            res.status(200).send({ token: token });
+          });
+        } else {
+          // invalid password
+          console.log("Password didn't match"); // for debugging
+          res.status(401).send("Unauthorized");
+        }
       bcrypt
-        .compare(pwd, retrievedUser.hashedPassword)
+        .compare(pwd, retrievedUser.password)
         .then((matched) => {
-          if (matched) {
-            generateAccessToken(username).then((token) => {
-              res.status(200).send({ token: token });
-            });
-          } else {
-            // invalid password
-            res.status(401).send("Unauthorized");
-          }
+        if (matched) {
+          console.log("Password matched"); // for debugging
+          generateAccessToken(username).then((token) => {
+          res.status(200).send({ token: token });
+          });
+        } else {
+          // invalid password
+          console.log("Password didn't match"); // for debugging
+          res.status(401).send("Unauthorized");
+        }
         })
         .catch(() => {
-          res.status(401).send("Unauthorized");
+        res.status(401).send("Unauthorized");
         });
-    }
+      }
+    }).catch(() => {
+      res.status(500).send("Internal Server Error");
+    });
   }

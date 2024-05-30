@@ -142,6 +142,8 @@ function MyApp() {
   }
 
   function loginUser(creds) {
+    console.log("Logging in with creds", creds);
+    console.log("API_PREFIX", API_PREFIX);
     const promise = fetch(`${API_PREFIX}/login`, {
       method: "POST",
       headers: {

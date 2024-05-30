@@ -15,6 +15,64 @@ function LoginPage(props) {
       username: "",
       pwd: "",
     });
+    
+    const API_PREFIX = "http://localhost:8000";
+
+    function loginUser(creds) {
+      console.log("loginUser2 called")
+      console.log(API_PREFIX)
+      const promise = fetch(`${API_PREFIX}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(creds),
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            response.json().then((payload) => setToken(payload.token));
+            setMessage(`Login successful; auth token saved`);
+          } else {
+            setMessage(`Login Error ${response.status}: ${response.data}`);
+          }
+        })
+        .catch((error) => {
+          setMessage(`Login Error: ${error}`);
+        });
+    
+      return promise;
+    }
+    
+    function signupUser(creds) {
+      const promise = fetch(`${API_PREFIX}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(creds),
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            response.json().then((payload) => setToken(payload.token));
+            setMessage(
+              `Signup successful for user: ${creds.username}; auth token saved`,
+            );
+          } else {
+            setMessage(`Signup Error ${response.status}: ${response.data}`);
+          }
+        })
+        .catch((error) => {
+          setMessage(`Signup Error: ${error}`);
+        });
+    
+      return promise;
+    }    
+
+    function handleLoginClick() {
+      console.log("button clicked")
+      console.log(creds)
+      loginUser(creds)
+    }
 
      return (
         <ChakraProvider resetCSS>
@@ -37,14 +95,16 @@ function LoginPage(props) {
                   name="email"
                   type="email"
                   placeholder="Email"
+                  onChange={(e) => setCreds({ ...creds, username: e.target.value })}
                 />
                 <Input
                   bg="lightgrey"
                   name="password"
                   type="password"
                   placeholder="Password"
+                  onChange={(e) => setCreds({ ...creds, pwd: e.target.value })}
                 />
-                <Button className="but">Login</Button>
+                <Button className="but" onClick={handleLoginClick}>Login</Button>
               </Stack>
     
               <Stack justify="center" className="secText" spacing="3">
