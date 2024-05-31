@@ -800,7 +800,7 @@ dd {
 
 /**
    * Buttons
-   */
+  */
 .button,
 a.button,
 button,
@@ -808,11 +808,11 @@ button,
 [type="reset"],
 [type="button"] {
   -webkit-appearance: none;
-  display: inline-block;
+  display: inline-block; /*
   border: 1px solid #0366ee;
   border-radius: 4px;
   background: #0366ee;
-  color: #ffffff;
+  color: #ffffff; */
   font-weight: 600;
   font-family:
     -apple-system,
@@ -837,10 +837,10 @@ a.button:hover,
 button:hover,
 [type="submit"]:hover,
 [type="reset"]:hover,
-[type="button"]:hover {
+[type="button"]:hover { /*
   border: 1px solid #0250bc;
   background: #0250bc;
-  color: #ffffff;
+  color: #ffffff; */
   text-decoration: none;
 }
 
@@ -855,12 +855,12 @@ button:active,
 [type="reset"]:focus,
 [type="reset"]:active,
 [type="button"]:focus,
-[type="button"]:active {
+[type="button"]:active { /*
   border: 1px solid #0250bc;
   background: #0250bc;
-  color: #ffffff;
+  color: #ffffff; */
   text-decoration: none;
-}
+} 
 
 .button::-moz-focus-inner,
 a.button::-moz-focus-inner,

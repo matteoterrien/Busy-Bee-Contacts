@@ -37,7 +37,9 @@ function HomeHeader() {
                   position="relative"
                   spacing={1.5}
                   >
-            <button className="tagbut tag all">All</button>
+            <button className="tagbut tag all"
+                    
+                    >All</button>
             <button className="friends tag tagbut">Friends</button>
             <button className="tagbut tag family">Family</button>
             <button className="tagbut tag work">Work</button>

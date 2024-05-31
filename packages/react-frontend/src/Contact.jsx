@@ -107,10 +107,10 @@ function Contact() {
               {contact.first_name} {contact.last_name}
             </Heading>
             <Text fontStyle="italic">{contact.pronouns}</Text>
-            <HStack spacing={2} alignItems="center" >
-              <Box className="tag friends">Friends</Box>
-              <Box className="tag work">Work</Box>
-              <Box className="tag personal">Personal</Box>
+            <HStack spacing={2}>
+              <Box className="tag friends" pt={1}>Friends</Box>
+              <Box className="tag work" pt={1}>Work</Box>
+              <Box className="tag personal" pt={1}>Personal</Box>
             </HStack>
           </Box>
 
