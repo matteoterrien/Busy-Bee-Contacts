@@ -15,13 +15,13 @@ import {
 import {
   ArrowBackIcon,
   EditIcon,
-  StarIcon,
-  ExternalLinkIcon,
   PhoneIcon,
   EmailIcon,
   CalendarIcon,
   AtSignIcon,
 } from "@chakra-ui/icons";
+import { getCommonProps, getCommonStackProps, getCommonButtonProps } from './utils';
+
 
 function Contact() {
   const { id } = useParams();
@@ -62,32 +62,17 @@ function Contact() {
 
   return (
     <ChakraProvider resetCSS>
-      <Box
-        backgroundColor="#FFF"
-        borderRadius={20}
-        p={4}
-        border="3px solid #000"
-        m={4}
-      >
+      <Box backgroundColor="#FFF" borderRadius={20} p={4} border="3px solid #000" m={4}>
         <Button
-          variant="solid"
-          size="xs"
-          leftIcon={<ArrowBackIcon />}
-          display="flex"
-          alignItems="center"
-          flexDirection="row"
-          className="but"
-          onClick={() => navigate(-1)}
+          {...getCommonButtonProps({
+            size: "xs",
+            leftIcon: <ArrowBackIcon />,
+            onClick: () => navigate(-1),
+          })}
         >
           Back
         </Button>
-        <Stack
-          spacing={6}
-          isInline
-          justifyContent="space-between"
-          alignItems="center"
-          m={3}
-        >
+        <Stack {...getCommonStackProps({ spacing: 6, m: 3 })}>
           <Box border="3px solid #000" borderRadius={100}>
             <Avatar
               size="2xl"
@@ -107,63 +92,33 @@ function Contact() {
               {contact.first_name} {contact.last_name}
             </Heading>
             <Text fontStyle="italic">{contact.pronouns}</Text>
-            <HStack spacing={2} alignItems="center" >
+            <HStack spacing={2} alignItems="center">
               <Box className="tag friends">Friends</Box>
               <Box className="tag work">Work</Box>
               <Box className="tag personal">Personal</Box>
             </HStack>
           </Box>
-
           <Button
-            variant="solid"
-            size="md"
-            rightIcon={<EditIcon />}
-            backgroundColor="#C3C29C"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="row"
-            className="but"
-            onClick={() => {
+            {...getCommonButtonProps({
+              size: "md",
+              rightIcon: <EditIcon />,
+              backgroundColor: "#C3C29C",
+              justifyContent: "center",
+              onClick: () => {
               console.log(contact._id);
               navigate(`../edit/${contact._id}`);
-            }}
+              },
+            })}
           >
             Edit
           </Button>
         </Stack>
-        <Box
-          height={2}
-          borderRadius={20}
-          display="block"
-          flexDirection="row"
-          className="border"
-        />
-        <Stack
-          spacing={2}
-          alignItems="stretch"
-          justifyContent="flex-start"
-          isInline
-          display="flex"
-          flexDirection="row"
-        >
-          <Box width="60%" p={5} overflow="auto" height={260} m={1}>
+        <Box height={2} borderRadius={20} display="block" flexDirection="row" className="border" />
+        <Stack {...getCommonStackProps({ spacing: 2, m: 1 })}>
+          <Box width="60%" p={5} overflow="auto" height={260}>
             <Stack spacing={2}>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
-                <Stack
-                  spacing={2}
-                  flexDirection="row"
-                  isInline
-                  justifyContent="flex-start"
-                  alignItems="stretch"
-                >
+              <Box backgroundColor="#E4DFAF" borderRadius={20} overflow="hidden" textAlign="left" lineHeight={0} p={4}>
+                <Stack {...getCommonStackProps({ flexDirection: "row", justifyContent: "flex-start" })}>
                   <PhoneIcon />
                   <Text width="60%" fontWeight="bold" p={2}>
                     Phone Number
@@ -173,21 +128,8 @@ function Contact() {
                   </Text>
                 </Stack>
               </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
-                <Stack
-                  spacing={2}
-                  flexDirection="row"
-                  isInline
-                  justifyContent="flex-start"
-                  alignItems="stretch"
-                >
+              <Box backgroundColor="#E4DFAF" borderRadius={20} overflow="hidden" textAlign="left" lineHeight={0} p={4}>
+                <Stack {...getCommonStackProps({ flexDirection: "row", justifyContent: "flex-start" })}>
                   <EmailIcon />
                   <Text width="35%" fontWeight="bold" p={2}>
                     Email
