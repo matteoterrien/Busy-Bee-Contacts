@@ -21,7 +21,7 @@ import {
   StarIcon,
   ExternalLinkIcon,
 } from '@chakra-ui/icons';
-import { getCommonProps, getCommonStackProps, getCommonButtonProps, commonAvatarProps, commonBoxProps } from './chakraUtils';
+import { getCommonProps, getCommonStackProps, getCommonButtonProps, commonAvatarProps, commonBoxProps } from './utils';
 
 const Contact = ({ contact, navigate, updateContact, setContact }) => {
   const handleFileChange = (event) => {
