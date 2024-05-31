@@ -88,6 +88,14 @@
     vertical-align: center;
   }
   
+  .tagbut:hover {
+    -webkit-filter: brightness(70%);
+  }
+
+  .tagbut:active {
+    -webkit-filter: brightness(50%);
+  }
+  
   .all {
     background-color: lightgrey;
   }

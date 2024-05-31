@@ -88,9 +88,9 @@ function CreateContact() {
             />
             <Text fontStyle="italic">Pronouns</Text>
             <Stack {...getCommonStackProps()}>
-              <Box className="tag friends">Friends</Box>
-              <Box className="tag work">Work</Box>
-              <Box className="tag personal">Personal</Box>
+              <Box className="tag friends" pt={1}>Friends</Box>
+              <Box className="tag work" pt={1}>Work</Box>
+              <Box className="tag personal" pt={1}>Personal</Box>
               <button className="tag buttag all">Add Tag</button>
             </Stack>
           </Box>
