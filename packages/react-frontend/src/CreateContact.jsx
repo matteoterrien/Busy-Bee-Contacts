@@ -110,9 +110,9 @@ function CreateContact() {
             />
             <Text fontStyle="italic">Pronouns</Text>
             <Stack spacing={2} isInline alignItems="center">
-              <Box className="tag friends">Friends</Box>
-              <Box className="tag work">Work</Box>
-              <Box className="tag personal">Personal</Box>
+              <Box className="tag friends" pt={1}>Friends</Box>
+              <Box className="tag work" pt={1}>Work</Box>
+              <Box className="tag personal" pt={1}>Personal</Box>
               <button className="tag buttag all">Add Tag</button>
             </Stack>
           </Box>

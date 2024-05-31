@@ -72,9 +72,8 @@ function Edit() {
         m={4}
       >
         <Box>
-          <Stack
+          <HStack
             spacing={2}
-            isInline
             alignItems="center"
             justifyContent="space-between"
           >
@@ -109,7 +108,7 @@ function Edit() {
             >
               Done
             </Button>
-          </Stack>
+          </HStack>
         </Box>
         <Stack
           spacing={6}
@@ -144,10 +143,10 @@ function Edit() {
             />
             <Text fontStyle="italic">Pronouns</Text>
             <HStack spacing={2} alignItems="center">
-              <div className="tag friends">Friends</div>
-              <div className="tag work">Work</div>
-              <div className="tag personal">Personal</div>
-              <button className="tag buttag all">Add Tag</button>
+              <Box className="tag friends" pt={1}>Friends</Box>
+              <Box className="tag work" pt={1}>Work</Box>
+              <Box className="tag personal" pt={1}>Personal</Box>
+              <button className="tagbut tag all">Add Tag</button>
             </HStack>
           </Box>
         </Stack>
