@@ -1,17 +1,16 @@
-import { useParams, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+// src/Contact.jsx
+import React from 'react';
 import {
-  ChakraProvider,
   Box,
   Stack,
-  HStack,
+  Button,
+  Avatar,
   Heading,
   Text,
-  Button,
+  HStack,
   AvatarGroup,
-  Avatar,
-  Icon,
-} from "@chakra-ui/react";
+  ChakraProvider,
+} from '@chakra-ui/react';
 import {
   ArrowBackIcon,
   EditIcon,
@@ -19,46 +18,19 @@ import {
   EmailIcon,
   CalendarIcon,
   AtSignIcon,
-} from "@chakra-ui/icons";
-import { getCommonProps, getCommonStackProps, getCommonButtonProps } from './utils';
+  StarIcon,
+  ExternalLinkIcon,
+} from '@chakra-ui/icons';
+import { getCommonProps, getCommonStackProps, getCommonButtonProps, commonAvatarProps, commonBoxProps } from './chakraUtils';
 
-
-function Contact() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [contact, setContact] = useState(null);
-
-  function updateContact(contact) {
-    const id = contact._id;
-    const promise = fetch("http://localhost:8000/contacts", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(id, contact),
-      code: 201,
-    })
-      .then((res) => {
-        if (res.status == 201) {
-          return res.json();
-        } else {
-          console.log("ERROR: Returned Status ", res.status);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    return promise;
-  }
-
-  useEffect(() => {
-    fetch(`http://localhost:8000/contacts/${id}`)
-      .then((res) => res.json())
-      .then((data) => setContact(data["contact_list"]))
-      .catch((error) => console.log(error));
-  }, [id]);
-
-  if (!contact) return <div>Loading...</div>;
+const Contact = ({ contact, navigate, updateContact, setContact }) => {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log('Selected file:', file);
+      // Here you can handle the file upload logic
+    }
+  };
 
   return (
     <ChakraProvider resetCSS>
@@ -74,17 +46,14 @@ function Contact() {
         </Button>
         <Stack {...getCommonStackProps({ spacing: 6, m: 3 })}>
           <Box border="3px solid #000" borderRadius={100}>
-            <Avatar
-              size="2xl"
-              showBorder
-              src={contact.img}
-              border="5px solid #ffe990"
-              maxWidth={150}
-              maxHeight={150}
-              overflow="hidden"
-              minWidth={150}
-              minHeight={150}
-              className="avatar"
+            <label htmlFor="file-input">
+              <Avatar {...commonAvatarProps} src={contact.img} />
+            </label>
+            <input
+              id="file-input"
+              type="file"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
             />
           </Box>
           <Box width="80%">
@@ -105,8 +74,8 @@ function Contact() {
               backgroundColor: "#C3C29C",
               justifyContent: "center",
               onClick: () => {
-              console.log(contact._id);
-              navigate(`../edit/${contact._id}`);
+                console.log(contact._id);
+                navigate(`../edit/${contact._id}`);
               },
             })}
           >
@@ -117,7 +86,7 @@ function Contact() {
         <Stack {...getCommonStackProps({ spacing: 2, m: 1 })}>
           <Box width="60%" p={5} overflow="auto" height={260}>
             <Stack spacing={2}>
-              <Box backgroundColor="#E4DFAF" borderRadius={20} overflow="hidden" textAlign="left" lineHeight={0} p={4}>
+              <Box {...commonBoxProps}>
                 <Stack {...getCommonStackProps({ flexDirection: "row", justifyContent: "flex-start" })}>
                   <PhoneIcon />
                   <Text width="60%" fontWeight="bold" p={2}>
@@ -128,7 +97,7 @@ function Contact() {
                   </Text>
                 </Stack>
               </Box>
-              <Box backgroundColor="#E4DFAF" borderRadius={20} overflow="hidden" textAlign="left" lineHeight={0} p={4}>
+              <Box {...commonBoxProps}>
                 <Stack {...getCommonStackProps({ flexDirection: "row", justifyContent: "flex-start" })}>
                   <EmailIcon />
                   <Text width="35%" fontWeight="bold" p={2}>
@@ -139,21 +108,8 @@ function Contact() {
                   </Text>
                 </Stack>
               </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
-                <Stack
-                  spacing={2}
-                  flexDirection="row"
-                  isInline
-                  justifyContent="flex-start"
-                  alignItems="stretch"
-                >
+              <Box {...commonBoxProps}>
+                <Stack {...getCommonStackProps({ flexDirection: "row", justifyContent: "flex-start" })}>
                   <CalendarIcon />
                   <Text width="35%" fontWeight="bold" p={2}>
                     Birthday
@@ -163,46 +119,21 @@ function Contact() {
                   </Text>
                 </Stack>
               </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
-                <Stack
-                  spacing={2}
-                  flexDirection="row"
-                  isInline
-                  justifyContent="flex-start"
-                  alignItems="stretch"
-                >
+              <Box {...commonBoxProps}>
+                <Stack {...getCommonStackProps({ flexDirection: "row", justifyContent: "flex-start" })}>
                   <AtSignIcon />
                   <Text width="35%" fontWeight="bold" p={2}>
                     Address
                   </Text>
                   <Text width="60%" textAlign="center" p={2}>
-                    {contact.addess}
+                    {contact.address}
                   </Text>
                 </Stack>
               </Box>
             </Stack>
           </Box>
           <Box width="40%" p={3}>
-            <AvatarGroup
-              spacing={1}
-              max={25}
-              size="xs"
-              flexDirection="column"
-              alignItems="stretch"
-              display="block"
-              height={250}
-              overflow="auto"
-              pl={0}
-              pr={0}
-              width="100%"
-            >
+            <AvatarGroup spacing={1} max={25} size="xs" flexDirection="column" alignItems="stretch" display="block" height={250} overflow="auto" pl={0} pr={0} width="100%">
               <Avatar size="md" src="link" mb={2} width={20} height={20} />
               <Avatar size="md" src="link" mb={2} width={20} height={20} />
               <Avatar size="md" src="link" mb={2} width={20} height={20} />
@@ -215,16 +146,7 @@ function Contact() {
             </AvatarGroup>
           </Box>
         </Stack>
-        <Box
-          backgroundColor="#E4DFAF"
-          borderRadius={20}
-          overflow="hidden"
-          textAlign="left"
-          lineHeight={0}
-          p={3}
-          pb={6}
-          m={2}
-        >
+        <Box backgroundColor="#E4DFAF" borderRadius={20} overflow="hidden" textAlign="left" lineHeight={0} p={3} pb={6} m={2}>
           <Heading textAlign="left" as="h6" size="md">
             Notes
           </Heading>
@@ -234,43 +156,37 @@ function Contact() {
             </Text>
           </Box>
         </Box>
-        <Stack spacing={2} isInline p={2}>
+        <Stack {...getCommonStackProps({ spacing: 2, p: 2, isInline: true })}>
           <Button
-            variant="solid"
-            size="md"
-            rightIcon={<StarIcon />}
-            backgroundColor="#C3C29C"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="row"
-            borderRadius={40}
-            width="50%"
-            className="but"
-            onClick={() => {
-              const updatedContact = {
-                ...contact,
-                favorite: !contact.favorite,
-              };
-              updateContact(updatedContact).then((updated) => {
-                if (updated) setContact(updated);
-              });
-            }}
+            {...getCommonButtonProps({
+              size: "md",
+              rightIcon: <StarIcon />,
+              backgroundColor: "#C3C29C",
+              justifyContent: "center",
+              borderRadius: 40,
+              width: "50%",
+              onClick: () => {
+                const updatedContact = {
+                  ...contact,
+                  favorite: !contact.favorite,
+                };
+                updateContact(updatedContact).then((updated) => {
+                  if (updated) setContact(updated);
+                });
+              },
+            })}
           >
             {contact.favorite ? "Remove from Favorites" : "Add to Favorites"}
           </Button>
           <Button
-            variant="solid"
-            size="md"
-            rightIcon={<ExternalLinkIcon />}
-            backgroundColor="#C3C29C"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="row"
-            borderRadius={40}
-            width="50%"
-            className="but"
+            {...getCommonButtonProps({
+              size: "md",
+              rightIcon: <ExternalLinkIcon />,
+              backgroundColor: "#C3C29C",
+              justifyContent: "center",
+              borderRadius: 40,
+              width: "50%",
+            })}
           >
             Share Contact
           </Button>
@@ -278,6 +194,6 @@ function Contact() {
       </Box>
     </ChakraProvider>
   );
-}
+};
 
 export default Contact;

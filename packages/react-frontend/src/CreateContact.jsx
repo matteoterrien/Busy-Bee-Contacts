@@ -1,5 +1,6 @@
+// src/CreateContact.jsx
 import { useParams, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   ChakraProvider,
   Box,
@@ -8,7 +9,6 @@ import {
   Button,
   Heading,
   Avatar,
-  Icon,
   Textarea,
   IconButton,
   AvatarGroup,
@@ -23,6 +23,13 @@ import {
   CloseIcon,
   AddIcon,
 } from "@chakra-ui/icons";
+import {
+  getCommonProps,
+  getCommonStackProps,
+  getCommonButtonProps,
+  commonAvatarProps,
+  commonBoxProps,
+} from './utils';
 
 function CreateContact() {
   const { id } = useParams();
@@ -39,69 +46,40 @@ function CreateContact() {
         m={4}
       >
         <Box>
-          <Stack
-            spacing={2}
-            isInline
-            alignItems="center"
-            justifyContent="space-between"
-          >
+          <Stack {...getCommonStackProps()}>
             <Button
-              variant="solid"
-              size="md"
-              leftIcon={<CloseIcon />}
-              colorScheme="gray"
-              backgroundColor="red.500"
-              className="butred"
-              display="flex"
-              alignItems="center"
-              flexDirection="row"
-              onClick={() => navigate("/")}
+              {...getCommonButtonProps({
+                size: "md",
+                leftIcon: <CloseIcon />,
+                colorScheme: "gray",
+                backgroundColor: "red.500",
+                onClick: () => navigate("/"),
+              })}
             >
               Cancel
             </Button>
             <Button
-              variant="solid"
-              size="md"
-              rightIcon={<CheckIcon />}
-              colorScheme="gray"
-              backgroundColor="green.500"
-              display="flex"
-              alignItems="center"
-              flexDirection="row"
-              className="butgreen"
-              onClick={() => {
-                navigate("/");
-              }}
+              {...getCommonButtonProps({
+                size: "md",
+                rightIcon: <CheckIcon />,
+                colorScheme: "gray",
+                backgroundColor: "green.500",
+                onClick: () => navigate("/"),
+              })}
             >
               Done
             </Button>
           </Stack>
         </Box>
-        <Stack
-          spacing={6}
-          isInline
-          justifyContent="space-between"
-          alignItems="center"
-          m={3}
-        >
+        <Stack {...getCommonStackProps({ spacing: 6, m: 3 })}>
           <Box border="3px solid #000" borderRadius={100}>
-            <Avatar
-              size="2xl"
-              showBorder
-              src={contact.img}
-              border="5px solid #6969"
-              maxWidth={150}
-              maxHeight={150}
-              overflow="hidden"
-              minWidth={150}
-              minHeight={150}
-            />
+            <Avatar {...commonAvatarProps} src={contact.img} />
           </Box>
           <Box width="80%">
             <Textarea
               placeholder={
                 contact.first_name || contact.last_name
-                  ? contact.first_name + " " + contact.last_name
+                  ? `${contact.first_name} ${contact.last_name}`
                   : "Name"
               }
               size="lg"
@@ -109,7 +87,7 @@ function CreateContact() {
               m={3}
             />
             <Text fontStyle="italic">Pronouns</Text>
-            <Stack spacing={2} isInline alignItems="center">
+            <Stack {...getCommonStackProps()}>
               <Box className="tag friends">Friends</Box>
               <Box className="tag work">Work</Box>
               <Box className="tag personal">Personal</Box>
@@ -123,162 +101,39 @@ function CreateContact() {
           borderRadius={20}
           display="block"
           flexDirection="row"
-        >
-          <AvatarGroup spacing={-3} max={3} size="md" />
-        </Box>
-        <Stack
-          spacing={2}
-          alignItems="stretch"
-          justifyContent="flex-start"
-          isInline
-          display="flex"
-          flexDirection="row"
-        >
+        />
+        <Stack {...getCommonStackProps({ isInline: false })}>
           <Box width="50%" p={3} overflow="scroll" height={260}>
             <Stack spacing={2}>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
-                <Stack
-                  spacing={2}
-                  flexDirection="row"
-                  isInline
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <PhoneIcon />
-                  <Text width="65%" fontWeight="bold" p={2}>
-                    Phone Number
-                  </Text>
-                  <Textarea
-                    placeholder={
-                      contact.phone_number ? contact.phone_number : "XXX-XXXX"
-                    }
-                    resize="none"
-                    minH={1}
-                  />
-                </Stack>
-                <Stack spacing={2} justifyContent="flex-end" mt={2} height={7}>
-                  <IconButton
-                    aria-label="icon"
-                    icon={<DeleteIcon />}
-                    size="md"
-                    backgroundColor="#eb5555"
-                    className="butred"
-                  />
-                </Stack>
-              </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
-                <Stack
-                  spacing={2}
-                  flexDirection="row"
-                  isInline
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <EmailIcon />
-                  <Text width="65%" fontWeight="bold" p={2}>
-                    Email
-                  </Text>
-                  <Textarea
-                    placeholder={contact.email ? contact.email : "XXX-XXXX"}
-                    resize="none"
-                    minH={1}
-                  />
-                </Stack>
-                <Stack spacing={2} justifyContent="flex-end" mt={2} height={7}>
-                  <IconButton
-                    aria-label="icon"
-                    icon={<DeleteIcon />}
-                    size="md"
-                    backgroundColor="red.500"
-                    className="butred"
-                  />
-                </Stack>
-              </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
-                <Stack
-                  spacing={2}
-                  flexDirection="row"
-                  isInline
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <CalendarIcon />
-                  <Text width="65%" fontWeight="bold" p={2}>
-                    Birthday
-                  </Text>
-                  <Textarea
-                    placeholder={
-                      contact.birthday ? contact.birthday : "XX/XX/XXXX"
-                    }
-                    resize="none"
-                    minH={1}
-                  />
-                </Stack>
-                <Stack spacing={2} justifyContent="flex-end" mt={2} height={7}>
-                  <IconButton
-                    aria-label="icon"
-                    icon={<DeleteIcon />}
-                    size="md"
-                    backgroundColor="red.500"
-                    className="butred"
-                  />
-                </Stack>
-              </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
-                <Stack
-                  spacing={2}
-                  flexDirection="row"
-                  justifyContent="flex-start"
-                  alignItems="stretch"
-                >
-                  <AtSignIcon />
-                  <Text width="65%" fontWeight="bold" p={2}>
-                    Address
-                  </Text>
-                  <Textarea
-                    placeholder={contact.addess ? contact.address : "XXX-XXXX"}
-                    resize="none"
-                    minH={1}
-                  />
-                </Stack>
-                <Stack spacing={2} justifyContent="flex-end" mt={2} height={7}>
-                  <IconButton
-                    aria-label="icon"
-                    icon={<DeleteIcon />}
-                    size="md"
-                    backgroundColor="red.500"
-                    className="butred"
-                  />
-                </Stack>
-              </Box>
+              {[
+                { icon: <PhoneIcon />, placeholder: "Phone Number", value: contact.phone_number },
+                { icon: <EmailIcon />, placeholder: "Email", value: contact.email },
+                { icon: <CalendarIcon />, placeholder: "Birthday", value: contact.birthday },
+                { icon: <AtSignIcon />, placeholder: "Address", value: contact.address },
+              ].map(({ icon, placeholder, value }, index) => (
+                <Box key={index} {...commonBoxProps}>
+                  <Stack {...getCommonStackProps({ flexDirection: "row", isInline: true })}>
+                    {icon}
+                    <Text width="65%" fontWeight="bold" p={2}>
+                      {placeholder}
+                    </Text>
+                    <Textarea
+                      placeholder={value ? value : `XXX-XXXX`}
+                      resize="none"
+                      minH={1}
+                    />
+                  </Stack>
+                  <Stack spacing={2} justifyContent="flex-end" mt={2} height={7}>
+                    <IconButton
+                      aria-label="icon"
+                      icon={<DeleteIcon />}
+                      size="md"
+                      backgroundColor="red.500"
+                      className="butred"
+                    />
+                  </Stack>
+                </Box>
+              ))}
             </Stack>
           </Box>
           <Box
@@ -290,34 +145,27 @@ function CreateContact() {
           >
             <Stack spacing={2}>
               <Button
-                variant="solid"
-                size="lg"
-                rightIcon={<AddIcon />}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                flexDirection="row"
-                borderRadius={40}
-                className="but"
+                {...getCommonButtonProps({
+                  size: "lg",
+                  rightIcon: <AddIcon />,
+                  borderRadius: 40,
+                  className: "but",
+                })}
               >
                 Add Info Pill
               </Button>
               <Button
-                variant="solid"
-                size="lg"
-                rightIcon={<AddIcon />}
-                backgroundColor="#C3C29C"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                flexDirection="row"
-                borderRadius={40}
-                className="but"
+                {...getCommonButtonProps({
+                  size: "lg",
+                  rightIcon: <AddIcon />,
+                  backgroundColor: "#C3C29C",
+                  borderRadius: 40,
+                  className: "but",
+                })}
               >
                 Add Social
               </Button>
             </Stack>
-            <Box />
             <AvatarGroup
               spacing={3}
               max={25}
@@ -332,28 +180,13 @@ function CreateContact() {
               opacity={1}
               backgroundColor="whiteAlpha.300"
             >
-              <Avatar size="lg" src="link" m={2} />
-              <Avatar size="lg" src="link" m={2} />
-              <Avatar size="lg" src="link" m={2} />
-              <Avatar size="lg" src="link" m={2} />
-              <Avatar size="lg" src="link" m={2} />
-              <Avatar size="lg" src="link" m={2} />
-              <Avatar size="lg" src="link" m={2} />
-              <Avatar size="lg" src="link" m={2} />
-              <Avatar size="lg" src="link" m={2} />
+              {Array(9).fill().map((_, index) => (
+                <Avatar key={index} size="lg" src="link" m={2} />
+              ))}
             </AvatarGroup>
           </Box>
         </Stack>
-        <Box
-          backgroundColor="#E4DFAF"
-          borderRadius={20}
-          overflow="hidden"
-          textAlign="left"
-          lineHeight={0}
-          p={3}
-          pb={6}
-          m={2}
-        >
+        <Box {...commonBoxProps} p={3} pb={6} m={2}>
           <Heading textAlign="left" as="h6" size="md">
             Notes
           </Heading>
