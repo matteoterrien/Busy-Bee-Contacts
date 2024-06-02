@@ -18,8 +18,8 @@ function findContactById(id) {
   return Contact.findById(id);
 }
 
-function addContact(user) {
-  const contactToAdd = new Contact(user);
+function addContact(contact) {
+  const contactToAdd = new Contact(contact);
   const promise = contactToAdd.save();
   return promise;
 }
