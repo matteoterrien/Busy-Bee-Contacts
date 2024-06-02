@@ -20,7 +20,7 @@ function MyApp() {
       .then((res) => (res.status === 200 ? res.json() : undefined))
       .then((json) => {
         if (json) {
-          setContacts(json["contact_list"]);
+          setContacts(sortContactsByFirstName(json["contact_list"]));
         } else {
           setContacts(null);
         }
@@ -34,7 +34,7 @@ function MyApp() {
     fetchFavoriteContacts()
       .then((json) => {
         if (json) {
-          setFavoriteContacts(json["contact_list"]);
+          setFavoriteContacts(sortContactsByFirstName(json["contact_list"]));
         } else {
           setContacts(null);
         }
@@ -43,6 +43,41 @@ function MyApp() {
         console.error("Failed to fetch favorite contacts:", error);
       });
   }, []);
+
+  function loginUser(creds) {
+    const promise = fetch(`${API_PREFIX}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(creds),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((payload) => setToken(payload.token));
+          setMessage(`Login successful; auth token saved`);
+        } else {
+          setMessage(`Login Error ${response.status}: ${response.data}`);
+        }
+      })
+      .catch((error) => {
+        setMessage(`Login Error: ${error}`);
+      });
+  }
+  
+  function fetchContacts() {
+    const promise = fetch("http://localhost:8000/contacts");
+    return promise;
+  }
+
+  const fetchFavoriteContacts = async () => {
+    const res = await fetch("http://localhost:8000/contacts/favorite");
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return await res.json();
+  };
+
 
   function postContact(person) {
     const promise = fetch("http://localhost:8000/contacts", {
@@ -88,24 +123,6 @@ function MyApp() {
     return promise;
   }
 
-  function fetchContacts() {
-    const promise = fetch("http://localhost:8000/contacts");
-    // {
-    //   headers: addAuthHeader(),
-    // }
-    // );
-
-    return promise;
-  }
-
-  const fetchFavoriteContacts = async () => {
-    const res = await fetch("http://localhost:8000/contacts/favorite");
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    return await res.json();
-  };
-
   function addAuthHeader(otherHeaders = {}) {
     if (token === INVALID_TOKEN) {
       return otherHeaders;
@@ -121,7 +138,7 @@ function MyApp() {
   function updateList(person) {
     postContact(person)
       .then((promise) => {
-        setCharacters([...characters, promise]);
+        setContacts([...contacts, promise]);
       })
       .catch((error) => {
         console.log(error);
@@ -141,65 +158,11 @@ function MyApp() {
       });
   }
 
-  function loginUser(creds) {
-    const promise = fetch(`${API_PREFIX}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(creds),
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          response.json().then((payload) => setToken(payload.token));
-          setMessage(`Login successful; auth token saved`);
-        } else {
-          setMessage(`Login Error ${response.status}: ${response.data}`);
-        }
-      })
-      .catch((error) => {
-        setMessage(`Login Error: ${error}`);
-      });
-    }
-
-  function selectContact(userId) {
-    setSelectedContactId(userId);
-  }
-
   const sortContactsByFirstName = (contacts) => {
     return contacts
       .slice()
       .sort((a, b) => a.first_name.localeCompare(b.first_name));
   };
-
-  useEffect(() => {
-    fetchContacts()
-      .then((res) => (res.status === 200 ? res.json() : undefined))
-      .then((json) => {
-        if (json) {
-          setContacts(sortContactsByFirstName(json["contact_list"]));
-        } else {
-          setContacts(null);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchFavoriteContacts()
-      .then((json) => {
-        if (json) {
-          setFavoriteContacts(sortContactsByFirstName(json["contact_list"]));
-        } else {
-          setContacts(null);
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to fetch favorite contacts:", error);
-      });
-  }, []);
 
   return (
     <div id="page">
@@ -217,7 +180,7 @@ function MyApp() {
         />
         <Route exact path="/contact/:id" element={<Contact />} />
         <Route exact path="/edit/:id" element={<Edit />} />
-        <Route exact path="/createContact/" element={<CreateContact />} />
+        <Route exact path="/createContact/" element={<CreateContact handleSubmit={updateList} />} />
         <Route exact path="/deleteContact/:id" element={<HomePage />} />
         {<Route path="/login" element={<LoginPage handleSubmit={loginUser} />} />}
       </Routes>

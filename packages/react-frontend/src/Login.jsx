@@ -85,22 +85,22 @@ function LoginPage(props) {
     </ChakraProvider>
   );
   
-    function handleChange(event) {
-      const { name, value } = event.target;
-      switch (name) {
-        case "username":
-          setCreds({ ...creds, username: value });
-          break;
-        case "password":
-          setCreds({ ...creds, pwd: value });
-          break;
-      }
+  function handleChange(event) {
+    const { name, value } = event.target;
+    switch (name) {
+      case "username":
+        setCreds({ ...creds, username: value });
+        break;
+      case "password":
+        setCreds({ ...creds, pwd: value });
+        break;
     }
-  
-    function submitForm() {
-      props.handleSubmit(creds);
-      setCreds({ username: "", pwd: "" });
-    }
+  }
+
+  function submitForm() {
+    props.handleSubmit(creds);
+    setCreds({ username: "", pwd: "" });
+  }
   
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
