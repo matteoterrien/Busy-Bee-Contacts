@@ -9,6 +9,9 @@ import {
   Button,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import HomePage from "./HomePageV2";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 function LoginPage(props) {
     const [creds, setCreds] = useState({
@@ -17,6 +20,8 @@ function LoginPage(props) {
     });
     
     const API_PREFIX = "http://localhost:8000";
+
+    const [message, setMessage] = useState("");
 
     function loginUser(creds) {
       console.log("loginUser2 called")
@@ -30,15 +35,12 @@ function LoginPage(props) {
       })
         .then((response) => {
           if (response.status === 200) {
-            response.json().then((payload) => setToken(payload.token));
-            setMessage(`Login successful; auth token saved`);
+            setMessage("Login successful");
           } else {
+            console.log("Login failed");
             setMessage(`Login Error ${response.status}: ${response.data}`);
           }
         })
-        .catch((error) => {
-          setMessage(`Login Error: ${error}`);
-        });
     
       return promise;
     }

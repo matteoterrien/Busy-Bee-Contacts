@@ -153,8 +153,8 @@ function MyApp() {
     })
       .then((response) => {
         if (response.status === 200) {
-          response.json().then((payload) => setToken(payload.token));
           setMessage(`Login successful; auth token saved`);
+          fetchContacts();
         } else {
           setMessage(`Login Error ${response.status}: ${response.data}`);
         }
