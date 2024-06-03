@@ -142,6 +142,8 @@ function MyApp() {
   }
 
   function loginUser(creds) {
+    console.log("Logging in with creds", creds);
+    console.log("API_PREFIX", API_PREFIX);
     const promise = fetch(`${API_PREFIX}/login`, {
       method: "POST",
       headers: {
@@ -151,8 +153,8 @@ function MyApp() {
     })
       .then((response) => {
         if (response.status === 200) {
-          response.json().then((payload) => setToken(payload.token));
           setMessage(`Login successful; auth token saved`);
+          fetchContacts();
         } else {
           setMessage(`Login Error ${response.status}: ${response.data}`);
         }

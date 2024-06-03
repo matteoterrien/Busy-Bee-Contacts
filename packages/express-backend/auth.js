@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+var User = import ('./../express-backend/models/user.js');
 
 const creds = [];
 
@@ -66,29 +68,29 @@ export function registerUser(req, res) {
   }
 
   export function loginUser(req, res) {
-    const { username, pwd } = req.body; // from form
-    const retrievedUser = creds.find(
-      (c) => c.username === username
-    );
-  
-    if (!retrievedUser) {
+    const { username, pwd } = req.body; 
+    //console.log("Logging in with creds username: |" + username +"| password: |" + pwd + "|"); // for debugging
+    mongoose.model('User').findOne({ username: username }).then((retrievedUser) => {
+      if (!retrievedUser) {
       // invalid username
+      console.log("Couldn't retrieve username"); // for debugging
       res.status(401).send("Unauthorized");
-    } else {
-      bcrypt
-        .compare(pwd, retrievedUser.hashedPassword)
-        .then((matched) => {
-          if (matched) {
-            generateAccessToken(username).then((token) => {
-              res.status(200).send({ token: token });
-            });
-          } else {
-            // invalid password
-            res.status(401).send("Unauthorized");
-          }
-        })
-        .catch(() => {
+      } else {
+          mongoose.model('User').findOne({ _id: retrievedUser.id }).select('password').then((user) => {
+            const password = user.password;
+            if (password == pwd) {
+              //console.log("Password matched. attempted pwd: |" + pwd + "|\nactual password: |" + password + "|"); // for debugging
+              res.status(200).send();
+            } else {
+              // invalid password
+              //console.log("Password didn't match. attempted pwd: |" + pwd + "|\nactual password: |" + password + "|"); // for debugging
+              res.status(401).send("Unauthorized");
+            }
+        }).catch(() => {
           res.status(401).send("Unauthorized");
         });
+      
+      }}).catch(() => {
+        res.status(500).send("Internal Server Error");
+      })
     }
-  }
