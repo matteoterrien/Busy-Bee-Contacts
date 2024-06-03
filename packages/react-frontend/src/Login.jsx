@@ -12,7 +12,6 @@ import React, { useState } from "react";
 import HomePage from "./HomePageV2";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-
 function LoginPage(props) {
     const [creds, setCreds] = useState({
       username: "",
@@ -22,6 +21,11 @@ function LoginPage(props) {
     const API_PREFIX = "http://localhost:8000";
 
     const [message, setMessage] = useState("");
+
+    function navigateToHomePage() {
+      const history = require("react-router-dom").useHistory();
+      history.push("/"); // Replace "/" with the desired URL of the home page
+    }    
 
     function loginUser(creds) {
       console.log("loginUser2 called")
@@ -36,6 +40,7 @@ function LoginPage(props) {
         .then((response) => {
           if (response.status === 200) {
             setMessage("Login successful");
+            navigateToHomePage();
           } else {
             console.log("Login failed");
             setMessage(`Login Error ${response.status}: ${response.data}`);
