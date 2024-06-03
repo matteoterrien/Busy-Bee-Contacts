@@ -76,7 +76,7 @@ function LoginPage(props) {
     }    
 
     function handleLoginClick() {
-      console.log("button clicked")
+      //console.log("button clicked")
       loginUser(creds)
     }
 
