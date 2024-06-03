@@ -25,7 +25,7 @@ function LoginPage(props) {
     function navigateToHomePage() {
       navigateTo('/')
     }    
-    //test
+
     function loginUser(creds) {
       console.log("loginUser2 called")
       const promise = fetch(`${API_PREFIX}/login`, {
