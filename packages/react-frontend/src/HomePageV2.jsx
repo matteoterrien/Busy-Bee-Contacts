@@ -8,13 +8,11 @@ import {
   ChakraProvider,
   Spacer,
 } from "@chakra-ui/react";
-import { AddIcon, StarIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { GiBee } from "react-icons/gi";
 import { IoMdContact } from "react-icons/io";
 import { TiStarFullOutline } from "react-icons/ti";
-import "./styles.css"
+import "./styles.css";
 
 function HomeHeader() {
   return (
@@ -33,13 +31,8 @@ function HomeHeader() {
               Busy Bee Contacts
             </Text>
           </Box>
-          <HStack display="flex" 
-                  position="relative"
-                  spacing={1.5}
-                  >
-            <button className="tagbut tag all"
-                    
-                    >All</button>
+          <HStack display="flex" position="relative" spacing={1.5}>
+            <button className="tagbut tag all">All</button>
             <button className="friends tag tagbut">Friends</button>
             <button className="tagbut tag family">Family</button>
             <button className="tagbut tag work">Work</button>
