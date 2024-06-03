@@ -1,19 +1,50 @@
-import React from "react";
-import { Text, Box, Button } from "@chakra-ui/react";
+import {
+  Text,
+  Box,
+  Button,
+  Image,
+  Stack,
+  HStack,
+  ChakraProvider,
+  Spacer,
+} from "@chakra-ui/react";
+import { AddIcon, StarIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { GiBee } from "react-icons/gi";
 import { IoMdContact } from "react-icons/io";
 import { TiStarFullOutline } from "react-icons/ti";
 
 function HomeHeader() {
   return (
-    <div>
+    <ChakraProvider resetCSS>
       <Box display="flex">
-        <GiBee size={100} color="#E4DFAF" />
-        <Text marginLeft="2%" fontSize="6xl" fontFamily="Comic Sans MS">
-          Busy Bee Contacts
-        </Text>
+        {/* <GiBee size={200} color="#E4DFAF" /> */}
+        <Image
+          src="https://us.123rf.com/450wm/kaissaart/kaissaart1807/kaissaart180700038/114801772-bee-flat-design-illustration-simple-vector-icon.jpg?ver=6"
+          height={200}
+          width={200}
+          color="#E4DFAF"
+        />
+        <Stack width="100%">
+          <Box display="flex">
+            <Text ml="2%" fontSize="7xl" fontFamily="Kokoro">
+              Busy Bee Contacts
+            </Text>
+          </Box>
+          <Box display="flex" justifyContent="space-evenly">
+            <button className="tagbut tag all">All</button>
+            <button className="friends tag tagbut">Friends</button>
+            <button className="tagbut tag family">Family</button>
+            <button className="tagbut tag work">Work</button>
+            <button className="tagbut tag school">School</button>
+            <button className="tagbut tag personal">Personal</button>
+            <button className="tagbut tag medical">Medical</button>
+          </Box>
+          <Spacer />
+        </Stack>
       </Box>
-    </div>
+    </ChakraProvider>
   );
 }
 
@@ -36,17 +67,46 @@ function FavoritesHeader() {
   );
 }
 
-function ShowAllContacts() {
+function ShowAllContactsHeader() {
+  const navigate = useNavigate();
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate("../createContact");
+    }
+  }, [shouldNavigate, navigate]);
+
   return (
-    <Box borderRadius="lg" alignItems="center" bg="#E4DFAF" mt={3}>
+    <Box
+      display="flex"
+      borderRadius="lg"
+      alignItems="center"
+      justifyContent="space-between"
+      bg="#E4DFAF"
+      mt={3}
+    >
       <Text ml={5} fontSize="4xl" fontFamily="kokoro" as="b">
         All
       </Text>
+      <Button
+        display="flex"
+        height={35}
+        bg="white"
+        mr={2}
+        mt={1}
+        borderWidth={0}
+        className="add but"
+        onClick={() => setShouldNavigate(true)}
+      >
+        Add Contact
+      </Button>
     </Box>
   );
 }
 
-function HomeBody(props) {
+function AllContactsBody(props) {
+  const navigate = useNavigate();
   const rows = props.contactData.map((row, index) => {
     return (
       <div key={index}>
@@ -55,17 +115,17 @@ function HomeBody(props) {
           width="100%"
           borderRadius="lg"
           bg="lightgray"
-          borderWidth={0}
           justifyContent="flex-start"
           alignItems="flex-start"
           mt={3}
           overflow="hidden"
           height="auto"
-          onClick={() => props.selectContact(row._id)}
+          borderWidth={0}
+          onClick={() => {
+            navigate(`../contact/${row._id}`);
+          }}
         >
-          <Box marginRight="1%">
-            <IoMdContact size={50} />
-          </Box>
+          <IoMdContact size={50} />
           <Box
             width="50%"
             display="flex"
@@ -92,11 +152,9 @@ function HomePage(props) {
     <>
       <HomeHeader />
       <FavoritesHeader />
-      <ShowAllContacts />
-      <HomeBody
-        contactData={props.contactData}
-        selectContact={props.selectContact}
-      />
+      <AllContactsBody contactData={props.favoriteContactData} />
+      <ShowAllContactsHeader />
+      <AllContactsBody contactData={props.contactData} />
     </>
   );
 }
