@@ -1,15 +1,11 @@
-// utils.jsx
-export const getCommonProps = (overrides = {}) => ({
-  alignItems: "center",
-  justifyContent: "space-between",
-  ...overrides,
-});
+// ContactUtils.jsx
 
-export const getCommonStackProps = (overrides = {}) => ({
-  spacing: 2,
-  isInline: true,
-  alignItems: "center",
-  justifyContent: "space-between",
+export const getCommonBoxProps = (overrides = {}) => ({
+  backgroundColor: "#FFF",
+  borderRadius: 20,
+  p: 4,
+  border: "3px solid #000",
+  m: 4,
   ...overrides,
 });
 
@@ -21,7 +17,7 @@ export const getCommonButtonProps = (overrides = {}) => ({
   ...overrides,
 });
 
-export const commonAvatarProps = {
+export const getCommonAvatarProps = (overrides = {}) => ({
   size: "2xl",
   showBorder: true,
   border: "5px solid #ffe990",
@@ -32,13 +28,24 @@ export const commonAvatarProps = {
   minHeight: 150,
   className: "avatar",
   cursor: "pointer",
-};
+  ...overrides,
+});
 
-export const commonBoxProps = {
+export const getCommonStackProps = (overrides = {}) => ({
+  spacing: 6,
+  isInline: true,
+  justifyContent: "space-between",
+  alignItems: "center",
+  m: 3,
+  ...overrides,
+});
+
+export const getCommonInnerBoxProps = (overrides = {}) => ({
   backgroundColor: "#E4DFAF",
   borderRadius: 20,
   overflow: "hidden",
   textAlign: "left",
   lineHeight: 0,
   p: 4,
-};
+  ...overrides,
+});

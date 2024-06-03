@@ -22,6 +22,13 @@ import {
   CalendarIcon,
   AtSignIcon,
 } from "@chakra-ui/icons";
+import {
+  getCommonBoxProps,
+  getCommonButtonProps,
+  getCommonAvatarProps,
+  getCommonStackProps,
+  getCommonInnerBoxProps,
+} from "./utils/ContactUtils"; // Import utility functions
 
 function Contact() {
   const { id } = useParams();
@@ -62,45 +69,20 @@ function Contact() {
 
   return (
     <ChakraProvider resetCSS>
-      <Box
-        backgroundColor="#FFF"
-        borderRadius={20}
-        p={4}
-        border="3px solid #000"
-        m={4}
-      >
+      <Box {...getCommonBoxProps()}>
         <Button
-          variant="solid"
-          size="xs"
-          leftIcon={<ArrowBackIcon />}
-          display="flex"
-          alignItems="center"
-          flexDirection="row"
-          className="but"
-          onClick={() => navigate(-1)}
+          {...getCommonButtonProps({
+            size: "xs",
+            leftIcon: <ArrowBackIcon />,
+            className: "but",
+            onClick: () => navigate(-1),
+          })}
         >
           Back
         </Button>
-        <Stack
-          spacing={6}
-          isInline
-          justifyContent="space-between"
-          alignItems="center"
-          m={3}
-        >
+        <Stack {...getCommonStackProps()}>
           <Box border="3px solid #000" borderRadius={100}>
-            <Avatar
-              size="2xl"
-              showBorder
-              src={contact.img}
-              border="5px solid #ffe990"
-              maxWidth={150}
-              maxHeight={150}
-              overflow="hidden"
-              minWidth={150}
-              minHeight={150}
-              className="avatar"
-            />
+            <Avatar {...getCommonAvatarProps({ src: contact.img })} />
           </Box>
           <Box width="80%">
             <Heading textAlign="left" as="h1" size="xl">
@@ -115,19 +97,16 @@ function Contact() {
           </Box>
 
           <Button
-            variant="solid"
-            size="md"
-            rightIcon={<EditIcon />}
-            backgroundColor="#C3C29C"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="row"
-            className="but"
-            onClick={() => {
-              console.log(contact._id);
-              navigate(`../edit/${contact._id}`);
-            }}
+            {...getCommonButtonProps({
+              size: "md",
+              rightIcon: <EditIcon />,
+              backgroundColor: "#C3C29C",
+              className: "but",
+              onClick: () => {
+                console.log(contact._id);
+                navigate(`../edit/${contact._id}`);
+              },
+            })}
           >
             Edit
           </Button>
@@ -149,14 +128,7 @@ function Contact() {
         >
           <Box width="60%" p={5} overflow="auto" height={260} m={1}>
             <Stack spacing={2}>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
+              <Box {...getCommonInnerBoxProps()}>
                 <Stack
                   spacing={2}
                   flexDirection="row"
@@ -173,14 +145,7 @@ function Contact() {
                   </Text>
                 </Stack>
               </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
+              <Box {...getCommonInnerBoxProps()}>
                 <Stack
                   spacing={2}
                   flexDirection="row"
@@ -197,14 +162,7 @@ function Contact() {
                   </Text>
                 </Stack>
               </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
+              <Box {...getCommonInnerBoxProps()}>
                 <Stack
                   spacing={2}
                   flexDirection="row"
@@ -221,14 +179,7 @@ function Contact() {
                   </Text>
                 </Stack>
               </Box>
-              <Box
-                backgroundColor="#E4DFAF"
-                borderRadius={20}
-                overflow="hidden"
-                textAlign="left"
-                lineHeight={0}
-                p={4}
-              >
+              <Box {...getCommonInnerBoxProps()}>
                 <Stack
                   spacing={2}
                   flexDirection="row"
@@ -274,14 +225,7 @@ function Contact() {
           </Box>
         </Stack>
         <Box
-          backgroundColor="#E4DFAF"
-          borderRadius={20}
-          overflow="hidden"
-          textAlign="left"
-          lineHeight={0}
-          p={3}
-          pb={6}
-          m={2}
+          {...getCommonInnerBoxProps({ backgroundColor: "#E4DFAF", pb: 6, m: 2 })}
         >
           <Heading textAlign="left" as="h6" size="md">
             Notes
@@ -294,41 +238,33 @@ function Contact() {
         </Box>
         <Stack spacing={2} isInline p={2}>
           <Button
-            variant="solid"
-            size="md"
-            rightIcon={<StarIcon />}
-            backgroundColor="#C3C29C"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="row"
-            borderRadius={40}
-            width="50%"
-            className="but"
-            onClick={() => {
-              const updatedContact = {
-                ...contact,
-                favorite: !contact.favorite,
-              };
-              updateContact(updatedContact).then((updated) => {
-                if (updated) setContact(updated);
-              });
-            }}
+            {...getCommonButtonProps({
+              size: "md",
+              rightIcon: <StarIcon />,
+              backgroundColor: "#C3C29C",
+              className: "but",
+              onClick: () => {
+                const updatedContact = {
+                  ...contact,
+                  favorite: !contact.favorite,
+                };
+                updateContact(updatedContact).then((updated) => {
+                  if (updated) setContact(updated);
+                });
+              },
+              width: "50%",
+            })}
           >
             {contact.favorite ? "Remove from Favorites" : "Add to Favorites"}
           </Button>
           <Button
-            variant="solid"
-            size="md"
-            rightIcon={<ExternalLinkIcon />}
-            backgroundColor="#C3C29C"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="row"
-            borderRadius={40}
-            width="50%"
-            className="but"
+            {...getCommonButtonProps({
+              size: "md",
+              rightIcon: <ExternalLinkIcon />,
+              backgroundColor: "#C3C29C",
+              className: "but",
+              width: "50%",
+            })}
           >
             Share Contact
           </Button>
