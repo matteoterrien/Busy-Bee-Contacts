@@ -9,8 +9,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import HomePage from "./HomePageV2";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 function LoginPage(props) {
@@ -27,7 +25,7 @@ function LoginPage(props) {
     function navigateToHomePage() {
       navigateTo('/')
     }    
-
+    //test
     function loginUser(creds) {
       console.log("loginUser2 called")
       const promise = fetch(`${API_PREFIX}/login`, {
