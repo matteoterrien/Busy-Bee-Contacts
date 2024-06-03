@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import HomePage from "./HomePageV2";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage(props) {
     const [creds, setCreds] = useState({
@@ -21,15 +22,14 @@ function LoginPage(props) {
     const API_PREFIX = "http://localhost:8000";
 
     const [message, setMessage] = useState("");
+    const navigateTo = useNavigate();
 
     function navigateToHomePage() {
-      const history = require("react-router-dom").useHistory();
-      history.push("/"); // Replace "/" with the desired URL of the home page
+      navigateTo('/')
     }    
 
     function loginUser(creds) {
       console.log("loginUser2 called")
-      console.log(API_PREFIX)
       const promise = fetch(`${API_PREFIX}/login`, {
         method: "POST",
         headers: {
@@ -77,7 +77,6 @@ function LoginPage(props) {
 
     function handleLoginClick() {
       console.log("button clicked")
-      console.log(creds)
       loginUser(creds)
     }
 
