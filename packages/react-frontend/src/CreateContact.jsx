@@ -12,6 +12,7 @@ import {
     Textarea,
     IconButton,
     AvatarGroup,
+    useTagStyles,
 } from '@chakra-ui/react'
 import {
     CheckIcon,
@@ -35,6 +36,7 @@ import {
 
 function CreateContact({ handleSubmit }) {
     const navigate = useNavigate()
+    const [newTags, setNewTags] = useState([])
     const [contact, setContact] = useState({
         first_name: '',
         last_name: '',
@@ -61,17 +63,29 @@ function CreateContact({ handleSubmit }) {
         }))
     }
 
-        
-    const fileInputRef = useRef(null);
+    function changeTags(tag) {
+        setNewTags((prevTags) => {
+            const updatedTags = prevTags.includes(tag)
+                ? prevTags.filter((t) => t !== tag)
+                : [...prevTags, tag]
+            setContact((prevPerson) => ({
+                ...prevPerson,
+                tags: updatedTags,
+            }))
+            return updatedTags
+        })
+    }
+
+    const fileInputRef = useRef(null)
 
     const avatarClick = () => {
-      fileInputRef.current.click();
-    };
+        fileInputRef.current.click()
+    }
 
-    const [file, setFile] = useState();
+    const [file, setFile] = useState()
     function uploadIcon(e) {
-        console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
+        console.log(e.target.files)
+        setFile(URL.createObjectURL(e.target.files[0]))
     }
 
     return (
@@ -105,48 +119,48 @@ function CreateContact({ handleSubmit }) {
                 </Box>
                 <Stack {...getCommonStackProps()}>
                     <Box border="3px solid #000" borderRadius={100}>
-                        <Avatar border= "5px solid #d3d3d3"
+                        <Avatar
+                            border="5px solid #d3d3d3"
                             {...getCommonAvatarProps({ src: file })}
                             onClick={avatarClick}
                             style={{ cursor: 'pointer' }}
                         />
-                        <input type="file"
-                                onChange={uploadIcon} 
-                                ref={fileInputRef}
-                                style={{ display: 'none' }} />
+                        <input
+                            type="file"
+                            onChange={uploadIcon}
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                        />
                     </Box>
                     <Box width="80%">
-                    <HStack>
-                        <Textarea
-                            placeholder={
-                                contact.first_name 
-                                    ? `${contact.first_name}`
-                                    : 'First Name'
-                            }
-                            size="lg"
-                            fontSize="4xl"
-                            m={3}
-                            name="first_name"
-                            value={contact.first_name}
-                            onChange={handleChange}
-                        />
-                        <Textarea
-                            placeholder={
-                              contact.last_name 
-                                  ? `${contact.last_name}`
-                                  : 'Last Name'
-                          }
-                            size="lg"
-                            fontSize="4xl"
-                            m={3}
-                            name="last_name"
-                            value={contact.last_name}
-                            onChange={handleChange}
-                        />
+                        <HStack>
+                            <Textarea
+                                placeholder={
+                                    contact.first_name
+                                        ? `${contact.first_name}`
+                                        : 'First Name'
+                                }
+                                size="lg"
+                                fontSize="4xl"
+                                m={3}
+                                name="first_name"
+                                value={contact.first_name}
+                                onChange={handleChange}
+                            />
+                            <Textarea
+                                placeholder={
+                                    contact.last_name
+                                        ? `${contact.last_name}`
+                                        : 'Last Name'
+                                }
+                                size="lg"
+                                fontSize="4xl"
+                                m={3}
+                                name="last_name"
+                                value={contact.last_name}
+                                onChange={handleChange}
+                            />
                         </HStack>
-                        <Stack spacing={2} isInline alignItems="center">
-                            <button className="tagbut tag all">Add Tags Below</button>
-                        </Stack>
                     </Box>
                 </Stack>
                 <Box
@@ -166,7 +180,12 @@ function CreateContact({ handleSubmit }) {
                     display="flex"
                     flexDirection="row"
                 >
-                    <Box width="60%" p={3}  overflowX="hidden"  height= "fit-content">
+                    <Box
+                        width="60%"
+                        p={3}
+                        overflowX="hidden"
+                        height="fit-content"
+                    >
                         <Stack spacing={2}>
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
@@ -312,36 +331,67 @@ function CreateContact({ handleSubmit }) {
                         overflow="hidden"
                         display="inline"
                     >
-                      <HStack padding={5} paddingBottom={0} paddingTop={0}>
-                        <button className="friends tag tagbut">Friends</button>
-                        <button className="tagbut tag family">Family</button>
-                        <button className="tagbut tag work">Work</button>
-                      </HStack>
-                      <span className='tagsep'></span>
-                      <HStack padding={5} paddingBottom={0} paddingTop={3}>
-                        <button className="tagbut tag school">School</button>
-                        <button className="tagbut tag personal">Personal</button>
-                        <button className="tagbut tag medical">Medical</button>
-                      </HStack>
+                        <HStack padding={5} paddingBottom={0} paddingTop={0}>
+                            <button
+                                className="friends tag tagbut"
+                                onClick={() => changeTags('friends')}
+                            >
+                                Friends
+                            </button>
+                            <button
+                                className="tagbut tag family"
+                                onClick={() => changeTags('family')}
+                            >
+                                Family
+                            </button>
+                            <button
+                                className="tagbut tag work"
+                                onClick={() => changeTags('work')}
+                            >
+                                Work
+                            </button>
+                        </HStack>
+                        <span className="tagsep"></span>
+                        <HStack padding={5} paddingBottom={0} paddingTop={3}>
+                            <button
+                                className="tagbut tag school"
+                                onClick={() => changeTags('school')}
+                            >
+                                School
+                            </button>
+                            <button
+                                className="tagbut tag personal"
+                                onClick={() => changeTags('personal')}
+                            >
+                                Personal
+                            </button>
+                            <button
+                                className="tagbut tag medical"
+                                onClick={() => changeTags('medical')}
+                            >
+                                Medical
+                            </button>
+                        </HStack>
 
-
-                      <Box {...getCommonInnerBoxProps({p: 6, m: 2 })} height="fit-content">
-                        <Heading textAlign="left" as="h6" size="md">
-                            Notes
-                        </Heading>
-                        <Box p={2} height="fit-content" overflowY="scroll">
-                            <Textarea
-                                placeholder="Edit Note..."
-                                name="notes"
-                                value={contact.notes}
-                                onChange={handleChange}
-                                height="315"
-                            />
+                        <Box
+                            {...getCommonInnerBoxProps({ p: 6, m: 2 })}
+                            height="fit-content"
+                        >
+                            <Heading textAlign="left" as="h6" size="md">
+                                Notes
+                            </Heading>
+                            <Box p={2} height="fit-content" overflowY="scroll">
+                                <Textarea
+                                    placeholder="Edit Note..."
+                                    name="notes"
+                                    value={contact.notes}
+                                    onChange={handleChange}
+                                    height="315"
+                                />
+                            </Box>
                         </Box>
-                    </Box>
-                  </Stack>
+                    </Stack>
                 </Stack>
-                
             </Box>
         </ChakraProvider>
     )
