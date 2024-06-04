@@ -9,8 +9,11 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
+import { useNavigate } from 'react-router-dom'
 
 function SignupPage() {
+  const navigateTo = useNavigate()
+
   return (
     <ChakraProvider resetCSS>
       <Center h="100vh" className="border">
@@ -58,7 +61,7 @@ function SignupPage() {
           <Stack justify="center" className="secText" spacing="3">
             <Text align="center">
               <span>Already have an account? </span>
-              <Button colorScheme="purple" variant="link">
+              <Button colorScheme="purple" variant="link" onClick={() => navigateTo('/login')}>
                 Log In
               </Button>
             </Text>
