@@ -109,6 +109,7 @@ function Contact({ handleSubmit }) {
                     <Box border="3px solid #000" borderRadius={100}>
                         <Avatar
                             {...getCommonAvatarProps({ src: contact.img })}
+                            style={{ cursor: 'default' }}
                         />
                     </Box>
                     <Box width="80%">
