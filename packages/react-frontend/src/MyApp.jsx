@@ -10,6 +10,7 @@ import Contact from './Contact'
 import Edit from './ContactEdit'
 import CreateContact from './CreateContact'
 import LoginPage from './Login'
+import SignupPage from './Signup'
 
 function MyApp() {
     const [contacts, setContacts] = useState([])
@@ -242,7 +243,9 @@ function MyApp() {
                     path="/createContact/"
                     element={<CreateContact handleSubmit={updateList} />}
                 />
+                
                 <Route exact path="/deleteContact/:id" element={<HomePage />} />
+                <Route exact path="/signup" element={<SignupPage />} />
                 {
                     <Route
                         path="/login"

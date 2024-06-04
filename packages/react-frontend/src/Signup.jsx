@@ -9,10 +9,8 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
-import styles from "./main.css"
 
-export default function LoginPage() {
+function SignupPage() {
   return (
     <ChakraProvider resetCSS>
       <Center h="100vh" className="border">
@@ -28,18 +26,7 @@ export default function LoginPage() {
           <Text fontsize="lg" className="secText">
             Please enter the information to register for Busy Bee Contacts.
           </Text>
-
-          <Formik
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                console.log(values);
-                setSubmitting(false);
-              }, 1000);
-            }}
-            initialValues={{ email: "", password: "" }}
-          >
-            {({ isSubmitting }) => (
-              <Form>
+          {/* Login Check For NEW Email */}
                 <Stack>
                   <Input
                     bg="lightgrey"
@@ -61,16 +48,12 @@ export default function LoginPage() {
                   />
 
                   <Button
-                    isLoasding={isSubmitting}
                     loadingText="Whispering to our servers"
                     className="but"
                   >
                     Sign Up
                   </Button>
                 </Stack>
-              </Form>
-            )}
-          </Formik>
 
           <Stack justify="center" className="secText" spacing="3">
             <Text align="center">
@@ -85,3 +68,5 @@ export default function LoginPage() {
     </ChakraProvider>
   );
 }
+
+export default SignupPage;
