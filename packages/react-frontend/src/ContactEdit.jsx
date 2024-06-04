@@ -24,15 +24,6 @@ import {
     CloseIcon,
     AddIcon,
 } from '@chakra-ui/icons'
-  CheckIcon,
-  DeleteIcon,
-  PhoneIcon,
-  EmailIcon,
-  CalendarIcon,
-  AtSignIcon,
-  CloseIcon,
-  AddIcon,
-} from "@chakra-ui/icons";
 import { 
   getCommonBoxProps, 
   getCommonHStackProps, 
