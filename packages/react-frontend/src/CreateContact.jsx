@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {
     ChakraProvider,
     Box,
@@ -62,6 +62,19 @@ function CreateContact({ handleSubmit }) {
         }))
     }
 
+        
+    const fileInputRef = useRef(null);
+
+    const avatarClick = () => {
+      fileInputRef.current.click();
+    };
+
+    const [file, setFile] = useState();
+    function uploadIcon(e) {
+        console.log(e.target.files);
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+
     return (
         <ChakraProvider resetCSS>
             <Box {...getCommonBoxProps()}>
@@ -94,8 +107,14 @@ function CreateContact({ handleSubmit }) {
                 <Stack {...getCommonStackProps()}>
                     <Box border="3px solid #000" borderRadius={100}>
                         <Avatar
-                            {...getCommonAvatarProps({ src: contact.img })}
+                            {...getCommonAvatarProps({ src: file })}
+                            onClick={avatarClick}
+                            style={{ cursor: 'pointer' }}
                         />
+                        <input type="file"
+                                onChange={uploadIcon} 
+                                ref={fileInputRef}
+                                style={{ display: 'none' }} />
                     </Box>
                     <Box width="80%">
                         <Textarea

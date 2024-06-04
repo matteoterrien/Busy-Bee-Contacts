@@ -16,8 +16,10 @@ import { IoMdContact } from 'react-icons/io'
 import { TiStarFullOutline } from 'react-icons/ti'
 
 function HomeHeader() {
+
     return (
         <ChakraProvider resetCSS>
+
             <Box display="flex">
                 {/* <GiBee size={200} color="#E4DFAF" /> */}
                 <Image
