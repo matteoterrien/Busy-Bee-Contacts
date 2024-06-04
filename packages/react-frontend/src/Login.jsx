@@ -120,7 +120,7 @@ function LoginPage(props) {
                     <Stack justify="center" className="secText" spacing="3">
                         <Text align="center">
                             <span>Don't have an account? </span>
-                            <Button colorScheme="white" variant="link">
+                            <Button colorScheme="white" variant="link" onClick={() => navigateTo('/signup')}>
                                 Sign Up
                             </Button>
                         </Text>
