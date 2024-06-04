@@ -27,7 +27,7 @@ function LoginPage(props) {
     }
 
     function loginUser(creds) {
-        console.log('loginUser2 called')
+        console.log('loginUser called')
         const promise = fetch(`${API_PREFIX}/login`, {
             method: 'POST',
             headers: {
@@ -75,7 +75,6 @@ function LoginPage(props) {
     }
 
     function handleLoginClick() {
-        //console.log("button clicked")
         loginUser(creds)
     }
 
