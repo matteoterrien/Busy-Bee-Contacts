@@ -159,7 +159,7 @@ function Contact({ handleSubmit }) {
                     display="flex"
                     flexDirection="row"
                 >
-                    <Box width="60%" p={5} overflow="auto" height={260} m={1}>
+                    <Box width="40%" p={5} overflow="auto" height={260} m={1}>
                         <Stack spacing={2}>
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
@@ -231,129 +231,41 @@ function Contact({ handleSubmit }) {
                             </Box>
                         </Stack>
                     </Box>
-                    <Box width="40%" p={3}>
-                        <AvatarGroup
-                            spacing={1}
-                            max={25}
-                            size="xs"
-                            flexDirection="column"
-                            alignItems="stretch"
-                            display="block"
-                            height={250}
-                            overflow="auto"
-                            pl={0}
-                            pr={0}
-                            width="100%"
+                    <Box width="60%" p={3} mt={2}>
+                        <Box
+                            {...getCommonInnerBoxProps({
+                                backgroundColor: '#E4DFAF',
+                                pb: 6,
+                                m: 2,
+                            })}
                         >
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                            <Avatar
-                                size="md"
-                                src="link"
-                                mb={2}
-                                width={20}
-                                height={20}
-                            />
-                        </AvatarGroup>
+                            <Heading textAlign="left" as="h6" size="md">
+                                Notes
+                            </Heading>
+                            <Box p={2} height="150px" overflow="auto">
+                                <Text textAlign="left" lineHeight={1.5}>
+                                    {contact.notes}
+                                </Text>
+                            </Box>
+                        </Box>
                     </Box>
                 </Stack>
-                <Box
-                    {...getCommonInnerBoxProps({
-                        backgroundColor: '#E4DFAF',
-                        pb: 6,
-                        m: 2,
-                    })}
-                >
-                    <Heading textAlign="left" as="h6" size="md">
-                        Notes
-                    </Heading>
-                    <Box p={2} height="100px" overflow="auto">
-                        <Text textAlign="left" lineHeight={1.5}>
-                            {contact.notes}
-                        </Text>
-                    </Box>
-                </Box>
-                <Stack spacing={2} isInline p={2}>
-                    <Button
+                
+                <Button
                         {...getCommonButtonProps({
                             size: 'md',
                             rightIcon: <StarIcon />,
                             backgroundColor: '#C3C29C',
                             className: 'but',
-                            width: '50%',
+                            width: '100%',
+                            margin: 2,
                         })}
                         onClick={handleFavoriteChange}
                     >
                         {favorited
                             ? 'Remove from Favorites'
                             : 'Add to Favorites'}
-                    </Button>
-                    <Button
-                        {...getCommonButtonProps({
-                            size: 'md',
-                            rightIcon: <ExternalLinkIcon />,
-                            backgroundColor: '#C3C29C',
-                            className: 'but',
-                            width: '50%',
-                        })}
-                    >
-                        Share Contact
-                    </Button>
-                </Stack>
+                </Button>
             </Box>
         </ChakraProvider>
     )
