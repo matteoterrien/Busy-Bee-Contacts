@@ -140,13 +140,24 @@ function MyApp() {
     }
 
     function removeOneContact(id) {
-        const index = contacts.findIndex((contact) => contact.id === id)
+        const index = contacts.findIndex((contact) => contact._id === id)
+        const favIndex = favoriteContacts.findIndex(
+            (contact) => contact._id === id,
+        )
         deleteContact(id)
             .then((promise) => {
                 const updated = contacts.filter((contact, i) => {
                     return i !== index
                 })
                 setContacts(updated)
+                if (favIndex !== -1) {
+                    const favoriteUpdate = favoriteContacts.filter(
+                        (contact, i) => {
+                            return i !== favIndex
+                        },
+                    )
+                    setFavoriteContacts(favoriteUpdate)
+                }
             })
             .catch((error) => {
                 console.log(error)
@@ -243,7 +254,7 @@ function MyApp() {
                     path="/createContact/"
                     element={<CreateContact handleSubmit={updateList} />}
                 />
-                
+
                 <Route exact path="/deleteContact/:id" element={<HomePage />} />
                 <Route exact path="/signup" element={<SignupPage />} />
                 {

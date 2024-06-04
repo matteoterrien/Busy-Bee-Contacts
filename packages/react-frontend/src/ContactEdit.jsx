@@ -144,7 +144,6 @@ function Edit({ handleSubmit }) {
                             value={contact.first_name}
                             onChange={handleChange}
                         />
-                        <Text fontStyle="italic">Pronouns</Text>
                         <HStack spacing={2} alignItems="center">
                             <Box className="tag friends" pt={1}>
                                 Friends
@@ -174,7 +173,7 @@ function Edit({ handleSubmit }) {
                     display="flex"
                     flexDirection="row"
                 >
-                    <Box width="50%" p={3} overflow="scroll" height={260}>
+                    <Box width="50%" p={3} overflowY="scroll" height={260}>
                         <Stack spacing={2}>
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
@@ -320,69 +319,22 @@ function Edit({ handleSubmit }) {
                         overflow="hidden"
                         display="inline"
                     >
-                        <Stack spacing={2}>
-                            <Button
-                                {...getCommonButtonProps({
-                                    size: 'lg',
-                                    rightIcon: <AddIcon />,
-                                    borderRadius: 40,
-                                    className: 'but',
-                                })}
-                            >
-                                Add Info Pill
-                            </Button>
-                            <Button
-                                {...getCommonButtonProps({
-                                    size: 'lg',
-                                    rightIcon: <AddIcon />,
-                                    backgroundColor: '#C3C29C',
-                                    borderRadius: 40,
-                                    className: 'but',
-                                })}
-                            >
-                                Add Social
-                            </Button>
-                        </Stack>
-                        <Box />
-                        <AvatarGroup
-                            spacing={3}
-                            max={25}
-                            size="xl"
-                            justifyContent="center"
-                            m={3}
-                            height={130}
-                            overflow="scroll"
-                            alignItems="stretch"
-                            flexDirection="row"
-                            display="block"
-                            opacity={1}
-                            backgroundColor="whiteAlpha.300"
-                        >
-                            <Avatar size="lg" src="link" m={2} />
-                            <Avatar size="lg" src="link" m={2} />
-                            <Avatar size="lg" src="link" m={2} />
-                            <Avatar size="lg" src="link" m={2} />
-                            <Avatar size="lg" src="link" m={2} />
-                            <Avatar size="lg" src="link" m={2} />
-                            <Avatar size="lg" src="link" m={2} />
-                            <Avatar size="lg" src="link" m={2} />
-                            <Avatar size="lg" src="link" m={2} />
-                        </AvatarGroup>
+                    <Box {...getCommonInnerBoxProps({ pb: 6, m: 2 })}>
+                        <Heading textAlign="left" as="h6" size="md">
+                            Notes
+                        </Heading>
+                        <Box p={2} height="150px" overflowY="scroll">
+                            <Textarea
+                                placeholder="Edit Note..."
+                                name="notes"
+                                value={contact.notes}
+                                onChange={handleChange}
+                                height="150px"
+                            />
+                        </Box>
+                    </Box>
                     </Box>
                 </Stack>
-                <Box {...getCommonInnerBoxProps({ pb: 6, m: 2 })}>
-                    <Heading textAlign="left" as="h6" size="md">
-                        Notes
-                    </Heading>
-                    <Box p={2} height="100px" overflow="scroll">
-                        <Textarea
-                            placeholder="Edit Note..."
-                            name="notes"
-                            value={contact.notes}
-                            onChange={handleChange}
-                        />
-                    </Box>
-                </Box>
                 <Button
                     {...getCommonButtonProps({
                         rightIcon: <DeleteIcon />,
@@ -391,6 +343,7 @@ function Edit({ handleSubmit }) {
                         width: '100%',
                         color: '#000000',
                         className: 'butred',
+                        margin: 2,
                     })}
                     onClick={deleteContact}
                 >
