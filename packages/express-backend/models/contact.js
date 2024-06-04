@@ -48,7 +48,7 @@ const ContactSchema = new mongoose.Schema(
             type: String,
         },
         tags: {
-            type: [Number],
+            type: [String],
         },
         favorite: {
             type: Boolean,
