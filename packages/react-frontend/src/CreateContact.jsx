@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 import {
     ChakraProvider,
     Box,
@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react'
 import {
     CheckIcon,
-    DeleteIcon,
     PhoneIcon,
     EmailIcon,
     CalendarIcon,
@@ -64,79 +63,44 @@ function CreateContact({ handleSubmit }) {
 
     return (
         <ChakraProvider resetCSS>
-            <Box
-                backgroundColor="#FFF"
-                borderRadius={20}
-                p={4}
-                border="3px solid #000"
-                m={4}
-            >
+            <Box {...getCommonBoxProps()}>
                 <Box>
-                    <Stack
-                        spacing={2}
-                        isInline
-                        alignItems="center"
-                        justifyContent="space-between"
-                    >
+                    <Stack {...getCommonHStackProps({ isInline: true })}>
                         <Button
-                            variant="solid"
-                            size="md"
-                            leftIcon={<CloseIcon />}
-                            colorScheme="gray"
-                            backgroundColor="red.500"
-                            className="butred"
-                            display="flex"
-                            alignItems="center"
-                            flexDirection="row"
-                            onClick={() => navigate('/')}
+                            {...getCommonButtonProps({
+                                leftIcon: <CloseIcon />,
+                                colorScheme: 'gray',
+                                backgroundColor: 'red.500',
+                                className: 'butred',
+                                onClick: () => navigate('/'),
+                            })}
                         >
                             Cancel
                         </Button>
                         <Button
-                            variant="solid"
-                            size="md"
-                            rightIcon={<CheckIcon />}
-                            colorScheme="gray"
-                            backgroundColor="green.500"
-                            display="flex"
-                            alignItems="center"
-                            flexDirection="row"
-                            className="butgreen"
-                            onClick={() => {
-                                submitForm()
-                            }}
+                            {...getCommonButtonProps({
+                                rightIcon: <CheckIcon />,
+                                colorScheme: 'gray',
+                                backgroundColor: 'green.500',
+                                className: 'butgreen',
+                            })}
+                            onClick={submitForm}
                         >
                             Done
                         </Button>
                     </Stack>
                 </Box>
-                <Stack
-                    spacing={6}
-                    isInline
-                    justifyContent="space-between"
-                    alignItems="center"
-                    m={3}
-                >
+                <Stack {...getCommonStackProps()}>
                     <Box border="3px solid #000" borderRadius={100}>
                         <Avatar
-                            size="2xl"
-                            showBorder
-                            src={contact.img}
-                            border="5px solid #6969"
-                            maxWidth={150}
-                            maxHeight={150}
-                            overflow="hidden"
-                            minWidth={150}
-                            minHeight={150}
+                            {...getCommonAvatarProps({ src: contact.img })}
                         />
                     </Box>
                     <Box width="80%">
                         <Textarea
                             placeholder={
                                 contact.first_name || contact.last_name
-                                    ? contact.first_name +
-                                      ' ' +
-                                      contact.last_name
+                                    ? `${contact.first_name} ${contact.last_name}`
                                     : 'Name'
                             }
                             size="lg"
@@ -148,10 +112,16 @@ function CreateContact({ handleSubmit }) {
                         />
                         <Text fontStyle="italic">Pronouns</Text>
                         <Stack spacing={2} isInline alignItems="center">
-                            <Box className="tag friends">Friends</Box>
-                            <Box className="tag work">Work</Box>
-                            <Box className="tag personal">Personal</Box>
-                            <button className="tag buttag all">Add Tag</button>
+                            <Box className="tag friends" pt={1}>
+                                Friends
+                            </Box>
+                            <Box className="tag work" pt={1}>
+                                Work
+                            </Box>
+                            <Box className="tag personal" pt={1}>
+                                Personal
+                            </Box>
+                            <button className="tagbut tag all">Add Tag</button>
                         </Stack>
                     </Box>
                 </Stack>
@@ -174,14 +144,7 @@ function CreateContact({ handleSubmit }) {
                 >
                     <Box width="50%" p={3} overflow="scroll" height={260}>
                         <Stack spacing={2}>
-                            <Box
-                                backgroundColor="#E4DFAF"
-                                borderRadius={20}
-                                overflow="hidden"
-                                textAlign="left"
-                                lineHeight={0}
-                                p={4}
-                            >
+                            <Box {...getCommonInnerBoxProps()}>
                                 <Stack
                                     spacing={2}
                                     flexDirection="row"
@@ -212,23 +175,10 @@ function CreateContact({ handleSubmit }) {
                                     mt={2}
                                     height={7}
                                 >
-                                    <IconButton
-                                        aria-label="icon"
-                                        icon={<DeleteIcon />}
-                                        size="md"
-                                        backgroundColor="#eb5555"
-                                        className="butred"
-                                    />
+                                    <IconButton {...getIconButtonProps()} />
                                 </Stack>
                             </Box>
-                            <Box
-                                backgroundColor="#E4DFAF"
-                                borderRadius={20}
-                                overflow="hidden"
-                                textAlign="left"
-                                lineHeight={0}
-                                p={4}
-                            >
+                            <Box {...getCommonInnerBoxProps()}>
                                 <Stack
                                     spacing={2}
                                     flexDirection="row"
@@ -259,23 +209,10 @@ function CreateContact({ handleSubmit }) {
                                     mt={2}
                                     height={7}
                                 >
-                                    <IconButton
-                                        aria-label="icon"
-                                        icon={<DeleteIcon />}
-                                        size="md"
-                                        backgroundColor="red.500"
-                                        className="butred"
-                                    />
+                                    <IconButton {...getIconButtonProps()} />
                                 </Stack>
                             </Box>
-                            <Box
-                                backgroundColor="#E4DFAF"
-                                borderRadius={20}
-                                overflow="hidden"
-                                textAlign="left"
-                                lineHeight={0}
-                                p={4}
-                            >
+                            <Box {...getCommonInnerBoxProps()}>
                                 <Stack
                                     spacing={2}
                                     flexDirection="row"
@@ -306,23 +243,10 @@ function CreateContact({ handleSubmit }) {
                                     mt={2}
                                     height={7}
                                 >
-                                    <IconButton
-                                        aria-label="icon"
-                                        icon={<DeleteIcon />}
-                                        size="md"
-                                        backgroundColor="red.500"
-                                        className="butred"
-                                    />
+                                    <IconButton {...getIconButtonProps()} />
                                 </Stack>
                             </Box>
-                            <Box
-                                backgroundColor="#E4DFAF"
-                                borderRadius={20}
-                                overflow="hidden"
-                                textAlign="left"
-                                lineHeight={0}
-                                p={4}
-                            >
+                            <Box {...getCommonInnerBoxProps()}>
                                 <Stack
                                     spacing={2}
                                     flexDirection="row"
@@ -335,13 +259,13 @@ function CreateContact({ handleSubmit }) {
                                     </Text>
                                     <Textarea
                                         placeholder={
-                                            contact.addess
+                                            contact.address
                                                 ? contact.address
                                                 : 'XXX-XXXX'
                                         }
                                         resize="none"
                                         minH={1}
-                                        vname="address"
+                                        name="address"
                                         value={contact.address}
                                         onChange={handleChange}
                                     />
@@ -352,13 +276,7 @@ function CreateContact({ handleSubmit }) {
                                     mt={2}
                                     height={7}
                                 >
-                                    <IconButton
-                                        aria-label="icon"
-                                        icon={<DeleteIcon />}
-                                        size="md"
-                                        backgroundColor="red.500"
-                                        className="butred"
-                                    />
+                                    <IconButton {...getIconButtonProps()} />
                                 </Stack>
                             </Box>
                         </Stack>
@@ -372,48 +290,29 @@ function CreateContact({ handleSubmit }) {
                     >
                         <Stack spacing={2}>
                             <Button
-                                variant="solid"
-                                size="lg"
-                                rightIcon={<AddIcon />}
-                                display="flex"
-                                alignItems="center"
-                                justifyContent="center"
-                                flexDirection="row"
-                                borderRadius={40}
-                                className="but"
+                                {...getCommonButtonProps({
+                                    size: 'lg',
+                                    rightIcon: <AddIcon />,
+                                    borderRadius: 40,
+                                    className: 'but',
+                                })}
                             >
                                 Add Info Pill
                             </Button>
                             <Button
-                                variant="solid"
-                                size="lg"
-                                rightIcon={<AddIcon />}
-                                backgroundColor="#C3C29C"
-                                display="flex"
-                                alignItems="center"
-                                justifyContent="center"
-                                flexDirection="row"
-                                borderRadius={40}
-                                className="but"
+                                {...getCommonButtonProps({
+                                    size: 'lg',
+                                    rightIcon: <AddIcon />,
+                                    backgroundColor: '#C3C29C',
+                                    borderRadius: 40,
+                                    className: 'but',
+                                })}
                             >
                                 Add Social
                             </Button>
                         </Stack>
                         <Box />
-                        <AvatarGroup
-                            spacing={3}
-                            max={25}
-                            size="xl"
-                            justifyContent="center"
-                            m={3}
-                            height={130}
-                            overflow="scroll"
-                            alignItems="stretch"
-                            flexDirection="row"
-                            display="block"
-                            opacity={1}
-                            backgroundColor="whiteAlpha.300"
-                        >
+                        <AvatarGroup {...getAvatarGroupProps()}>
                             <Avatar size="lg" src="link" m={2} />
                             <Avatar size="lg" src="link" m={2} />
                             <Avatar size="lg" src="link" m={2} />
@@ -426,16 +325,7 @@ function CreateContact({ handleSubmit }) {
                         </AvatarGroup>
                     </Box>
                 </Stack>
-                <Box
-                    backgroundColor="#E4DFAF"
-                    borderRadius={20}
-                    overflow="hidden"
-                    textAlign="left"
-                    lineHeight={0}
-                    p={3}
-                    pb={6}
-                    m={2}
-                >
+                <Box {...getCommonInnerBoxProps({ pb: 6, m: 2 })}>
                     <Heading textAlign="left" as="h6" size="md">
                         Notes
                     </Heading>

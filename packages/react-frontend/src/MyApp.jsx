@@ -122,8 +122,9 @@ function MyApp() {
             })
     }
 
-    function removeOneContact(index) {
-        deleteContact(index)
+    function removeOneContact(id) {
+        const index = contacts.findIndex((contact) => contact.id === id)
+        deleteContact(id)
             .then((promise) => {
                 const updated = contacts.filter((contact, i) => {
                     return i !== index
@@ -211,7 +212,6 @@ function MyApp() {
                         <HomePage
                             contactData={contacts}
                             favoriteContactData={favoriteContacts}
-                            removeCharacter={removeOneContact}
                         />
                     }
                 />
