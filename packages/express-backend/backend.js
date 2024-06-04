@@ -87,7 +87,7 @@ app.put('/contacts/:id', (req, res) => {
         .then((result) => {
             if (result === undefined || result === null)
                 res.status(404).send('Resource not found')
-            else res.status(200).send({ contact_list: result })
+            else res.status(200).send(result)
         })
         .catch((error) => {
             console.log(error)

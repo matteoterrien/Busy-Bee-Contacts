@@ -122,6 +122,22 @@ function MyApp() {
             })
     }
 
+    function updateFavorites() {
+        fetchFavoriteContacts()
+            .then((json) => {
+                if (json) {
+                    setFavoriteContacts(
+                        sortContactsByFirstName(json['contact_list']),
+                    )
+                } else {
+                    setContacts(null)
+                }
+            })
+            .catch((error) => {
+                console.error('Failed to fetch favorite contacts:', error)
+            })
+    }
+
     function removeOneContact(id) {
         const index = contacts.findIndex((contact) => contact.id === id)
         deleteContact(id)
@@ -159,10 +175,6 @@ function MyApp() {
             .catch((error) => {
                 setMessage(`Login Error: ${error}`)
             })
-    }
-
-    function selectContact(userId) {
-        setSelectedContactId(userId)
     }
 
     const sortContactsByFirstName = (contacts) => {
@@ -215,7 +227,11 @@ function MyApp() {
                         />
                     }
                 />
-                <Route exact path="/contact/:id" element={<Contact />} />
+                <Route
+                    exact
+                    path="/contact/:id"
+                    element={<Contact handleSubmit={updateFavorites} />}
+                />
                 <Route
                     exact
                     path="/edit/:id"

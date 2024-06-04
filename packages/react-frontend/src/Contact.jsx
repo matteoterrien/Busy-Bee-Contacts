@@ -1,4 +1,8 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import {
+    useParams,
+    useNavigate,
+    UNSAFE_DataRouterStateContext,
+} from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import {
     ChakraProvider,
@@ -34,20 +38,20 @@ function Contact({ handleSubmit }) {
     const { id } = useParams()
     const navigate = useNavigate()
     const [contact, setContact] = useState(null)
+    const [favorited, setFavorited] = useState(null)
 
     function updateContact(contact) {
-        const id = contact._id
-        const promise = fetch('http://localhost:8000/contacts', {
+        const promise = fetch(`http://localhost:8000/contacts/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(id, contact),
-            code: 201,
+            body: JSON.stringify(contact),
         })
             .then((res) => {
-                if (res.status == 201) {
+                if (res.ok) {
                     return res.json()
+                    // console.log('updated')
                 } else {
                     console.log('ERROR: Returned Status ', res.status)
                 }
@@ -61,9 +65,30 @@ function Contact({ handleSubmit }) {
     useEffect(() => {
         fetch(`http://localhost:8000/contacts/${id}`)
             .then((res) => res.json())
-            .then((data) => setContact(data['contact_list']))
+            .then((data) => {
+                {
+                    setContact(data['contact_list'])
+                }
+                {
+                    setFavorited(data['contact_list'].favorite)
+                }
+            })
             .catch((error) => console.log(error))
     }, [id])
+
+    function handleFavoriteChange() {
+        const updatedContact = {
+            ...contact,
+            favorite: !contact.favorite,
+        }
+        updateContact(updatedContact)
+            .then((updated) => {
+                setContact(updated)
+                setFavorited(!favorited)
+                handleSubmit()
+            })
+            .catch((error) => console.error('Error updating contact:', error))
+    }
 
     if (!contact) return <div>Loading...</div>
 
@@ -309,21 +334,11 @@ function Contact({ handleSubmit }) {
                             rightIcon: <StarIcon />,
                             backgroundColor: '#C3C29C',
                             className: 'but',
-                            onClick: () => {
-                                const updatedContact = {
-                                    ...contact,
-                                    favorite: !contact.favorite,
-                                }
-                                updateContact(updatedContact).then(
-                                    (updated) => {
-                                        if (updated) setContact(updated)
-                                    },
-                                )
-                            },
                             width: '50%',
                         })}
+                        onClick={handleFavoriteChange}
                     >
-                        {contact.favorite
+                        {favorited
                             ? 'Remove from Favorites'
                             : 'Add to Favorites'}
                     </Button>
