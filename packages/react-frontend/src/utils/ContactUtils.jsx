@@ -9,6 +9,7 @@ export const getCommonBoxProps = (overrides = {}) => ({
   ...overrides,
 });
 
+
 export const getCommonButtonProps = (overrides = {}) => ({
   variant: "solid",
   display: "flex",

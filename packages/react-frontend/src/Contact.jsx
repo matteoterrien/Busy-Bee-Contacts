@@ -151,15 +151,14 @@ function Contact({ handleSubmit }) {
                     flexDirection="row"
                     className="border"
                 />
-                <Stack
+                <HStack
                     spacing={2}
                     alignItems="stretch"
                     justifyContent="flex-start"
-                    isInline
                     display="flex"
                     flexDirection="row"
                 >
-                    <Box width="40%" p={5} overflow="auto" height={260} m={1}>
+                    <Box width="60%" p={5} height="fit-content" m={1}>
                         <Stack spacing={2}>
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
@@ -170,7 +169,7 @@ function Contact({ handleSubmit }) {
                                     alignItems="stretch"
                                 >
                                     <PhoneIcon />
-                                    <Text width="35%" fontWeight="bold" p={2}>
+                                    <Text width="60%" fontWeight="bold" p={2}>
                                         Phone Number
                                     </Text>
                                     <Text width="60%" textAlign="center" p={2}>
@@ -187,7 +186,7 @@ function Contact({ handleSubmit }) {
                                     alignItems="stretch"
                                 >
                                     <EmailIcon />
-                                    <Text width="35%" fontWeight="bold" p={2}>
+                                    <Text width="60%" fontWeight="bold" p={2}>
                                         Email
                                     </Text>
                                     <Text width="60%" textAlign="center" p={2}>
@@ -204,7 +203,7 @@ function Contact({ handleSubmit }) {
                                     alignItems="stretch"
                                 >
                                     <CalendarIcon />
-                                    <Text width="35%" fontWeight="bold" p={2}>
+                                    <Text width="60%" fontWeight="bold" p={2}>
                                         Birthday
                                     </Text>
                                     <Text width="60%" textAlign="center" p={2}>
@@ -213,43 +212,42 @@ function Contact({ handleSubmit }) {
                                 </Stack>
                             </Box>
                             <Box {...getCommonInnerBoxProps()}>
-                                <Stack
+                                <HStack
                                     spacing={2}
                                     flexDirection="row"
-                                    isInline
                                     justifyContent="flex-start"
                                     alignItems="stretch"
                                 >
                                     <AtSignIcon />
-                                    <Text width="35%" fontWeight="bold" p={2}>
+                                    <Text width="60%" fontWeight="bold" p={2}>
                                         Address
                                     </Text>
                                     <Text width="60%" textAlign="center" p={2}>
-                                        {contact.addess}
+                                        {contact.address}
                                     </Text>
-                                </Stack>
+                                </HStack>
                             </Box>
                         </Stack>
                     </Box>
-                    <Box width="60%" p={3} mt={2}>
+                    <Box width="40%" p={3} mt={2}>
                         <Box
                             {...getCommonInnerBoxProps({
                                 backgroundColor: '#E4DFAF',
                                 pb: 6,
-                                m: 2,
+                                m: 0,
                             })}
                         >
                             <Heading textAlign="left" as="h6" size="md">
                                 Notes
                             </Heading>
-                            <Box p={2} height="150px" overflow="auto">
+                            <Box p={2} height="250px" overflow="auto">
                                 <Text textAlign="left" lineHeight={1.5}>
                                     {contact.notes}
                                 </Text>
                             </Box>
                         </Box>
                     </Box>
-                </Stack>
+                </HStack>
                 
                 <Button
                         {...getCommonButtonProps({
