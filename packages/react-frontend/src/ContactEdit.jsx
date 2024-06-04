@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
     ChakraProvider,
     Box,
@@ -91,7 +91,19 @@ function Edit({ handleSubmit }) {
             [name]: value,
         }))
     }
+        
+    const fileInputRef = useRef(null);
 
+    const avatarClick = () => {
+      fileInputRef.current.click();
+    };
+
+    const [file, setFile] = useState();
+    function uploadIcon(e) {
+        console.log(e.target.files);
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+    
     return (
         <ChakraProvider resetCSS>
             <Box {...getCommonBoxProps()}>
@@ -126,9 +138,15 @@ function Edit({ handleSubmit }) {
                 </Box>
                 <Stack {...getCommonStackProps()}>
                     <Box border="3px solid #000" borderRadius={100}>
-                        <Avatar
-                            {...getCommonAvatarProps({ src: contact.img })}
+                        <Avatar border= "5px solid #d3d3d3"
+                            {...getCommonAvatarProps({ src: file })}
+                            onClick={avatarClick}
+                            style={{ cursor: 'pointer' }}
                         />
+                        <input type="file"
+                                onChange={uploadIcon} 
+                                ref={fileInputRef}
+                                style={{ display: 'none' }} />
                     </Box>
                     <Box width="80%">
                       <HStack>
