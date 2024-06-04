@@ -29,12 +29,22 @@ function HomeHeader() {
                     color="#E4DFAF"
                 />
                 <Stack width="100%">
-                    <Box display="flex">
-                        <Text ml="2%" fontSize="7xl" fontFamily="Kokoro">
+                    <Box display="block" mt="20px">
+                        <Text 
+                        fontSize="7xl"
+                        fontFamily="Kokoro"
+                        textAlign="center"
+                        fontWeight="bold"
+                        color="transparent"
+                        sx={{
+                          background: "linear-gradient(to top, #E4DFAF, black)",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                        }}>
                             Busy Bee Contacts
                         </Text>
                     </Box>
-                    <Box display="flex" justifyContent="space-evenly">
+                    <Box display="flex" justifyContent="space-evenly" mt="-20px">
                         <button className="tagbut tag all">All</button>
                         <button className="friends tag tagbut">Friends</button>
                         <button className="tagbut tag family">Family</button>
