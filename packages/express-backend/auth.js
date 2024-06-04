@@ -69,21 +69,18 @@ export function registerUser(req, res) {
 
   export function loginUser(req, res) {
     const { username, pwd } = req.body; 
-    //console.log("Logging in with creds username: |" + username +"| password: |" + pwd + "|"); // for debugging
     mongoose.model('User').findOne({ username: username }).then((retrievedUser) => {
       if (!retrievedUser) {
       // invalid username
-      console.log("Couldn't retrieve username"); // for debugging
+      //console.log("Couldn't retrieve username"); // for debugging
       res.status(401).send("Unauthorized");
       } else {
           mongoose.model('User').findOne({ _id: retrievedUser.id }).select('password').then((user) => {
             const password = user.password;
             if (password == pwd) {
-              //console.log("Password matched. attempted pwd: |" + pwd + "|\nactual password: |" + password + "|"); // for debugging
               res.status(200).send();
             } else {
               // invalid password
-              //console.log("Password didn't match. attempted pwd: |" + pwd + "|\nactual password: |" + password + "|"); // for debugging
               res.status(401).send("Unauthorized");
             }
         }).catch(() => {
