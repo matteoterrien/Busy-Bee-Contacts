@@ -1,0 +1,120 @@
+/* Written CSS Code */
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  .border {
+    background-color: #8f8255;
+  }
+  
+
+  .but.chakra-button {
+    background-color: #e4dfaf;
+    color: black;
+    border: rgba(0, 0, 0, 0);
+    border-width: 2px;
+    padding: 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow:
+      rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+  .but.chakra-button:hover {
+    background-color: #cbc47f;
+    border: black;
+    color: black;
+  }
+  .but.chakra-button:active {
+    background-color: #beba8d;
+    border: black;
+    color: black;
+  }
+  .add.chakra-button {
+    background-color: #d8d18b;
+    border: rgba(0, 0, 0, 0);
+  }
+  
+  .butred.chakra-button {
+    background-color: #eb5555;
+    
+    border: rgba(0, 0, 0, 0);
+    box-shadow:
+      rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+  
+  .butred.chakra-button:hover {
+    background-color: rgb(156, 53, 53);
+    border: rgba(0, 0, 0, 0);
+  }
+  
+  .butred.chakra-button:active {
+    background-color: rgb(97, 47, 47);
+    border: rgba(0, 0, 0, 0);
+  }
+  
+  .butgreen.chakra-button {
+    background-color: #77cc6d;
+    border: rgba(0, 0, 0, 0);
+    box-shadow:
+      rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+  .butgreen.chakra-button:hover {
+    background-color: #499641;
+    border: rgba(0, 0, 0, 0);
+  }
+  .butgreen.chakra-button:active {
+    background-color: #3f6d3a;
+    border: rgba(0, 0, 0, 0);
+  }
+  
+  .avatar {
+    border: 5px solid #ffc7c7;
+  }
+  
+  .tag {
+    color: black;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    align-items: center;
+    width: 50%;
+    max-width: 100px;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 10px;
+    vertical-align: center;
+  }
+  
+  .tagbut:hover {
+    -webkit-filter: brightness(70%);
+  }
+
+  .tagbut:active {
+    -webkit-filter: brightness(50%);
+  }
+  
+  .all {
+    background-color: lightgrey;
+  }
+  
+  .friends {
+    background-color: #ffe990;
+  }
+  .family {
+    background-color: #ffc7c7;
+  }
+  .work {
+    background-color: #ffca8c;
+  }
+  .school {
+    background-color: #d1f2c9;
+  }
+  .personal {
+    background-color: #e3dfff;
+  }
+  .medical {
+    background-color: #ffceef;
+  }

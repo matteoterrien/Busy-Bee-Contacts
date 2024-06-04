@@ -8,4 +8,7 @@ Have three different tabs open to run Mongoose, Express backend and React fronte
 
 ## MongoDB Configurations and Contributing
 MongoDB URI: ``mongodb+srv://<username>:<password>@busybeecontacts.yckncwj.mongodb.net/?retryWrites=true&w=majority&appName=BusyBeeContacts``
+## Copy and paste below text to .env
+MONGODB_URI=mongodb+srv://adminuser:adminuser123@busybeecontacts.yckncwj.mongodb.net/?retryWrites=true&w=majority&appName=BusyBeeContacts
+
 Remember that .env is a REMOTE REPOSITORY and everyone should make their own

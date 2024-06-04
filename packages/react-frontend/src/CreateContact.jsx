@@ -23,6 +23,16 @@ import {
     CloseIcon,
     AddIcon,
 } from '@chakra-ui/icons'
+import {
+    getCommonBoxProps,
+    getCommonHStackProps,
+    getCommonButtonProps,
+    getCommonAvatarProps,
+    getCommonStackProps,
+    getCommonInnerBoxProps,
+    getIconButtonProps,
+    getAvatarGroupProps,
+} from './utils/CreateContactUtils'
 
 function CreateContact({ handleSubmit }) {
     const navigate = useNavigate()

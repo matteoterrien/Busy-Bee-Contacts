@@ -122,9 +122,8 @@ function MyApp() {
             })
     }
 
-    function removeOneContact(id) {
-        const index = contacts.findIndex((contact) => contact.id === id)
-        deleteContact(id)
+    function removeOneContact(index) {
+        deleteContact(index)
             .then((promise) => {
                 const updated = contacts.filter((contact, i) => {
                     return i !== index
@@ -134,6 +133,35 @@ function MyApp() {
             .catch((error) => {
                 console.log(error)
             })
+    }
+
+    function loginUser(creds) {
+        console.log('Logging in with creds', creds)
+        console.log('API_PREFIX', API_PREFIX)
+        const promise = fetch(`${API_PREFIX}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(creds),
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    setMessage(`Login successful; auth token saved`)
+                    fetchContacts()
+                } else {
+                    setMessage(
+                        `Login Error ${response.status}: ${response.data}`,
+                    )
+                }
+            })
+            .catch((error) => {
+                setMessage(`Login Error: ${error}`)
+            })
+    }
+
+    function selectContact(userId) {
+        setSelectedContactId(userId)
     }
 
     const sortContactsByFirstName = (contacts) => {
