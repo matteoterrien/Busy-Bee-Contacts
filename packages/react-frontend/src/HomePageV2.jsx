@@ -14,7 +14,29 @@ import { IoMdContact } from 'react-icons/io'
 import { TiStarFullOutline } from 'react-icons/ti'
 import './styles.css'
 
+const [tags, setTags] = useState([])
+
 function HomeHeader() {
+    function removeTags(tag) {
+        if (tag === 'all') {
+            setTags([])
+        } else {
+            const index = tags.findIndex(tag)
+            const updated = tags.filter((tag, i) => {
+                return i !== index
+            })
+            setTags(updated)
+        }
+    }
+
+    function changeTags(tag) {
+        if (tags.find(tag) !== -1) {
+            setTags(...tags, tag)
+        } else {
+            removeTags(tag)
+        }
+    }
+
     return (
         <ChakraProvider resetCSS>
             <Box display="flex">
@@ -32,15 +54,49 @@ function HomeHeader() {
                         </Text>
                     </Box>
                     <HStack display="flex" position="relative" maxWidth={6}>
-                        <button className="tagbut tag all">All</button> <span></span>
-                        <button className="friends tag tagbut">Friends</button>
-                        <button className="tagbut tag family">Family</button>
-                        <button className="tagbut tag work">Work</button>
-                        <button className="tagbut tag school">School</button>
-                        <button className="tagbut tag personal">
+                        <button
+                            className="tagbut tag all"
+                            onClick={removeTags('all')}
+                        >
+                            All
+                        </button>{' '}
+                        <span></span>
+                        <button
+                            className="friends tag tagbut"
+                            onClick={changeTags('friends')}
+                        >
+                            Friends
+                        </button>
+                        <button
+                            className="tagbut tag family"
+                            onClick={changeTags('family')}
+                        >
+                            Family
+                        </button>
+                        <button
+                            className="tagbut tag work"
+                            onClick={changeTags('work')}
+                        >
+                            Work
+                        </button>
+                        <button
+                            className="tagbut tag school"
+                            onClick={changeTags('school')}
+                        >
+                            School
+                        </button>
+                        <button
+                            className="tagbut tag personal"
+                            onClick={changeTags('personal')}
+                        >
                             Personal
                         </button>
-                        <button className="tagbut tag medical">Medical</button>
+                        <button
+                            className="tagbut tag medical"
+                            onClick={changeTags('medical')}
+                        >
+                            Medical
+                        </button>
                     </HStack>
                     <Spacer />
                 </Stack>
