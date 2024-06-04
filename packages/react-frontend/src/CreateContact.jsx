@@ -24,8 +24,7 @@ import {
     AddIcon,
 } from '@chakra-ui/icons'
 
-function CreateContact() {
-    const { id } = useParams()
+function CreateContact({ handleSubmit }) {
     const navigate = useNavigate()
     const [contact, setContact] = useState({
         first_name: '',
@@ -41,9 +40,8 @@ function CreateContact() {
         favorite: false,
     })
 
-    function submitFom() {
+    function submitForm() {
         handleSubmit(contact)
-        navigate('/')
     }
 
     function handleChange(event) {
@@ -95,7 +93,7 @@ function CreateContact() {
                             flexDirection="row"
                             className="butgreen"
                             onClick={() => {
-                                submitFom()
+                                submitForm()
                             }}
                         >
                             Done

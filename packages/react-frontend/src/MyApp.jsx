@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    useNavigate,
+} from 'react-router-dom'
 import HomePage from './HomePage'
 import Contact from './Contact'
 import Edit from './ContactEdit'
@@ -12,37 +17,7 @@ function MyApp() {
     const INVALID_TOKEN = 'INVALID_TOKEN'
     const [token, setToken] = useState(INVALID_TOKEN)
     const [message, setMessage] = useState('')
-
-    useEffect(() => {
-        fetchContacts()
-            .then((res) => (res.status === 200 ? res.json() : undefined))
-            .then((json) => {
-                if (json) {
-                    setContacts(sortContactsByFirstName(json['contact_list']))
-                } else {
-                    setContacts(null)
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }, [])
-
-    useEffect(() => {
-        fetchFavoriteContacts()
-            .then((json) => {
-                if (json) {
-                    setFavoriteContacts(
-                        sortContactsByFirstName(json['contact_list']),
-                    )
-                } else {
-                    setContacts(null)
-                }
-            })
-            .catch((error) => {
-                console.error('Failed to fetch favorite contacts:', error)
-            })
-    }, [])
+    const navigate = useNavigate()
 
     function loginUser(creds) {
         const promise = fetch(`${API_PREFIX}/login`, {
@@ -81,29 +56,27 @@ function MyApp() {
     }
 
     function postContact(person) {
-        const promise = fetch('http://localhost:8000/contacts', {
+        return fetch('http://localhost:8000/contacts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(person),
-            code: 201,
         })
             .then((res) => {
-                if (res.status == 201) {
+                if (res.status === 201) {
                     return res.json()
                 } else {
-                    console.log('ERROR: Returned Status ', res.status)
+                    console.error('ERROR: Returned Status', res.status)
                 }
             })
             .catch((error) => {
-                console.log(error)
+                console.error(error)
             })
-        return promise
     }
 
     function deleteContact(id) {
-        const promise = fetch('http://localhost:8000/contacts/:' + id, {
+        const promise = fetch(`http://localhost:8000/contacts/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -138,7 +111,11 @@ function MyApp() {
     function updateList(person) {
         postContact(person)
             .then((promise) => {
-                setContacts([...contacts, promise])
+                if (promise) {
+                    setContacts((prevContacts) => [...prevContacts, promise])
+                    const id = promise._id
+                    navigate(`/contact/${id}`)
+                }
             })
             .catch((error) => {
                 console.log(error)
@@ -147,7 +124,7 @@ function MyApp() {
 
     function removeOneContact(id) {
         const index = contacts.findIndex((contact) => contact.id === id)
-        deleteContact(index)
+        deleteContact(id)
             .then((promise) => {
                 const updated = contacts.filter((contact, i) => {
                     return i !== index
@@ -164,6 +141,37 @@ function MyApp() {
             .slice()
             .sort((a, b) => a.first_name.localeCompare(b.first_name))
     }
+
+    useEffect(() => {
+        fetchContacts()
+            .then((res) => (res.status === 200 ? res.json() : undefined))
+            .then((json) => {
+                if (json) {
+                    setContacts(sortContactsByFirstName(json['contact_list']))
+                } else {
+                    setContacts(null)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
+
+    useEffect(() => {
+        fetchFavoriteContacts()
+            .then((json) => {
+                if (json) {
+                    setFavoriteContacts(
+                        sortContactsByFirstName(json['contact_list']),
+                    )
+                } else {
+                    setContacts(null)
+                }
+            })
+            .catch((error) => {
+                console.error('Failed to fetch favorite contacts:', error)
+            })
+    }, [])
 
     return (
         <div id="page">
@@ -183,7 +191,7 @@ function MyApp() {
                 <Route
                     exact
                     path="/edit/:id"
-                    element={<Edit handleSubmit={removeOneContact(id)} />}
+                    element={<Edit handleSubmit={removeOneContact} />}
                 />
                 <Route
                     exact

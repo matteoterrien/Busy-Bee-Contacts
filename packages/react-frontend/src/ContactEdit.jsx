@@ -24,7 +24,7 @@ import {
     AddIcon,
 } from '@chakra-ui/icons'
 
-function Edit() {
+function Edit({ handleSubmit }) {
     const { id } = useParams()
     const navigate = useNavigate()
     const [contact, setContact] = useState({
@@ -42,17 +42,15 @@ function Edit() {
     })
 
     function updateContact(contact) {
-        const id = contact._id
-        const promise = fetch('http://localhost:8000/contacts', {
+        const promise = fetch(`http://localhost:8000/contacts/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(id, contact),
-            code: 201,
+            body: JSON.stringify(contact),
         })
             .then((res) => {
-                if (res.status == 201) {
+                if (res.status == 200) {
                     return res.json()
                 } else {
                     console.log('ERROR: Returned Status ', res.status)
@@ -73,6 +71,15 @@ function Edit() {
 
     function deleteContact() {
         handleSubmit(id)
+        navigate('/')
+    }
+
+    function handleChange(event) {
+        const { name, value } = event.target
+        setContact((prevPerson) => ({
+            ...prevPerson,
+            [name]: value,
+        }))
     }
 
     return (
@@ -212,6 +219,9 @@ function Edit() {
                                         }
                                         resize="none"
                                         minH={1}
+                                        name="phone_number"
+                                        value={contact.phone_number}
+                                        onChange={handleChange}
                                     />
                                 </Stack>
                                 <Stack
@@ -256,6 +266,9 @@ function Edit() {
                                         }
                                         resize="none"
                                         minH={1}
+                                        name="email"
+                                        value={contact.email}
+                                        onChange={handleChange}
                                     />
                                 </Stack>
                                 <Stack
@@ -300,6 +313,9 @@ function Edit() {
                                         }
                                         resize="none"
                                         minH={1}
+                                        name="birthday"
+                                        value={contact.birthday}
+                                        onChange={handleChange}
                                     />
                                 </Stack>
                                 <Stack
@@ -343,6 +359,9 @@ function Edit() {
                                         }
                                         resize="none"
                                         minH={1}
+                                        name="address"
+                                        value={contact.address}
+                                        onChange={handleChange}
                                     />
                                 </Stack>
                                 <Stack
