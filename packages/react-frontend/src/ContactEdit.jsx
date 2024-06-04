@@ -131,10 +131,11 @@ function Edit({ handleSubmit }) {
                         />
                     </Box>
                     <Box width="80%">
+                      <HStack>
                         <Textarea
                             placeholder={
-                                contact.first_name || contact.last_name
-                                    ? `${contact.first_name} ${contact.last_name}`
+                                contact.first_name 
+                                    ? `${contact.first_name}`
                                     : 'Name'
                             }
                             size="lg"
@@ -144,18 +145,35 @@ function Edit({ handleSubmit }) {
                             value={contact.first_name}
                             onChange={handleChange}
                         />
-                        <HStack spacing={2} alignItems="center">
-                            <Box className="tag friends" pt={1}>
-                                Friends
-                            </Box>
-                            <Box className="tag work" pt={1}>
-                                Work
-                            </Box>
-                            <Box className="tag personal" pt={1}>
-                                Personal
-                            </Box>
-                            <button className="tagbut tag all">Add Tag</button>
+                        <Textarea
+                            placeholder={
+                              contact.last_name 
+                                  ? `${contact.last_name}`
+                                  : 'Name'
+                          }
+                            size="lg"
+                            fontSize="4xl"
+                            m={3}
+                            name="last_name"
+                            value={contact.last_name}
+                            onChange={handleChange}
+                        />
                         </HStack>
+
+                        {/*Display Select Tags HERE - START*/}
+                        <HStack spacing={2} alignItems="center">
+                            <div className="tag friends center-div">
+                                Friends
+                            </div>
+                            <div className="tag work center-div" >
+                                Work
+                            </div>
+                            <div className="tag personal center-div" >
+                                Personal
+                            </div>
+                        </HStack>
+                        {/*Display Select Tags HERE - END*/}
+                        
                     </Box>
                 </Stack>
                 <Box
@@ -165,16 +183,17 @@ function Edit({ handleSubmit }) {
                     display="block"
                     flexDirection="row"
                 />
-                <Stack
+                <HStack
                     spacing={2}
                     alignItems="stretch"
                     justifyContent="flex-start"
-                    isInline
                     display="flex"
                     flexDirection="row"
                 >
-                    <Box width="50%" p={3} overflowY="scroll" height={260}>
+                    <Box width="60%" p={3}  height="fit-content">
                         <Stack spacing={2}>
+
+                            {/*Box for Phone Number*/}
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
                                     spacing={2}
@@ -200,6 +219,7 @@ function Edit({ handleSubmit }) {
                                         onChange={handleChange}
                                     />
                                 </Stack>
+
                                 <Stack
                                     spacing={2}
                                     justifyContent="flex-end"
@@ -209,6 +229,8 @@ function Edit({ handleSubmit }) {
                                     <IconButton {...getIconButtonProps()} />
                                 </Stack>
                             </Box>
+                            
+                            {/*Box for Email*/}
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
                                     spacing={2}
@@ -243,6 +265,8 @@ function Edit({ handleSubmit }) {
                                     <IconButton {...getIconButtonProps()} />
                                 </Stack>
                             </Box>
+
+                            {/*Box for Birthday*/}
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
                                     spacing={2}
@@ -277,6 +301,8 @@ function Edit({ handleSubmit }) {
                                     <IconButton {...getIconButtonProps()} />
                                 </Stack>
                             </Box>
+
+                            {/*Box for Address*/}
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
                                     spacing={2}
@@ -312,29 +338,43 @@ function Edit({ handleSubmit }) {
                             </Box>
                         </Stack>
                     </Box>
-                    <Box
+                    
+                    <Stack
                         width="50%"
                         p={3}
-                        height={260}
+                        height="fit-content"
                         overflow="hidden"
                         display="inline"
                     >
-                    <Box {...getCommonInnerBoxProps({ pb: 6, m: 2 })}>
+                      <HStack padding={5} paddingBottom={0} paddingTop={0}>
+                        <button className="friends tag tagbut">Friends</button>
+                        <button className="tagbut tag family">Family</button>
+                        <button className="tagbut tag work">Work</button>
+                      </HStack>
+                      <span className='tagsep'></span>
+                      <HStack padding={5} paddingBottom={0} paddingTop={3}>
+                        <button className="tagbut tag school">School</button>
+                        <button className="tagbut tag personal">Personal</button>
+                        <button className="tagbut tag medical">Medical</button>
+                      </HStack>
+
+
+                      <Box {...getCommonInnerBoxProps({p: 6, m: 2 })} height="fit-content">
                         <Heading textAlign="left" as="h6" size="md">
                             Notes
                         </Heading>
-                        <Box p={2} height="150px" overflowY="scroll">
+                        <Box p={2} height="fit-content" overflowY="scroll">
                             <Textarea
                                 placeholder="Edit Note..."
                                 name="notes"
                                 value={contact.notes}
                                 onChange={handleChange}
-                                height="150px"
+                                height="315"
                             />
                         </Box>
                     </Box>
-                    </Box>
-                </Stack>
+                  </Stack>
+                </HStack>
                 <Button
                     {...getCommonButtonProps({
                         rightIcon: <DeleteIcon />,
