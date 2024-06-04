@@ -136,7 +136,7 @@ function Edit({ handleSubmit }) {
                             placeholder={
                                 contact.first_name 
                                     ? `${contact.first_name}`
-                                    : 'Name'
+                                    : 'First Name'
                             }
                             size="lg"
                             fontSize="4xl"
@@ -149,7 +149,7 @@ function Edit({ handleSubmit }) {
                             placeholder={
                               contact.last_name 
                                   ? `${contact.last_name}`
-                                  : 'Name'
+                                  : 'Last Name'
                           }
                             size="lg"
                             fontSize="4xl"
@@ -339,6 +339,7 @@ function Edit({ handleSubmit }) {
                         </Stack>
                     </Box>
                     
+                    {/*Right side*/}
                     <Stack
                         width="50%"
                         p={3}
@@ -375,6 +376,7 @@ function Edit({ handleSubmit }) {
                     </Box>
                   </Stack>
                 </HStack>
+
                 <Button
                     {...getCommonButtonProps({
                         rightIcon: <DeleteIcon />,
