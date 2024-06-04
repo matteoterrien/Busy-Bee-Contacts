@@ -8,11 +8,10 @@ import {
     Button,
     Heading,
     Avatar,
-    Icon,
+    HStack,
     Textarea,
     IconButton,
     AvatarGroup,
-    Center,
 } from '@chakra-ui/react'
 import {
     CheckIcon,
@@ -93,16 +92,17 @@ function CreateContact({ handleSubmit }) {
                 </Box>
                 <Stack {...getCommonStackProps()}>
                     <Box border="3px solid #000" borderRadius={100}>
-                        <Avatar
+                        <Avatar border= "5px solid #d3d3d3"
                             {...getCommonAvatarProps({ src: contact.img })}
                         />
                     </Box>
                     <Box width="80%">
+                    <HStack>
                         <Textarea
                             placeholder={
-                                contact.first_name || contact.last_name
-                                    ? `${contact.first_name} ${contact.last_name}`
-                                    : 'Name'
+                                contact.first_name 
+                                    ? `${contact.first_name}`
+                                    : 'First Name'
                             }
                             size="lg"
                             fontSize="4xl"
@@ -111,17 +111,22 @@ function CreateContact({ handleSubmit }) {
                             value={contact.first_name}
                             onChange={handleChange}
                         />
+                        <Textarea
+                            placeholder={
+                              contact.last_name 
+                                  ? `${contact.last_name}`
+                                  : 'Last Name'
+                          }
+                            size="lg"
+                            fontSize="4xl"
+                            m={3}
+                            name="last_name"
+                            value={contact.last_name}
+                            onChange={handleChange}
+                        />
+                        </HStack>
                         <Stack spacing={2} isInline alignItems="center">
-                            <Box className="tag friends" pt={1}>
-                                Friends
-                            </Box>
-                            <Box className="tag work" pt={1}>
-                                Work
-                            </Box>
-                            <Box className="tag personal" pt={1}>
-                                Personal
-                            </Box>
-                            <button className="tagbut tag all">Add Tag</button>
+                            <button className="tagbut tag all">Add Tags Below</button>
                         </Stack>
                     </Box>
                 </Stack>
@@ -142,7 +147,7 @@ function CreateContact({ handleSubmit }) {
                     display="flex"
                     flexDirection="row"
                 >
-                    <Box width="50%" p={3} overflowY="scroll" overflowX="hidden"  height={260}>
+                    <Box width="60%" p={3}  overflowX="hidden"  height= "fit-content">
                         <Stack spacing={2}>
                             <Box {...getCommonInnerBoxProps()}>
                                 <Stack
@@ -281,27 +286,41 @@ function CreateContact({ handleSubmit }) {
                             </Box>
                         </Stack>
                     </Box>
-                    <Box
+                    <Stack
                         width="50%"
                         p={3}
-                        height={260}
+                        height="fit-content"
                         overflow="hidden"
                         display="inline"
                     >
-                    <Box {...getCommonInnerBoxProps({ pb: 6, m: 2 })}>
-                    <Heading textAlign="left" as="h6" size="md">
-                        Notes
-                    </Heading>
-                    <Box p={2} height="150px" overflowY="scroll">
-                        <Textarea height="150px"
-                            placeholder="Edit Note..."
-                            name="notes"
-                            value={contact.notes}
-                            onChange={handleChange}
-                        />
+                      <HStack padding={5} paddingBottom={0} paddingTop={0}>
+                        <button className="friends tag tagbut">Friends</button>
+                        <button className="tagbut tag family">Family</button>
+                        <button className="tagbut tag work">Work</button>
+                      </HStack>
+                      <span className='tagsep'></span>
+                      <HStack padding={5} paddingBottom={0} paddingTop={3}>
+                        <button className="tagbut tag school">School</button>
+                        <button className="tagbut tag personal">Personal</button>
+                        <button className="tagbut tag medical">Medical</button>
+                      </HStack>
+
+
+                      <Box {...getCommonInnerBoxProps({p: 6, m: 2 })} height="fit-content">
+                        <Heading textAlign="left" as="h6" size="md">
+                            Notes
+                        </Heading>
+                        <Box p={2} height="fit-content" overflowY="scroll">
+                            <Textarea
+                                placeholder="Edit Note..."
+                                name="notes"
+                                value={contact.notes}
+                                onChange={handleChange}
+                                height="315"
+                            />
+                        </Box>
                     </Box>
-                </Box>
-                    </Box>
+                  </Stack>
                 </Stack>
                 
             </Box>

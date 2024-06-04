@@ -31,7 +31,6 @@ export const getCommonBoxProps = (overrides = {}) => ({
   export const getCommonAvatarProps = (overrides = {}) => ({
     size: "2xl",
     showBorder: true,
-    border: "5px solid #6969",
     maxWidth: 150,
     maxHeight: 150,
     overflow: "hidden",
