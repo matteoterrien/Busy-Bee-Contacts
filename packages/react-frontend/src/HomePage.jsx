@@ -29,11 +29,22 @@ function HomeHeader() {
                     color="#E4DFAF"
                 />
                 <Stack width="100%">
+                <HStack>
                     <Box display="flex">
                         <Text ml="2%" fontSize="7xl" fontFamily="Kokoro">
                             Busy Bee Contacts
                         </Text>
                     </Box>
+                    <Button
+                      display="flex"
+                      height={35}
+                      mr={2}
+                      mt={1}
+                      borderWidth={0}
+                      className="add but"> 
+                      Log Out
+                    </Button>
+                  </HStack>
                     <Box display="flex" justifyContent="space-evenly">
                         <button className="tagbut tag all">All</button>
                         <button className="friends tag tagbut">Friends</button>
