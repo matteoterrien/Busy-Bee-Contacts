@@ -170,7 +170,7 @@ function Contact({ handleSubmit }) {
                                     alignItems="stretch"
                                 >
                                     <PhoneIcon />
-                                    <Text width="60%" fontWeight="bold" p={2}>
+                                    <Text width="35%" fontWeight="bold" p={2}>
                                         Phone Number
                                     </Text>
                                     <Text width="60%" textAlign="center" p={2}>
