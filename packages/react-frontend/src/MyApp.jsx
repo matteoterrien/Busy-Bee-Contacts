@@ -13,6 +13,7 @@ import LoginPage from './Login'
 import SignupPage from './Signup'
 
 function MyApp() {
+    const [userID, setUserID] = useState('')
     const [contacts, setContacts] = useState([])
     const [favoriteContacts, setFavoriteContacts] = useState([])
     const INVALID_TOKEN = 'INVALID_TOKEN'
