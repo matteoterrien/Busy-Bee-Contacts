@@ -47,33 +47,6 @@ function LoginPage(props) {
         return promise
     }
 
-    function signupUser(creds) {
-        const promise = fetch(`${API_PREFIX}/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(creds),
-        })
-            .then((response) => {
-                if (response.status === 201) {
-                    response.json().then((payload) => setToken(payload.token))
-                    setMessage(
-                        `Signup successful for user: ${creds.username}; auth token saved`,
-                    )
-                } else {
-                    setMessage(
-                        `Signup Error ${response.status}: ${response.data}`,
-                    )
-                }
-            })
-            .catch((error) => {
-                setMessage(`Signup Error: ${error}`)
-            })
-
-        return promise
-    }
-
     function handleLoginClick() {
         loginUser(creds)
     }

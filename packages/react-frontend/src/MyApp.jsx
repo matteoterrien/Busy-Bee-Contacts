@@ -21,29 +21,6 @@ function MyApp() {
     const [message, setMessage] = useState('')
     const navigate = useNavigate()
 
-    function loginUser(creds) {
-        const promise = fetch(`${API_PREFIX}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(creds),
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    response.json().then((payload) => setToken(payload.token))
-                    setMessage(`Login successful; auth token saved`)
-                } else {
-                    setMessage(
-                        `Login Error ${response.status}: ${response.data}`,
-                    )
-                }
-            })
-            .catch((error) => {
-                setMessage(`Login Error: ${error}`)
-            })
-    }
-
     function fetchContacts() {
         const promise = fetch('http://localhost:8000/contacts')
         return promise
@@ -166,7 +143,6 @@ function MyApp() {
     }
 
     function loginUser(creds) {
-        console.log('Logging in with creds', creds)
         console.log('API_PREFIX', API_PREFIX)
         const promise = fetch(`${API_PREFIX}/login`, {
             method: 'POST',
@@ -177,7 +153,7 @@ function MyApp() {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    setMessage(`Login successful; auth token saved`)
+                    setMessage(`Login successful;`)
                     fetchContacts()
                 } else {
                     setMessage(
@@ -188,6 +164,29 @@ function MyApp() {
             .catch((error) => {
                 setMessage(`Login Error: ${error}`)
             })
+    }
+    function signUpUser(creds) {
+      console.log('sign up user called', API_PREFIX)
+      return fetch(`${API_PREFIX}/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(creds),
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            setMessage(`Sign up successful;`)
+            fetchContacts()
+          } else {
+            setMessage(
+              `Sign up Error ${response.status}: ${response.data}`,
+            )
+          }
+        })
+        .catch((error) => {
+          setMessage(`Sign up Error: ${error}`)
+        })
     }
 
     const sortContactsByFirstName = (contacts) => {
@@ -257,12 +256,14 @@ function MyApp() {
                 />
 
                 <Route exact path="/deleteContact/:id" element={<HomePage />} />
-                <Route exact path="/signup" element={<SignupPage />} />
+                <Route
+                  path="/signup"
+                  element={<SignupPage handleSubmit={signUpUser} />} />
                 {
-                    <Route
-                        path="/login"
-                        element={<LoginPage handleSubmit={loginUser} />}
-                    />
+                  <Route
+                      path="/login"
+                      element={<LoginPage handleSubmit={loginUser} />}
+                  />
                 }
             </Routes>
         </div>
