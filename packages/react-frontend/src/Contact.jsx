@@ -117,16 +117,15 @@ function Contact({ handleSubmit }) {
                             {contact.first_name} {contact.last_name}
                         </Heading>
                         <Text fontStyle="italic">{contact.pronouns}</Text>
-                        <HStack spacing={2}>
-                            <Box className="tag friends" pt={1}>
-                                Friends
-                            </Box>
-                            <Box className="tag work" pt={1}>
-                                Work
-                            </Box>
-                            <Box className="tag personal" pt={1}>
-                                Personal
-                            </Box>
+                        <HStack spacing={2} alignItems="center">
+                            {contact.tags.map((tag) => (
+                                <div
+                                    key={tag}
+                                    className={`tag ${tag} center-div`}
+                                >
+                                    {tag}
+                                </div>
+                            ))}
                         </HStack>
                     </Box>
 
@@ -137,7 +136,6 @@ function Contact({ handleSubmit }) {
                             backgroundColor: '#C3C29C',
                             className: 'but',
                             onClick: () => {
-                                console.log(contact._id)
                                 navigate(`../edit/${contact._id}`)
                             },
                         })}
@@ -249,21 +247,19 @@ function Contact({ handleSubmit }) {
                         </Box>
                     </Box>
                 </HStack>
-                
+
                 <Button
-                        {...getCommonButtonProps({
-                            size: 'md',
-                            rightIcon: <StarIcon />,
-                            backgroundColor: '#C3C29C',
-                            className: 'but',
-                            width: '100%',
-                            margin: 2,
-                        })}
-                        onClick={handleFavoriteChange}
-                    >
-                        {favorited
-                            ? 'Remove from Favorites'
-                            : 'Add to Favorites'}
+                    {...getCommonButtonProps({
+                        size: 'md',
+                        rightIcon: <StarIcon />,
+                        backgroundColor: '#C3C29C',
+                        className: 'but',
+                        width: '100%',
+                        margin: 2,
+                    })}
+                    onClick={handleFavoriteChange}
+                >
+                    {favorited ? 'Remove from Favorites' : 'Add to Favorites'}
                 </Button>
             </Box>
         </ChakraProvider>
