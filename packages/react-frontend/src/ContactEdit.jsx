@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 import {
   ChakraProvider,
   Box,
@@ -15,15 +15,15 @@ import {
   AvatarGroup,
 } from "@chakra-ui/react";
 import {
-  CheckIcon,
-  DeleteIcon,
-  PhoneIcon,
-  EmailIcon,
-  CalendarIcon,
-  AtSignIcon,
-  CloseIcon,
-  AddIcon,
-} from "@chakra-ui/icons";
+    CheckIcon,
+    DeleteIcon,
+    PhoneIcon,
+    EmailIcon,
+    CalendarIcon,
+    AtSignIcon,
+    CloseIcon,
+    AddIcon,
+} from '@chakra-ui/icons'
 import { 
   getCommonBoxProps, 
   getCommonHStackProps, 
@@ -35,42 +35,63 @@ import {
  } from "./utils/ContactEditUtils"; // Import utility functions
 
 
-function Edit() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [contact, setContact] = useState(null);
-
-  function updateContact(contact) {
-    const id = contact._id;
-    const promise = fetch("http://localhost:8000/contacts", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(id, contact),
-      code: 201,
+function Edit({ handleSubmit }) {
+    const { id } = useParams()
+    const navigate = useNavigate()
+    const [contact, setContact] = useState({
+        first_name: '',
+        last_name: '',
+        phone_number: '',
+        email: '',
+        address: '',
+        birthday: '',
+        pronouns: '',
+        socials: '',
+        notes: '',
+        tags: [],
+        favorite: false,
     })
-      .then((res) => {
-        if (res.status == 201) {
-          return res.json();
-        } else {
-          console.log("ERROR: Returned Status ", res.status);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    return promise;
-  }
 
-  useEffect(() => {
-    fetch(`http://localhost:8000/contacts/${id}`)
-      .then((res) => res.json())
-      .then((data) => setContact(data["contact_list"]))
-      .catch((error) => console.log(error));
-  }, [id]);
+    function updateContact(contact) {
+        const promise = fetch(`http://localhost:8000/contacts/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(contact),
+        })
+            .then((res) => {
+                if (res.status == 200) {
+                    return res.json()
+                } else {
+                    console.log('ERROR: Returned Status ', res.status)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        return promise
+    }
 
-  if (!contact) return <div>Loading...</div>;
+    useEffect(() => {
+        fetch(`http://localhost:8000/contacts/${id}`)
+            .then((res) => res.json())
+            .then((data) => setContact(data['contact_list']))
+            .catch((error) => console.log(error))
+    }, [id])
+
+    function deleteContact() {
+        handleSubmit(id)
+        navigate('/')
+    }
+
+    function handleChange(event) {
+        const { name, value } = event.target
+        setContact((prevPerson) => ({
+            ...prevPerson,
+            [name]: value,
+        }))
+    }
 
   return (
     <ChakraProvider resetCSS>
@@ -211,4 +232,4 @@ function Edit() {
   );
 }
 
-export default Edit;
+export default Edit

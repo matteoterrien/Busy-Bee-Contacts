@@ -1,17 +1,17 @@
-import { useParams, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 import {
-  ChakraProvider,
-  Box,
-  Stack,
-  HStack,
+    ChakraProvider,
+    Box,
+    Stack,
+    HStack,
   Heading,
-  Text,
-  Button,
-  AvatarGroup,
-  Avatar,
-  Icon,
-} from "@chakra-ui/react";
+    Text,
+    Button,
+    AvatarGroup,
+    Avatar,
+    Icon,
+} from '@chakra-ui/react'
 import {
   ArrowBackIcon,
   EditIcon,
@@ -30,42 +30,42 @@ import {
   getCommonInnerBoxProps,
 } from "./utils/ContactUtils"; // Import utility functions
 
-function Contact() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [contact, setContact] = useState(null);
+function Contact({ handleSubmit }) {
+    const { id } = useParams()
+    const navigate = useNavigate()
+    const [contact, setContact] = useState(null)
 
-  function updateContact(contact) {
-    const id = contact._id;
-    const promise = fetch("http://localhost:8000/contacts", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(id, contact),
-      code: 201,
-    })
-      .then((res) => {
-        if (res.status == 201) {
-          return res.json();
-        } else {
-          console.log("ERROR: Returned Status ", res.status);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    return promise;
-  }
+    function updateContact(contact) {
+        const id = contact._id
+        const promise = fetch('http://localhost:8000/contacts', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(id, contact),
+            code: 201,
+        })
+            .then((res) => {
+                if (res.status == 201) {
+                    return res.json()
+                } else {
+                    console.log('ERROR: Returned Status ', res.status)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        return promise
+    }
 
-  useEffect(() => {
-    fetch(`http://localhost:8000/contacts/${id}`)
-      .then((res) => res.json())
-      .then((data) => setContact(data["contact_list"]))
-      .catch((error) => console.log(error));
-  }, [id]);
+    useEffect(() => {
+        fetch(`http://localhost:8000/contacts/${id}`)
+            .then((res) => res.json())
+            .then((data) => setContact(data['contact_list']))
+            .catch((error) => console.log(error))
+    }, [id])
 
-  if (!contact) return <div>Loading...</div>;
+    if (!contact) return <div>Loading...</div>
 
   return (
     <ChakraProvider resetCSS>
