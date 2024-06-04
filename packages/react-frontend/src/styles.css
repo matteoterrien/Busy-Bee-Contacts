@@ -89,6 +89,10 @@
     margin-right: 5px;
   }
   
+  .tagbut {
+    margin: 0;
+  }
+
   .tagbut:hover {
     -webkit-filter: brightness(70%);
   }
@@ -118,4 +122,10 @@
   }
   .medical {
     background-color: #ffceef;
+  }
+
+  .center-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
