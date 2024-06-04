@@ -27,7 +27,7 @@ function LoginPage(props) {
     }    
     //test
     function loginUser(creds) {
-      console.log("loginUser2 called")
+      console.log("loginUser called")
       const promise = fetch(`${API_PREFIX}/login`, {
         method: "POST",
         headers: {
