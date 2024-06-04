@@ -85,9 +85,14 @@
     height: 30px;
     border: 2px solid black;
     border-radius: 10px;
-    vertical-align: center;
+    vertical-align: auto;
+    margin-right: 5px;
   }
   
+  .tagbut {
+    margin: 0;
+  }
+
   .tagbut:hover {
     -webkit-filter: brightness(70%);
   }
@@ -117,4 +122,10 @@
   }
   .medical {
     background-color: #ffceef;
+  }
+
+  .center-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
