@@ -43,7 +43,7 @@ function HomeHeader({ tags, setTags }) {
                     color="#E4DFAF"
                 />
                 <Stack width="100%">
-                <HStack>
+                <Stack>
                     <Box display="flex">
                         <Text ml="2%" fontSize="7xl" fontFamily="Kokoro">
                             Busy Bee Contacts
@@ -52,13 +52,15 @@ function HomeHeader({ tags, setTags }) {
                     <Button
                       display="flex"
                       height={35}
+                      width={1000}
+                      alignSelf="center"
                       mr={2}
                       mt={1}
                       borderWidth={0}
                       className="add but"> 
                       Log Out
                     </Button>
-                  </HStack>
+                  </Stack>
                     <Box display="flex" justifyContent="space-evenly">
                         <button
                             className="tagbut tag all"
