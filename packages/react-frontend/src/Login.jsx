@@ -18,7 +18,7 @@ function LoginPage({ handleSubmit }) {
         pwd: '',
     })
 
-    const API_PREFIX = 'http://localhost:8000'
+    const API_PREFIX = 'busybeecontacts.azurewebsites.net'
     const [message, setMessage] = useState('')
     const navigateTo = useNavigate()
     const { setIsAuthenticated } = useAuth()
