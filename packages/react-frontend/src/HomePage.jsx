@@ -16,6 +16,8 @@ import { IoMdContact } from 'react-icons/io'
 import { TiStarFullOutline } from 'react-icons/ti'
 
 function HomeHeader({ tags, setTags }) {
+    const navigateTo = useNavigate()
+
     function removeTags(tag) {
         if (tag === 'all') {
             setTags([])
@@ -53,10 +55,14 @@ function HomeHeader({ tags, setTags }) {
                         <Button
                             display="flex"
                             height={35}
-                            mr={2}
-                            mt={1}
+                            flexDirection="row"
+                            justifyContent="flex-end"
+                            position='absolute'
+                            right={10}
+                            /* mr={2} */
+                            /* mt={1} */
                             borderWidth={0}
-                            className="add but"
+                            className="add but"  onClick={() => navigateTo('/login')}
                         >
                             Log Out
                         </Button>

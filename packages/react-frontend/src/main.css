@@ -729,6 +729,10 @@ dd {
   height: auto;
 }
 
+.right-aligned {
+  float: right;
+}
+
 .show {
   display: block !important;
 }
