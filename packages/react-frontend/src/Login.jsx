@@ -25,7 +25,7 @@ function LoginPage({ handleSubmit }) {
 
     function navigateToHomePage(userID) {
         handleSubmit(userID)
-        navigateTo('/')
+        navigateTo('/homepage')
     }
 
     function navigateToLoginError() {

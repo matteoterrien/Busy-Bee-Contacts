@@ -22,7 +22,7 @@ function SignupPage() {
   const [message, setMessage] = useState('')
 
   function navigateToHomePage() {
-    navigateTo('/')
+    navigateTo('/homepage')
   }
 
   function navigateToSignUpError() {

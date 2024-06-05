@@ -185,18 +185,6 @@ const MyApp = () => {
             <Routes>
                 <Route
                     exact
-                    path="/"
-                    element={
-                        <PrivateRoute>
-                            <HomePage
-                                contactData={contacts}
-                                favoriteContactData={favoriteContacts}
-                            />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    exact
                     path="/contact/:id"
                     element={
                         <PrivateRoute>
@@ -233,6 +221,18 @@ const MyApp = () => {
                                 updateFavorites()
                             }}
                         />
+                    }
+                />
+                 <Route
+                    exact
+                    path="/homepage"
+                    element={
+                        <PrivateRoute>
+                            <HomePage
+                                contactData={contacts}
+                                favoriteContactData={favoriteContacts}
+                            />
+                        </PrivateRoute>
                     }
                 />
                 <Route exact path="/loginerror" element={<LoginError />} />
