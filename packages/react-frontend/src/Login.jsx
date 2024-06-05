@@ -62,11 +62,11 @@ function LoginPage() {
     return (
         <ChakraProvider resetCSS>
             <Center h="100vh" className="border">
-                <Stack boxShadow="md" bg="white" p="20" rounded="md">
+                <Stack boxShadow="md" bg="#fcfcfa" p="20" rounded="md">
                     <Stack isInline>
                         <Image
                             src="https://us.123rf.com/450wm/kaissaart/kaissaart1807/kaissaart180700038/114801772-bee-flat-design-illustration-simple-vector-icon.jpg?ver=6"
-                            maxW="90px"
+                            maxW="100px"
                             mx="auto"
                         />
                     </Stack>
