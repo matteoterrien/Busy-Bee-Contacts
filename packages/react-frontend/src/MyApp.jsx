@@ -21,11 +21,11 @@ const MyApp = () => {
     const navigate = useNavigate()
     const { setIsAuthenticated } = useAuth()
 
-    const fetchContacts = () => {
-        const promise = fetch(
+    const fetchContacts = async () => {
+        const promise = await fetch(
             `http://busybeecontacts.azurewebsites.net/contacts?userID=${userID}`,
         )
-        return promise
+        return await promise.json()
     }
 
     const fetchFavoriteContacts = async () => {
@@ -214,7 +214,13 @@ const MyApp = () => {
                     path="/edit/:id"
                     element={
                         <PrivateRoute>
-                            <Edit handleSubmit={removeOneContact} />
+                            <Edit
+                                handleSubmit={(event) => {
+                                    removeOneContact(event)
+                                    updateContacts()
+                                    updateFavorites()
+                                }}
+                            />
                         </PrivateRoute>
                     }
                 />

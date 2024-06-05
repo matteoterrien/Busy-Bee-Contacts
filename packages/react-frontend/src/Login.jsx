@@ -39,13 +39,16 @@ function LoginPage({ handleSubmit }) {
     async function loginUser(creds) {
         console.log('loginUser called')
         try {
-            const response = await fetch(`${API_PREFIX}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            const response = await fetch(
+                `http://busybeecontacts.azurewebsites.net/login`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(creds),
                 },
-                body: JSON.stringify(creds),
-            })
+            )
 
             if (response.status === 200) {
                 response.json().then((data) => {
