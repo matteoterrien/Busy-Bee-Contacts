@@ -27,8 +27,8 @@ mongoose
 app.use(cors())
 app.use(express.json())
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+app.listen(process.env.PORT || port, () => {
+    console.log(`Rest API is listening.`)
 })
 
 app.get('/contacts', (req, res) => {

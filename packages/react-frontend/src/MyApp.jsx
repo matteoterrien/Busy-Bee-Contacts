@@ -22,13 +22,15 @@ const MyApp = () => {
     const { setIsAuthenticated } = useAuth()
 
     const fetchContacts = () => {
-        const promise = fetch(`http://localhost:8000/contacts?userID=${userID}`)
+        const promise = fetch(
+            `http://busybeecontacts.azurewebsites.net/contacts?userID=${userID}`,
+        )
         return promise
     }
 
     const fetchFavoriteContacts = async () => {
         const res = await fetch(
-            `http://localhost:8000/contacts/favorite?userID=${userID}`,
+            `http://busybeecontacts.azurewebsites.net/contacts/favorite?userID=${userID}`,
         )
         if (!res.ok) {
             throw new Error(`Error: ${res.status}`)
@@ -37,7 +39,7 @@ const MyApp = () => {
     }
 
     const postContact = (person) => {
-        return fetch('http://localhost:8000/contacts', {
+        return fetch('http://busybeecontacts.azurewebsites.net/contacts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,12 +62,15 @@ const MyApp = () => {
     }
 
     const deleteContact = (id) => {
-        return fetch(`http://localhost:8000/contacts/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
+        return fetch(
+            `http://busybeecontacts.azurewebsites.net/contacts/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             },
-        })
+        )
             .then((res) => {
                 if (res.status === 404) {
                     console.log('Did not find contact')
