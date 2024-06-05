@@ -49,6 +49,7 @@ function CreateContact({ handleSubmit }) {
         notes: '',
         tags: [],
         favorite: false,
+        userID: '',
     })
 
     function submitForm() {

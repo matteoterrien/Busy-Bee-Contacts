@@ -22,13 +22,16 @@ const MyApp = () => {
     const { setIsAuthenticated } = useAuth()
 
     const fetchContacts = () => {
-        return fetch('http://localhost:8000/contacts')
+        const promise = fetch(`http://localhost:8000/contacts?userID=${userID}`)
+        return promise
     }
 
     const fetchFavoriteContacts = async () => {
-        const res = await fetch('http://localhost:8000/contacts/favorite')
+        const res = await fetch(
+            `http://localhost:8000/contacts/favorite?userID=${userID}`,
+        )
         if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`)
+            throw new Error(`Error: ${res.status}`)
         }
         return await res.json()
     }
@@ -39,7 +42,10 @@ const MyApp = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(person),
+            body: JSON.stringify({
+                ...person,
+                userID: userID,
+            }),
         })
             .then((res) => {
                 if (res.status === 201) {
@@ -86,15 +92,29 @@ const MyApp = () => {
             })
     }
 
+    const updateContacts = () => {
+        fetchContacts()
+            .then((json) => {
+                if (json && json['contact_list']) {
+                    setContacts(sortContactsByFirstName(json['contact_list']))
+                } else {
+                    setContacts([])
+                }
+            })
+            .catch((error) => {
+                console.error('Failed to fetch contacts:', error)
+            })
+    }
+
     const updateFavorites = () => {
         fetchFavoriteContacts()
             .then((json) => {
-                if (json) {
+                if (json && json['contact_list']) {
                     setFavoriteContacts(
                         sortContactsByFirstName(json['contact_list']),
                     )
                 } else {
-                    setContacts(null)
+                    setFavoriteContacts([])
                 }
             })
             .catch((error) => {
@@ -123,54 +143,6 @@ const MyApp = () => {
             })
     }
 
-    const loginUser = async (creds) => {
-        try {
-            const response = await fetch(`${API_PREFIX}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(creds),
-            })
-            if (response.status === 200) {
-                const data = await response.json()
-                localStorage.setItem('token', data.token)
-                setToken(data.token)
-                setMessage('Login successful')
-                setIsAuthenticated(true)
-                navigate('/')
-            } else {
-                setMessage(
-                    `Login Error ${response.status}: ${response.statusText}`,
-                )
-            }
-        } catch (error) {
-            setMessage(`Login Error: ${error.message}`)
-        }
-    }
-
-    const signUpUser = async (creds) => {
-        try {
-            const response = await fetch(`${API_PREFIX}/signup`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(creds),
-            })
-            if (response.status === 201) {
-                setMessage('Sign up successful')
-                fetchContacts()
-            } else {
-                setMessage(
-                    `Sign up Error ${response.status}: ${response.statusText}`,
-                )
-            }
-        } catch (error) {
-            setMessage(`Sign up Error: ${error.message}`)
-        }
-    }
-
     const sortContactsByFirstName = (contacts) => {
         return contacts
             .slice()
@@ -190,7 +162,7 @@ const MyApp = () => {
             .catch((error) => {
                 console.log(error)
             })
-    }, [])
+    }, [userID])
 
     useEffect(() => {
         fetchFavoriteContacts()
@@ -206,7 +178,7 @@ const MyApp = () => {
             .catch((error) => {
                 console.error('Failed to fetch favorite contacts:', error)
             })
-    }, [])
+    }, [userID])
 
     return (
         <div id="page">
@@ -250,13 +222,18 @@ const MyApp = () => {
                         </PrivateRoute>
                     }
                 />
-                <Route
-                    path="/signup"
-                    element={<SignupPage handleSubmit={signUpUser} />}
-                />
+                <Route path="/signup" element={<SignupPage />} />
                 <Route
                     path="/login"
-                    element={<LoginPage handleSubmit={loginUser} />}
+                    element={
+                        <LoginPage
+                            handleSubmit={(event) => {
+                                setUserID(event)
+                                updateContacts()
+                                updateFavorites()
+                            }}
+                        />
+                    }
                 />
                 <Route exact path="/loginerror" element={<LoginError />} />
                 <Route exact path="/signuperror" element={<SignUpError />} />
