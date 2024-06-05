@@ -29,6 +29,10 @@ function SignupPage() {
     navigateTo('/signuperror')
   }
 
+  function navigateToInvalidInputError() {
+    navigateTo('/invalidinputerror')
+  }
+
   function SignUpUser(creds) {
     const promise = fetch(`${API_PREFIX}/signup`, {
         method: 'POST',
@@ -48,8 +52,12 @@ function SignupPage() {
                     `Signup Error ${response.status}: Username already taken`,
                 )
                 navigateToSignUpError()            
-              }
-            else {
+              } else if (response.status === 400) {
+                setMessage(
+                    `Signup Error ${response.status}: Invalid input data. Please fill out all fields.`,
+                )
+                navigateToInvalidInputError()      
+              } else {
                 setMessage(
                     `Signup Error ${response.status}: ${response.data}`,
                 )
