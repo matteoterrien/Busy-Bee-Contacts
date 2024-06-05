@@ -59,8 +59,6 @@ function HomeHeader({ tags, setTags }) {
                             justifyContent="flex-end"
                             position='absolute'
                             right={10}
-                            /* mr={2} */
-                            /* mt={1} */
                             borderWidth={0}
                             className="add but"  onClick={() => navigateTo('/login')}
                         >
