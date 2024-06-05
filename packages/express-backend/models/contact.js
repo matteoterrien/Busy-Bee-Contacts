@@ -54,6 +54,7 @@ const ContactSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        profileImage: Buffer,
     },
     { collection: 'contact_list' },
 )

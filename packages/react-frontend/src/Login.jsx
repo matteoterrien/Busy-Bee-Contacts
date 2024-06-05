@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from './AuthProvider'
 
 function LoginPage() {
     const [creds, setCreds] = useState({
@@ -20,6 +21,7 @@ function LoginPage() {
     const API_PREFIX = 'http://localhost:8000'
     const [message, setMessage] = useState('')
     const navigateTo = useNavigate()
+    const { setIsAuthenticated } = useAuth()
 
     function navigateToHomePage() {
         navigateTo('/')
@@ -33,26 +35,34 @@ function LoginPage() {
         navigateTo('/forgotpassword')
     }
 
-    function loginUser(creds) {
+    async function loginUser(creds) {
         console.log('loginUser called')
-        const promise = fetch(`${API_PREFIX}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(creds),
-        }).then((response) => {
+        try {
+            const response = await fetch(`${API_PREFIX}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(creds),
+            })
+
             if (response.status === 200) {
                 setMessage('Login successful')
+                setIsAuthenticated(true)
                 navigateToHomePage()
             } else {
                 console.log('Login failed')
-                setMessage(`Login Error ${response.status}: ${response.data}`)
+                const errorData = await response.json()
+                setMessage(
+                    `Login Error ${response.status}: ${errorData.message}`,
+                )
                 navigateToLoginError()
             }
-        })
-
-        return promise
+        } catch (error) {
+            console.log('Login error:', error)
+            setMessage('Login Error: Network issue or server error')
+            navigateToLoginError()
+        }
     }
 
     function handleLoginClick() {
@@ -101,11 +111,19 @@ function LoginPage() {
                     <Stack justify="center" className="secText" spacing="3">
                         <Text align="center">
                             <span>Don't have an account? </span>
-                            <Button colorScheme="purple" variant="link" onClick={() => navigateTo('/signup')}>
+                            <Button
+                                colorScheme="purple"
+                                variant="link"
+                                onClick={() => navigateTo('/signup')}
+                            >
                                 Sign Up
                             </Button>
                         </Text>
-                        <Button colorScheme="purple" variant="link" onClick={() => navigateTo('/forgotpassword')}>
+                        <Button
+                            colorScheme="purple"
+                            variant="link"
+                            onClick={() => navigateTo('/forgotpassword')}
+                        >
                             Forgot Password?
                         </Button>
                     </Stack>

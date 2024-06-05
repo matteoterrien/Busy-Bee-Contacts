@@ -47,8 +47,8 @@ function HomeHeader({ tags, setTags }) {
                 />
                 <Stack width="100%">
                     <HStack>
-                        <Box display="flex">
-                            <Text ml="2%" fontSize="7xl" fontFamily="Kokoro">
+                        <Box display="flex" width="50%">
+                            <Text ml="10%" fontSize="7xl" fontFamily="Kokoro">
                                 Busy Bee Contacts
                             </Text>
                         </Box>
@@ -57,10 +57,11 @@ function HomeHeader({ tags, setTags }) {
                             height={35}
                             flexDirection="row"
                             justifyContent="flex-end"
-                            position='absolute'
+                            position="absolute"
                             right={10}
                             borderWidth={0}
-                            className="add but"  onClick={() => navigateTo('/login')}
+                            className="add but"
+                            onClick={() => navigateTo('/login')}
                         >
                             Log Out
                         </Button>
@@ -71,8 +72,7 @@ function HomeHeader({ tags, setTags }) {
                             onClick={() => removeTags('all')}
                         >
                             All
-                        </button>{' '}
-                        <span></span>
+                        </button>
                         <button
                             className="friends tag tagbut"
                             onClick={() => changeTags('friends')}
