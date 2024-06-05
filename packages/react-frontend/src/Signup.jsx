@@ -1,4 +1,3 @@
-//import React from "react";
 import {
   Center,
   ChakraProvider,
@@ -12,7 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 
-function SignupPage(props) {
+function SignupPage() {
   const navigateTo = useNavigate()
   const [creds, setCreds] = useState({
     full_name: '',
@@ -59,7 +58,6 @@ function SignupPage(props) {
         .catch((error) => {
             setMessage(`Signup Error: ${error}`)
         })
-
     return promise
   }
 
@@ -82,7 +80,6 @@ function SignupPage(props) {
           <Text fontSize="lg" className="secText">
             Please enter the information to register for Busy Bee Contacts.
           </Text>
-          {/* Login Check For NEW Email */}
                 <Stack>
                   <Input
                     bg="lightgrey"
