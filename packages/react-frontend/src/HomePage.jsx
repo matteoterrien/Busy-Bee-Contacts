@@ -48,7 +48,7 @@ function HomeHeader({ tags, setTags }) {
                 <Stack width="100%">
                     <HStack>
                         <Box display="flex" width="80%">
-                            <Text  fontSize="7xl" fontFamily="Kokoro">
+                            <Text fontSize="7xl" fontFamily="Kokoro">
                                 Busy Bee Contacts
                             </Text>
                         </Box>
@@ -184,7 +184,6 @@ function AllContactsBody({ contactData, tags }) {
                       contact.tags &&
                       contact.tags.some((tag) => tags.includes(tag)),
               )
-
     const rows = filteredContacts.map((row, index) => {
         return (
             <div key={index}>

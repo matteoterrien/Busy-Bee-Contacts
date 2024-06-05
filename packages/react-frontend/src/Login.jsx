@@ -12,7 +12,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
 
-function LoginPage() {
+function LoginPage({ handleSubmit }) {
     const [creds, setCreds] = useState({
         username: '',
         pwd: '',
@@ -23,7 +23,8 @@ function LoginPage() {
     const navigateTo = useNavigate()
     const { setIsAuthenticated } = useAuth()
 
-    function navigateToHomePage() {
+    function navigateToHomePage(userID) {
+        handleSubmit(userID)
         navigateTo('/')
     }
 
@@ -47,9 +48,11 @@ function LoginPage() {
             })
 
             if (response.status === 200) {
-                setMessage('Login successful')
-                setIsAuthenticated(true)
-                navigateToHomePage()
+                response.json().then((data) => {
+                    setMessage('Login successful')
+                    setIsAuthenticated(true)
+                    navigateToHomePage(data)
+                })
             } else {
                 console.log('Login failed')
                 const errorData = await response.json()

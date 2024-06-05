@@ -1,15 +1,15 @@
 import Contact from '../models/contact.js'
 
-function getContacts(first_name, last_name) {
+function getContacts(userID, first_name, last_name) {
     let promise
     if (first_name === undefined && last_name === undefined) {
-        promise = Contact.find()
+        promise = Contact.find({ userID: userID })
     } else if (first_name && last_name) {
-        promise = findContactByFirstAndLastName(first_name, last_name)
+        promise = findContactByFirstAndLastName(userID, first_name, last_name)
     } else if (first_name && !last_name) {
-        promise = findContactByFirstName(first_name)
+        promise = findContactByFirstName(userID, first_name)
     } else if (!first_name && last_name) {
-        promise = findContactByLastName(last_name)
+        promise = findContactByLastName(userID, last_name)
     }
     return promise
 }
@@ -24,20 +24,20 @@ function addContact(contact) {
     return promise
 }
 
-function findContactByFirstName(name) {
-    return Contact.find({ first_name: name })
+function findContactByFirstName(userID, name) {
+    return Contact.find({ userID: userID, first_name: name })
 }
 
-function findContactByLastName(name, job) {
-    return Contact.find({ last_name: name })
+function findContactByLastName(userID, name) {
+    return Contact.find({ userID: userID, last_name: name })
 }
 
-function findContactByFirstAndLastName(first, last) {
-    return Contact.find({ first_name: first, last_name: last })
+function findContactByFirstAndLastName(userID, first, last) {
+    return Contact.find({ userID: userID, first_name: first, last_name: last })
 }
 
-function findContactByFavorites() {
-    return Contact.find({ favorite: true })
+function findContactByFavorites(userID) {
+    return Contact.find({ userID: userID, favorite: true })
 }
 
 async function findContactAndUpdate(id, updatedContactData) {

@@ -38,12 +38,6 @@ const ContactSchema = new mongoose.Schema(
             type: String,
             trim: true,
         },
-        pronouns: {
-            type: String,
-        },
-        socials: {
-            type: [String],
-        },
         notes: {
             type: String,
         },
@@ -55,6 +49,10 @@ const ContactSchema = new mongoose.Schema(
             default: false,
         },
         profileImage: Buffer,
+        userID: {
+            type: String,
+            required: true,
+        },
     },
     { collection: 'contact_list' },
 )

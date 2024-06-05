@@ -50,6 +50,7 @@ function Edit({ handleSubmit }) {
         notes: '',
         tags: [],
         favorite: false,
+        userID: '',
     })
 
     function updateContact(contact) {
