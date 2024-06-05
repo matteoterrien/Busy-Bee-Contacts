@@ -11,6 +11,8 @@ import Edit from './ContactEdit'
 import CreateContact from './CreateContact'
 import LoginPage from './Login'
 import SignupPage from './Signup'
+import LoginError from './LoginError'
+import SignUpError from './SignUpError'
 
 function MyApp() {
     const [userID, setUserID] = useState('')
@@ -256,6 +258,8 @@ function MyApp() {
                 />
 
                 <Route exact path="/deleteContact/:id" element={<HomePage />} />
+                <Route exact path="/loginerror" element={<LoginError />} />
+                <Route exact path="/signuperror" element={<SignUpError />} />
                 <Route
                     path="/signup"
                     element={<SignupPage handleSubmit={signUpUser} />}
