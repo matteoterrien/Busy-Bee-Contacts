@@ -161,6 +161,16 @@ function CreateContact({ handleSubmit }) {
                                 onChange={handleChange}
                             />
                         </HStack>
+                        <HStack spacing={2} alignItems="center">
+                            {contact.tags.map((tag) => (
+                                <div
+                                    key={tag}
+                                    className={`tag ${tag} center-div`}
+                                >
+                                    {tag}
+                                </div>
+                            ))}
+                        </HStack>
                     </Box>
                 </Stack>
                 <Box
