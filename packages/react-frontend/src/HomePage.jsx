@@ -4,9 +4,8 @@ import {
     Button,
     Image,
     Stack,
-    HStack,
-    ChakraProvider,
     Spacer,
+    ChakraProvider,
 } from '@chakra-ui/react'
 import { AddIcon, StarIcon } from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom'
@@ -15,11 +14,26 @@ import { GiBee } from 'react-icons/gi'
 import { IoMdContact } from 'react-icons/io'
 import { TiStarFullOutline } from 'react-icons/ti'
 
-function HomeHeader() {
+function HomeHeader({ tags, setTags }) {
+    function removeTags(tag) {
+        if (tag === 'all') {
+            setTags([])
+        } else {
+            const updated = tags.filter((t) => t !== tag)
+            setTags(updated)
+        }
+    }
+
+    function changeTags(tag) {
+        if (tags.includes(tag)) {
+            removeTags(tag)
+        } else {
+            setTags([...tags, tag])
+        }
+    }
 
     return (
         <ChakraProvider resetCSS>
-
             <Box display="flex">
                 {/* <GiBee size={200} color="#E4DFAF" /> */}
                 <Image
@@ -29,31 +43,66 @@ function HomeHeader() {
                     color="#E4DFAF"
                 />
                 <Stack width="100%">
-                    <Box display="block" mt="20px">
-                        <Text 
-                        fontSize="7xl"
-                        fontFamily="Kokoro"
-                        textAlign="center"
-                        fontWeight="bold"
-                        color="transparent"
-                        sx={{
-                          background: "linear-gradient(to top, #E4DFAF, black)",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                        }}>
+                <HStack>
+                    <Box display="flex">
+                        <Text ml="2%" fontSize="7xl" fontFamily="Kokoro">
                             Busy Bee Contacts
                         </Text>
                     </Box>
-                    <Box display="flex" justifyContent="space-evenly" mt="-20px">
-                        <button className="tagbut tag all">All</button>
-                        <button className="friends tag tagbut">Friends</button>
-                        <button className="tagbut tag family">Family</button>
-                        <button className="tagbut tag work">Work</button>
-                        <button className="tagbut tag school">School</button>
-                        <button className="tagbut tag personal">
+                    <Button
+                      display="flex"
+                      height={35}
+                      mr={2}
+                      mt={1}
+                      borderWidth={0}
+                      className="add but"> 
+                      Log Out
+                    </Button>
+                  </HStack>
+                    <Box display="flex" justifyContent="space-evenly">
+                        <button
+                            className="tagbut tag all"
+                            onClick={() => removeTags('all')}
+                        >
+                            All
+                        </button>{' '}
+                        <span></span>
+                        <button
+                            className="friends tag tagbut"
+                            onClick={() => changeTags('friends')}
+                        >
+                            Friends
+                        </button>
+                        <button
+                            className="tagbut tag family"
+                            onClick={() => changeTags('family')}
+                        >
+                            Family
+                        </button>
+                        <button
+                            className="tagbut tag work"
+                            onClick={() => changeTags('work')}
+                        >
+                            Work
+                        </button>
+                        <button
+                            className="tagbut tag school"
+                            onClick={() => changeTags('school')}
+                        >
+                            School
+                        </button>
+                        <button
+                            className="tagbut tag personal"
+                            onClick={() => changeTags('personal')}
+                        >
                             Personal
                         </button>
-                        <button className="tagbut tag medical">Medical</button>
+                        <button
+                            className="tagbut tag medical"
+                            onClick={() => changeTags('medical')}
+                        >
+                            Medical
+                        </button>
                     </Box>
                     <Spacer />
                 </Stack>
@@ -119,9 +168,18 @@ function ShowAllContactsHeader() {
     )
 }
 
-function AllContactsBody(props) {
+function AllContactsBody({ contactData, tags }) {
     const navigate = useNavigate()
-    const rows = props.contactData.map((row, index) => {
+    const filteredContacts =
+        tags.length === 0
+            ? contactData
+            : contactData.filter(
+                  (contact) =>
+                      contact.tags &&
+                      contact.tags.some((tag) => tags.includes(tag)),
+              )
+
+    const rows = filteredContacts.map((row, index) => {
         return (
             <div key={index}>
                 <Button
@@ -162,13 +220,18 @@ function AllContactsBody(props) {
 }
 
 function HomePage(props) {
+    const [tags, setTags] = useState([])
+
     return (
         <>
-            <HomeHeader />
+            <HomeHeader tags={tags} setTags={setTags} />
             <FavoritesHeader />
-            <AllContactsBody contactData={props.favoriteContactData} />
+            <AllContactsBody
+                contactData={props.favoriteContactData}
+                tags={tags}
+            />
             <ShowAllContactsHeader />
-            <AllContactsBody contactData={props.contactData} />
+            <AllContactsBody contactData={props.contactData} tags={tags} />
         </>
     )
 }

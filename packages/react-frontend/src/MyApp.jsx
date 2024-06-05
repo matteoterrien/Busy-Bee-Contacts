@@ -11,6 +11,8 @@ import Edit from './ContactEdit'
 import CreateContact from './CreateContact'
 import LoginPage from './Login'
 import SignupPage from './Signup'
+import LoginError from './LoginError'
+import SignUpError from './SignUpError'
 
 function MyApp() {
     const [userID, setUserID] = useState('')
@@ -166,27 +168,27 @@ function MyApp() {
             })
     }
     function signUpUser(creds) {
-      console.log('sign up user called', API_PREFIX)
-      return fetch(`${API_PREFIX}/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(creds),
-      })
-        .then((response) => {
-          if (response.status === 201) {
-            setMessage(`Sign up successful;`)
-            fetchContacts()
-          } else {
-            setMessage(
-              `Sign up Error ${response.status}: ${response.data}`,
-            )
-          }
+        console.log('sign up user called', API_PREFIX)
+        return fetch(`${API_PREFIX}/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(creds),
         })
-        .catch((error) => {
-          setMessage(`Sign up Error: ${error}`)
-        })
+            .then((response) => {
+                if (response.status === 201) {
+                    setMessage(`Sign up successful;`)
+                    fetchContacts()
+                } else {
+                    setMessage(
+                        `Sign up Error ${response.status}: ${response.data}`,
+                    )
+                }
+            })
+            .catch((error) => {
+                setMessage(`Sign up Error: ${error}`)
+            })
     }
 
     const sortContactsByFirstName = (contacts) => {
@@ -256,14 +258,17 @@ function MyApp() {
                 />
 
                 <Route exact path="/deleteContact/:id" element={<HomePage />} />
+                <Route exact path="/loginerror" element={<LoginError />} />
+                <Route exact path="/signuperror" element={<SignUpError />} />
                 <Route
-                  path="/signup"
-                  element={<SignupPage handleSubmit={signUpUser} />} />
+                    path="/signup"
+                    element={<SignupPage handleSubmit={signUpUser} />}
+                />
                 {
-                  <Route
-                      path="/login"
-                      element={<LoginPage handleSubmit={loginUser} />}
-                  />
+                    <Route
+                        path="/login"
+                        element={<LoginPage handleSubmit={loginUser} />}
+                    />
                 }
             </Routes>
         </div>
