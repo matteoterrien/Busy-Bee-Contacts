@@ -47,8 +47,8 @@ function HomeHeader({ tags, setTags }) {
                 />
                 <Stack width="100%">
                     <HStack>
-                        <Box display="flex" width="50%">
-                            <Text ml="10%" fontSize="7xl" fontFamily="Kokoro">
+                        <Box display="flex" width="80%">
+                            <Text  fontSize="7xl" fontFamily="Kokoro">
                                 Busy Bee Contacts
                             </Text>
                         </Box>
