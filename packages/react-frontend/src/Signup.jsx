@@ -21,12 +21,12 @@ function SignupPage() {
   const API_PREFIX = 'http://localhost:8000'
   const [message, setMessage] = useState('')
 
-  function navigateToSignup() {
-    navigateTo('/signup')
-  }
-
   function navigateToHomePage() {
     navigateTo('/')
+  }
+
+  function navigateToSignUpError() {
+    navigateTo('/signuperror')
   }
 
   function SignUpUser(creds) {
@@ -47,8 +47,8 @@ function SignupPage() {
                 setMessage(
                     `Signup Error ${response.status}: Username already taken`,
                 )
-                navigateToSignup()
-            }
+                navigateToSignUpError()            
+              }
             else {
                 setMessage(
                     `Signup Error ${response.status}: ${response.data}`,

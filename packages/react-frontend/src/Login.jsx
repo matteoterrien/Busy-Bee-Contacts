@@ -18,12 +18,15 @@ function LoginPage() {
     })
 
     const API_PREFIX = 'http://localhost:8000'
-
     const [message, setMessage] = useState('')
     const navigateTo = useNavigate()
 
     function navigateToHomePage() {
         navigateTo('/')
+    }
+
+    function navigateToLoginError() {
+        navigateTo('/loginerror')
     }
 
     function loginUser(creds) {
@@ -41,6 +44,7 @@ function LoginPage() {
             } else {
                 console.log('Login failed')
                 setMessage(`Login Error ${response.status}: ${response.data}`)
+                navigateToLoginError()
             }
         })
 
