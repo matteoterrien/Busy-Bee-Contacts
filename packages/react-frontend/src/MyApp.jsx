@@ -13,6 +13,7 @@ import LoginPage from './Login'
 import SignupPage from './Signup'
 import LoginError from './LoginError'
 import SignUpError from './SignUpError'
+import ForgotPassword from './ForgotPassword'
 
 function MyApp() {
     const [userID, setUserID] = useState('')
@@ -260,6 +261,7 @@ function MyApp() {
                 <Route exact path="/deleteContact/:id" element={<HomePage />} />
                 <Route exact path="/loginerror" element={<LoginError />} />
                 <Route exact path="/signuperror" element={<SignUpError />} />
+                <Route exact path="/forgotpassword" element={<ForgotPassword />} />
                 <Route
                     path="/signup"
                     element={<SignupPage handleSubmit={signUpUser} />}

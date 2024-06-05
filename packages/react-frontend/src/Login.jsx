@@ -29,6 +29,10 @@ function LoginPage() {
         navigateTo('/loginerror')
     }
 
+    function navigateToForgotPassword() {
+        navigateTo('/forgotpassword')
+    }
+
     function loginUser(creds) {
         console.log('loginUser called')
         const promise = fetch(`${API_PREFIX}/login`, {
@@ -101,7 +105,7 @@ function LoginPage() {
                                 Sign Up
                             </Button>
                         </Text>
-                        <Button colorScheme="purple" variant="link">
+                        <Button colorScheme="purple" variant="link" onClick={() => navigateTo('/forgotpassword')}>
                             Forgot Password?
                         </Button>
                     </Stack>
