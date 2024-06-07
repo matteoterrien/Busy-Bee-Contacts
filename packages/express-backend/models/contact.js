@@ -51,6 +51,7 @@ const ContactSchema = new mongoose.Schema(
         icon: {
             type: String,
             default: 'FaUser',
+        },
         userID: {
             type: String,
             required: true,
