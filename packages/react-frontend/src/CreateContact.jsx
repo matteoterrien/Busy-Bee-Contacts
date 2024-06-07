@@ -53,6 +53,7 @@ function CreateContact({ handleSubmit }) {
         tags: [],
         favorite: false,
         icon: 'FaUser',
+        userID: '',
     })
 
     function submitForm() {

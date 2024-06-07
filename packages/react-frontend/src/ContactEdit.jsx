@@ -55,16 +55,20 @@ function Edit({ handleSubmit }) {
         tags: [],
         favorite: false,
         icon: '',
+        userID: '',
     })
 
     function updateContact(contact) {
-        const promise = fetch(`http://localhost:8000/contacts/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
+        const promise = fetch(
+            `http://busybeecontacts.azurewebsites.net/contacts/${id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(contact),
             },
-            body: JSON.stringify(contact),
-        })
+        )
             .then((res) => {
                 if (res.status == 200) {
                     return res.json()
@@ -79,7 +83,7 @@ function Edit({ handleSubmit }) {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:8000/contacts/${id}`)
+        fetch(`http://busybeecontacts.azurewebsites.net/contacts/${id}`)
             .then((res) => res.json())
             .then((data) => setContact(data['contact_list']))
             .catch((error) => console.log(error))

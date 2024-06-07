@@ -27,15 +27,16 @@ mongoose
 app.use(cors())
 app.use(express.json())
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+app.listen(process.env.PORT || port, () => {
+    console.log(`Rest API is listening.`)
 })
 
 app.get('/contacts', (req, res) => {
     const first_name = req.query['first_name']
     const last_name = req.query['last_name']
+    const userID = req.query['userID']
     contactService
-        .getContacts(first_name, last_name)
+        .getContacts(userID, first_name, last_name)
         .then((result) => {
             res.send({ contact_list: result })
         })
@@ -46,7 +47,8 @@ app.get('/contacts', (req, res) => {
 })
 
 app.get('/contacts/favorite', (req, res) => {
-    contactService.findContactByFavorites().then((result) => {
+    const userID = req.query['userID']
+    contactService.findContactByFavorites(userID).then((result) => {
         if (result === undefined || result === null)
             res.status(404).send('Resource not found.')
         else res.send({ contact_list: result })
@@ -58,7 +60,9 @@ app.get('/contacts/:id', (req, res) => {
     contactService.findContactById(id).then((result) => {
         if (result === undefined || result === null)
             res.status(404).send('Resource not found.')
-        else res.send({ contact_list: result })
+        else {
+            res.send({ contact_list: result })
+        }
     })
 })
 

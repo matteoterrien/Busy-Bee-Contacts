@@ -43,13 +43,16 @@ function Contact({ handleSubmit }) {
     const [favorited, setFavorited] = useState(null)
 
     function updateContact(contact) {
-        const promise = fetch(`http://localhost:8000/contacts/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
+        const promise = fetch(
+            `http://busybeecontacts.azurewebsites.net/contacts/${id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(contact),
             },
-            body: JSON.stringify(contact),
-        })
+        )
             .then((res) => {
                 if (res.ok) {
                     return res.json()
@@ -65,7 +68,7 @@ function Contact({ handleSubmit }) {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:8000/contacts/${id}`)
+        fetch(`http://busybeecontacts.azurewebsites.net/contacts/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 {
