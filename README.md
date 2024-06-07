@@ -12,7 +12,7 @@ Have two different tabs open to run Mongoose, Express backend and React frontend
 
 ### Potential Bugs with Deploying Development:
 - Mongosh installation: Mongosh may not be installed. Run ``mongosh`` in the packages\express-backend folder. You may need to run ``npm install mongosh``.
-- Installing packages: If ``npm run dev`` doesn't work in the frontend, you may need to ``npm install react-x`; x being the packages the terminal reports you do not have.
+- Installing packages: If ``npm run dev`` doesn't work in the frontend, you may need to ``npm install react-x``; x being the packages the terminal reports you do not have.
 - .env: Make sure there is a .env in packages. Copy-paste the configuration below.
 
 ## MongoDB Configurations and Contributing
