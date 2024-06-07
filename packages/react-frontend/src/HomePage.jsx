@@ -7,6 +7,7 @@ import {
     Spacer,
     ChakraProvider,
     HStack,
+    Icon,
 } from '@chakra-ui/react'
 import { AddIcon, StarIcon } from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom'
@@ -14,6 +15,7 @@ import React, { useState, useEffect } from 'react'
 import { GiBee } from 'react-icons/gi'
 import { IoMdContact } from 'react-icons/io'
 import { TiStarFullOutline } from 'react-icons/ti'
+import * as FaIcons from 'react-icons/fa';
 
 function HomeHeader({ tags, setTags }) {
     const navigateTo = useNavigate()
@@ -37,6 +39,7 @@ function HomeHeader({ tags, setTags }) {
 
     return (
         <ChakraProvider resetCSS>
+ 
             <Box display="flex">
                 {/* <GiBee size={200} color="#E4DFAF" /> */}
                 <Image
@@ -202,13 +205,14 @@ function AllContactsBody({ contactData, tags }) {
                         navigate(`../contact/${row._id}`)
                     }}
                 >
-                    <IoMdContact size={50} />
+                    <Icon as={FaIcons[row.icon]} boxSize="30px" mt={2} mr={2}/>
                     <Box
                         width="50%"
                         display="flex"
                         justifyContent="center"
                         alignItems="flex-start"
                         flexDirection="column"
+                        marginLeft={2}
                     >
                         <Box fontSize="xl" mb={1}>
                             {row.first_name} {row.last_name}
