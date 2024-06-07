@@ -7,6 +7,7 @@ import {
     Spacer,
     ChakraProvider,
     HStack,
+    Icon,
 } from '@chakra-ui/react'
 import { AddIcon, StarIcon } from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom'
@@ -14,6 +15,7 @@ import React, { useState, useEffect } from 'react'
 import { GiBee } from 'react-icons/gi'
 import { IoMdContact } from 'react-icons/io'
 import { TiStarFullOutline } from 'react-icons/ti'
+import * as FaIcons from 'react-icons/fa';
 
 function HomeHeader({ tags, setTags }) {
     const navigateTo = useNavigate()
@@ -37,6 +39,7 @@ function HomeHeader({ tags, setTags }) {
 
     return (
         <ChakraProvider resetCSS>
+ 
             <Box display="flex">
                 {/* <GiBee size={200} color="#E4DFAF" /> */}
                 <Image
@@ -47,8 +50,8 @@ function HomeHeader({ tags, setTags }) {
                 />
                 <Stack width="100%">
                     <HStack>
-                        <Box display="flex">
-                            <Text ml="2%" fontSize="7xl" fontFamily="Kokoro">
+                        <Box display="flex" width="80%">
+                            <Text fontSize="7xl" fontFamily="Kokoro">
                                 Busy Bee Contacts
                             </Text>
                         </Box>
@@ -57,10 +60,11 @@ function HomeHeader({ tags, setTags }) {
                             height={35}
                             flexDirection="row"
                             justifyContent="flex-end"
-                            position='absolute'
+                            position="absolute"
                             right={10}
                             borderWidth={0}
-                            className="add but"  onClick={() => navigateTo('/login')}
+                            className="add but"
+                            onClick={() => navigateTo('/login')}
                         >
                             Log Out
                         </Button>
@@ -71,8 +75,7 @@ function HomeHeader({ tags, setTags }) {
                             onClick={() => removeTags('all')}
                         >
                             All
-                        </button>{' '}
-                        <span></span>
+                        </button>
                         <button
                             className="friends tag tagbut"
                             onClick={() => changeTags('friends')}
@@ -184,7 +187,6 @@ function AllContactsBody({ contactData, tags }) {
                       contact.tags &&
                       contact.tags.some((tag) => tags.includes(tag)),
               )
-
     const rows = filteredContacts.map((row, index) => {
         return (
             <div key={index}>
@@ -203,13 +205,14 @@ function AllContactsBody({ contactData, tags }) {
                         navigate(`../contact/${row._id}`)
                     }}
                 >
-                    <IoMdContact size={50} />
+                    <Icon as={FaIcons[row.icon]} boxSize="30px" mt={2} mr={2}/>
                     <Box
                         width="50%"
                         display="flex"
                         justifyContent="center"
                         alignItems="flex-start"
                         flexDirection="column"
+                        marginLeft={2}
                     >
                         <Box fontSize="xl" mb={1}>
                             {row.first_name} {row.last_name}

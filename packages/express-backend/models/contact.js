@@ -54,6 +54,10 @@ const ContactSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        icon: {
+            type: String,
+            default: 'FaUser',
+        },
     },
     { collection: 'contact_list' },
 )

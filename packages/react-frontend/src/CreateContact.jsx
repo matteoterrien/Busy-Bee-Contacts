@@ -34,6 +34,9 @@ import {
     getAvatarGroupProps,
 } from './utils/CreateContactUtils'
 
+import { Select, Icon } from '@chakra-ui/react';
+import * as FaIcons from 'react-icons/fa';
+
 function CreateContact({ handleSubmit }) {
     const navigate = useNavigate()
     const [newTags, setNewTags] = useState([])
@@ -49,6 +52,7 @@ function CreateContact({ handleSubmit }) {
         notes: '',
         tags: [],
         favorite: false,
+        icon: 'FaUser',
     })
 
     function submitForm() {
@@ -76,17 +80,19 @@ function CreateContact({ handleSubmit }) {
         })
     }
 
-    const fileInputRef = useRef(null)
+    const [selectedIcon, setSelectedIcon] = useState('');
 
-    const avatarClick = () => {
-        fileInputRef.current.click()
-    }
+    const previewIcon = (event) => {
+      setSelectedIcon(event.target.value);
+      saveIcon(event.target.value);
+    };
 
-    const [file, setFile] = useState()
-    function uploadIcon(e) {
-        console.log(e.target.files)
-        setFile(URL.createObjectURL(e.target.files[0]))
-    }
+    function saveIcon(selectedIcon) {
+        setContact((prevContact) => ({
+          ...prevContact,
+          icon: selectedIcon,
+        }));
+      };
 
     return (
         <ChakraProvider resetCSS>
@@ -118,19 +124,19 @@ function CreateContact({ handleSubmit }) {
                     </Stack>
                 </Box>
                 <Stack {...getCommonStackProps()}>
-                    <Box border="3px solid #000" borderRadius={100}>
-                        <Avatar
-                            border="5px solid #d3d3d3"
-                            {...getCommonAvatarProps({ src: file })}
-                            onClick={avatarClick}
-                            style={{ cursor: 'pointer' }}
-                        />
-                        <input
-                            type="file"
-                            onChange={uploadIcon}
-                            ref={fileInputRef}
-                            style={{ display: 'none' }}
-                        />
+                    <Box align="center">
+                        <Icon as={FaIcons[selectedIcon]}
+                                boxSize="120px"/>
+                        <Select placeholder="Select icon"
+                                onChange={previewIcon}  >
+                            {Object.keys(FaIcons).map((iconName) => {
+                            return (
+                                <option key={iconName} value={iconName}>
+                                {iconName}
+                                </option>
+                            );
+                            })}
+                        </Select>
                     </Box>
                     <Box width="80%">
                         <HStack>

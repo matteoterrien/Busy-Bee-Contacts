@@ -34,6 +34,8 @@ import {
     getCommonInnerBoxProps,
 } from './utils/ContactUtils' // Import utility functions
 
+import * as FaIcons from 'react-icons/fa';
+
 function Contact({ handleSubmit }) {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -106,15 +108,10 @@ function Contact({ handleSubmit }) {
                     Back
                 </Button>
                 <Stack {...getCommonStackProps()}>
-                    <Box border="3px solid #000" borderRadius={100}>
-                        <Avatar
-                            {...getCommonAvatarProps({ src: contact.img })}
-                            style={{ cursor: 'default' }}
-                        />
-                    </Box>
+                    <Icon margin={3} as={FaIcons[contact.icon]} boxSize="140px" />
                     <Box width="80%">
                         <Heading textAlign="left" as="h1" size="xl">
-                            {contact.first_name} {contact.last_name}
+                            {contact.first_name} {contact.last_name} 
                         </Heading>
                         <Text fontStyle="italic">{contact.pronouns}</Text>
                         <HStack spacing={2} alignItems="center">
