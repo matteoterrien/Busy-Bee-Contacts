@@ -34,8 +34,8 @@ import {
     getAvatarGroupProps,
 } from './utils/CreateContactUtils'
 
-import { Select, Icon } from '@chakra-ui/react';
-import * as FaIcons from 'react-icons/fa';
+import { Select, Icon } from '@chakra-ui/react'
+import * as FaIcons from 'react-icons/fa'
 
 function CreateContact({ handleSubmit }) {
     const navigate = useNavigate()
@@ -81,19 +81,19 @@ function CreateContact({ handleSubmit }) {
         })
     }
 
-    const [selectedIcon, setSelectedIcon] = useState('');
+    const [selectedIcon, setSelectedIcon] = useState('')
 
     const previewIcon = (event) => {
-      setSelectedIcon(event.target.value);
-      saveIcon(event.target.value);
-    };
+        setSelectedIcon(event.target.value)
+        saveIcon(event.target.value)
+    }
 
     function saveIcon(selectedIcon) {
         setContact((prevContact) => ({
-          ...prevContact,
-          icon: selectedIcon,
-        }));
-      };
+            ...prevContact,
+            icon: selectedIcon,
+        }))
+    }
 
     return (
         <ChakraProvider resetCSS>
@@ -106,7 +106,7 @@ function CreateContact({ handleSubmit }) {
                                 colorScheme: 'gray',
                                 backgroundColor: 'red.500',
                                 className: 'butred',
-                                onClick: () => navigate('/'),
+                                onClick: () => navigate('/homepage'),
                             })}
                         >
                             Cancel
@@ -126,16 +126,17 @@ function CreateContact({ handleSubmit }) {
                 </Box>
                 <Stack {...getCommonStackProps()}>
                     <Box align="center">
-                        <Icon as={FaIcons[selectedIcon]}
-                                boxSize="120px"/>
-                        <Select placeholder="Select icon"
-                                onChange={previewIcon}  >
+                        <Icon as={FaIcons[selectedIcon]} boxSize="120px" />
+                        <Select
+                            placeholder="Select icon"
+                            onChange={previewIcon}
+                        >
                             {Object.keys(FaIcons).map((iconName) => {
-                            return (
-                                <option key={iconName} value={iconName}>
-                                {iconName}
-                                </option>
-                            );
+                                return (
+                                    <option key={iconName} value={iconName}>
+                                        {iconName}
+                                    </option>
+                                )
                             })}
                         </Select>
                     </Box>

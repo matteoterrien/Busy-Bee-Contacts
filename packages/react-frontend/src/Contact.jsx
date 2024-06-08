@@ -34,7 +34,7 @@ import {
     getCommonInnerBoxProps,
 } from './utils/ContactUtils' // Import utility functions
 
-import * as FaIcons from 'react-icons/fa';
+import * as FaIcons from 'react-icons/fa'
 
 function Contact({ handleSubmit }) {
     const { id } = useParams()
@@ -43,16 +43,13 @@ function Contact({ handleSubmit }) {
     const [favorited, setFavorited] = useState(null)
 
     function updateContact(contact) {
-        const promise = fetch(
-            `http://busybeecontacts.azurewebsites.net/contacts/${id}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(contact),
+        const promise = fetch(`http://localhost:8000/contacts/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
             },
-        )
+            body: JSON.stringify(contact),
+        })
             .then((res) => {
                 if (res.ok) {
                     return res.json()
@@ -68,7 +65,7 @@ function Contact({ handleSubmit }) {
     }
 
     useEffect(() => {
-        fetch(`http://busybeecontacts.azurewebsites.net/contacts/${id}`)
+        fetch(`http://localhost:8000/contacts/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 {
@@ -105,16 +102,20 @@ function Contact({ handleSubmit }) {
                         size: 'xs',
                         leftIcon: <ArrowBackIcon />,
                         className: 'but',
-                        onClick: () => navigate('/'),
+                        onClick: () => navigate('/homepage'),
                     })}
                 >
                     Back
                 </Button>
                 <Stack {...getCommonStackProps()}>
-                    <Icon margin={3} as={FaIcons[contact.icon]} boxSize="140px" />
+                    <Icon
+                        margin={3}
+                        as={FaIcons[contact.icon]}
+                        boxSize="140px"
+                    />
                     <Box width="80%">
                         <Heading textAlign="left" as="h1" size="xl">
-                            {contact.first_name} {contact.last_name} 
+                            {contact.first_name} {contact.last_name}
                         </Heading>
                         <Text fontStyle="italic">{contact.pronouns}</Text>
                         <HStack spacing={2} alignItems="center">

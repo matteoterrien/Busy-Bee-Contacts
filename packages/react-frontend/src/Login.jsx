@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from './AuthProvider'
 
 function LoginPage({ handleSubmit }) {
     const [creds, setCreds] = useState({
@@ -18,14 +17,12 @@ function LoginPage({ handleSubmit }) {
         pwd: '',
     })
 
-    const API_PREFIX = 'busybeecontacts.azurewebsites.net'
+    const API_PREFIX = 'http://localhost:8000'
     const [message, setMessage] = useState('')
     const navigateTo = useNavigate()
-    const { setIsAuthenticated } = useAuth()
 
     function navigateToHomePage(userID) {
         handleSubmit(userID)
-        navigateTo('/')
     }
 
     function navigateToLoginError() {
@@ -37,23 +34,18 @@ function LoginPage({ handleSubmit }) {
     }
 
     async function loginUser(creds) {
-        console.log('loginUser called')
         try {
-            const response = await fetch(
-                `http://busybeecontacts.azurewebsites.net/login`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(creds),
+            const response = await fetch(`http://localhost:8000/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-            )
+                body: JSON.stringify(creds),
+            })
 
-            if (response.status === 200) {
+            if (response.ok) {
                 response.json().then((data) => {
                     setMessage('Login successful')
-                    setIsAuthenticated(true)
                     navigateToHomePage(data)
                 })
             } else {

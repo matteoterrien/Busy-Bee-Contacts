@@ -34,9 +34,8 @@ import {
     getIconButtonProps,
 } from './utils/ContactEditUtils' // Import utility functions
 
-
-import { Select } from '@chakra-ui/react';
-import * as FaIcons from 'react-icons/fa';
+import { Select } from '@chakra-ui/react'
+import * as FaIcons from 'react-icons/fa'
 
 function Edit({ handleSubmit }) {
     const { id } = useParams()
@@ -59,16 +58,13 @@ function Edit({ handleSubmit }) {
     })
 
     function updateContact(contact) {
-        const promise = fetch(
-            `http://busybeecontacts.azurewebsites.net/contacts/${id}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(contact),
+        const promise = fetch(`http://localhost:8000/contacts/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
             },
-        )
+            body: JSON.stringify(contact),
+        })
             .then((res) => {
                 if (res.status == 200) {
                     return res.json()
@@ -83,7 +79,7 @@ function Edit({ handleSubmit }) {
     }
 
     useEffect(() => {
-        fetch(`http://busybeecontacts.azurewebsites.net/contacts/${id}`)
+        fetch(`http://localhost:8000/contacts/${id}`)
             .then((res) => res.json())
             .then((data) => setContact(data['contact_list']))
             .catch((error) => console.log(error))
@@ -91,7 +87,7 @@ function Edit({ handleSubmit }) {
 
     function deleteContact() {
         handleSubmit(id)
-        navigate('/')
+        navigate('/homepage')
     }
 
     function handleChange(event) {
@@ -115,19 +111,19 @@ function Edit({ handleSubmit }) {
         })
     }
 
-    const [selectedIcon, setSelectedIcon] = useState('');
+    const [selectedIcon, setSelectedIcon] = useState('')
 
     const previewIcon = (event) => {
-      setSelectedIcon(event.target.value);
-      saveIcon(event.target.value);
-    };
+        setSelectedIcon(event.target.value)
+        saveIcon(event.target.value)
+    }
 
     function saveIcon(selectedIcon) {
         setContact((prevContact) => ({
-          ...prevContact,
-          icon: selectedIcon,
-        }));
-      };
+            ...prevContact,
+            icon: selectedIcon,
+        }))
+    }
 
     return (
         <ChakraProvider resetCSS>
@@ -163,16 +159,17 @@ function Edit({ handleSubmit }) {
                 </Box>
                 <Stack {...getCommonStackProps()}>
                     <Box align="center">
-                        <Icon as={FaIcons[selectedIcon]}
-                                boxSize="120px"/>
-                        <Select placeholder="Select icon"
-                                onChange={previewIcon}  >
+                        <Icon as={FaIcons[selectedIcon]} boxSize="120px" />
+                        <Select
+                            placeholder="Select icon"
+                            onChange={previewIcon}
+                        >
                             {Object.keys(FaIcons).map((iconName) => {
-                            return (
-                                <option key={iconName} value={iconName}>
-                                {iconName}
-                                </option>
-                            );
+                                return (
+                                    <option key={iconName} value={iconName}>
+                                        {iconName}
+                                    </option>
+                                )
                             })}
                         </Select>
                     </Box>

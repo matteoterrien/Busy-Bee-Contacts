@@ -10,7 +10,6 @@ import LoginError from './LoginError'
 import SignUpError from './SignUpError'
 import ForgotPassword from './ForgotPassword'
 import InvalidInputError from './InvalidInputError'
-import { useAuth } from './AuthProvider' // Import useAuth from AuthProvider
 
 const MyApp = () => {
     const [userID, setUserID] = useState('')
@@ -19,18 +18,17 @@ const MyApp = () => {
     const [token, setToken] = useState('INVALID_TOKEN')
     const [message, setMessage] = useState('')
     const navigate = useNavigate()
-    const { setIsAuthenticated } = useAuth()
 
     const fetchContacts = async () => {
         const promise = await fetch(
-            `http://busybeecontacts.azurewebsites.net/contacts?userID=${userID}`,
+            `http://localhost:8000/contacts?userID=${userID}`,
         )
         return await promise.json()
     }
 
     const fetchFavoriteContacts = async () => {
         const res = await fetch(
-            `http://busybeecontacts.azurewebsites.net/contacts/favorite?userID=${userID}`,
+            `http://localhost:8000/contacts/favorite?userID=${userID}`,
         )
         if (!res.ok) {
             throw new Error(`Error: ${res.status}`)
@@ -39,7 +37,7 @@ const MyApp = () => {
     }
 
     const postContact = (person) => {
-        return fetch('http://busybeecontacts.azurewebsites.net/contacts', {
+        return fetch(`http://localhost:8000/contacts?userID=${userID}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,15 +60,12 @@ const MyApp = () => {
     }
 
     const deleteContact = (id) => {
-        return fetch(
-            `http://busybeecontacts.azurewebsites.net/contacts/${id}`,
-            {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+        return fetch(`http://localhost:8000/contacts/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
             },
-        )
+        })
             .then((res) => {
                 if (res.status === 404) {
                     console.log('Did not find contact')
@@ -154,14 +149,17 @@ const MyApp = () => {
             .sort((a, b) => a.first_name.localeCompare(b.first_name))
     }
 
+    const navigateToHomePage = () => {
+        navigate('/homepage')
+    }
+
     useEffect(() => {
         fetchContacts()
-            .then((res) => (res.status === 200 ? res.json() : undefined))
             .then((json) => {
                 if (json) {
                     setContacts(sortContactsByFirstName(json['contact_list']))
                 } else {
-                    setContacts(null)
+                    setContacts([])
                 }
             })
             .catch((error) => {
@@ -177,7 +175,7 @@ const MyApp = () => {
                         sortContactsByFirstName(json['contact_list']),
                     )
                 } else {
-                    setContacts(null)
+                    setContacts([])
                 }
             })
             .catch((error) => {
@@ -190,58 +188,47 @@ const MyApp = () => {
             <Routes>
                 <Route
                     exact
-                    path="/"
+                    path="/homepage"
                     element={
-                        <PrivateRoute>
-                            <HomePage
-                                contactData={contacts}
-                                favoriteContactData={favoriteContacts}
-                            />
-                        </PrivateRoute>
+                        <HomePage
+                            contactData={contacts}
+                            favoriteContactData={favoriteContacts}
+                        />
                     }
                 />
                 <Route
                     exact
                     path="/contact/:id"
-                    element={
-                        <PrivateRoute>
-                            <Contact handleSubmit={updateFavorites} />
-                        </PrivateRoute>
-                    }
+                    element={<Contact handleSubmit={updateFavorites} />}
                 />
                 <Route
                     exact
                     path="/edit/:id"
                     element={
-                        <PrivateRoute>
-                            <Edit
-                                handleSubmit={(event) => {
-                                    removeOneContact(event)
-                                    updateContacts()
-                                    updateFavorites()
-                                }}
-                            />
-                        </PrivateRoute>
+                        <Edit
+                            handleSubmit={(event) => {
+                                removeOneContact(event)
+                                updateContacts()
+                                updateFavorites()
+                            }}
+                        />
                     }
                 />
                 <Route
                     exact
                     path="/createContact/"
-                    element={
-                        <PrivateRoute>
-                            <CreateContact handleSubmit={updateList} />
-                        </PrivateRoute>
-                    }
+                    element={<CreateContact handleSubmit={updateList} />}
                 />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route
-                    path="/login"
+                    path="/"
                     element={
                         <LoginPage
                             handleSubmit={(event) => {
                                 setUserID(event)
                                 updateContacts()
                                 updateFavorites()
+                                navigateToHomePage()
                             }}
                         />
                     }
@@ -261,11 +248,6 @@ const MyApp = () => {
             </Routes>
         </div>
     )
-}
-
-const PrivateRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth()
-    return isAuthenticated ? children : <Navigate to="/login" />
 }
 
 export default MyApp

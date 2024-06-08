@@ -18,11 +18,11 @@ function SignupPage() {
         username: '',
         pwd: '',
     })
-    const API_PREFIX = 'busybeecontacts.azurewebsites.net'
+    const API_PREFIX = 'http://localhost:8000'
     const [message, setMessage] = useState('')
 
     function navigateToHomePage() {
-        navigateTo('/')
+        navigateTo('/homepage')
     }
 
     function navigateToSignUpError() {
@@ -130,7 +130,7 @@ function SignupPage() {
                             <Button
                                 colorScheme="purple"
                                 variant="link"
-                                onClick={() => navigateTo('/login')}
+                                onClick={() => navigateTo('/')}
                             >
                                 Log In
                             </Button>

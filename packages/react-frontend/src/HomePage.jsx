@@ -9,13 +9,10 @@ import {
     HStack,
     Icon,
 } from '@chakra-ui/react'
-import { AddIcon, StarIcon } from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
-import { GiBee } from 'react-icons/gi'
-import { IoMdContact } from 'react-icons/io'
 import { TiStarFullOutline } from 'react-icons/ti'
-import * as FaIcons from 'react-icons/fa';
+import * as FaIcons from 'react-icons/fa'
 
 function HomeHeader({ tags, setTags }) {
     const navigateTo = useNavigate()
@@ -39,9 +36,7 @@ function HomeHeader({ tags, setTags }) {
 
     return (
         <ChakraProvider resetCSS>
- 
             <Box display="flex">
-                {/* <GiBee size={200} color="#E4DFAF" /> */}
                 <Image
                     src="https://us.123rf.com/450wm/kaissaart/kaissaart1807/kaissaart180700038/114801772-bee-flat-design-illustration-simple-vector-icon.jpg?ver=6"
                     height={200}
@@ -64,7 +59,7 @@ function HomeHeader({ tags, setTags }) {
                             right={10}
                             borderWidth={0}
                             className="add but"
-                            onClick={() => navigateTo('/login')}
+                            onClick={() => navigateTo('/')}
                         >
                             Log Out
                         </Button>
@@ -179,6 +174,11 @@ function ShowAllContactsHeader() {
 
 function AllContactsBody({ contactData, tags }) {
     const navigate = useNavigate()
+
+    if (!contactData) {
+        return <div>Loading contacts...</div>
+    }
+
     const filteredContacts =
         tags.length === 0
             ? contactData
@@ -205,7 +205,7 @@ function AllContactsBody({ contactData, tags }) {
                         navigate(`../contact/${row._id}`)
                     }}
                 >
-                    <Icon as={FaIcons[row.icon]} boxSize="30px" mt={2} mr={2}/>
+                    <Icon as={FaIcons[row.icon]} boxSize="30px" mt={2} mr={2} />
                     <Box
                         width="50%"
                         display="flex"
